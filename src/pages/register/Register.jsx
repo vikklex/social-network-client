@@ -9,6 +9,9 @@ import './register.scss';
 import Center from '../../components/Center';
 import { useEffect } from 'react';
 
+import RegisterIllustration from './.././../img/registration.png';
+import MainLogo from './.././../img/logo.svg';
+
 const layout = {
   labelCol: {
     span: 8,
@@ -26,7 +29,7 @@ const validateMessages = {
   },
 };
 
-export default function Register() {
+const Register = () => {
   const dispatch = useDispatch();
   const ref = useRef();
 
@@ -53,14 +56,12 @@ export default function Register() {
     input.focus();
   });
 
-  const pf = process.env.REACT_APP_PUBLIC_FOLDER;
-
   return (
     <Center>
       <Row>
         <Col span={12}>
           <h3 className='login__title'>
-            <img src={pf + '/img/logo.svg'}></img>
+            <img src={MainLogo}></img>
           </h3>
           <span className='login__description'>
             Cement friendship and family relations with "F-network"
@@ -70,7 +71,7 @@ export default function Register() {
           <Card
             hoverable
             className='register__card'
-            cover={<img alt='example' src={pf + '/img/registration.png'} />}
+            cover={<img alt='example' src={RegisterIllustration} />}
           >
             {registerError && (
               <>
@@ -190,4 +191,6 @@ export default function Register() {
       </Row>
     </Center>
   );
-}
+};
+
+export default Register;

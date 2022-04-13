@@ -19,6 +19,9 @@ import './login.scss';
 import { Types, login } from '../../redux/actions/authActions';
 import Center from '../../components/Center';
 
+import LoginIllustration from './.././../img/login.jpg';
+import MainLogo from './.././../img/logo.svg';
+
 const Login = () => {
   const dispatch = useDispatch();
   const ref = useRef();
@@ -45,14 +48,12 @@ const Login = () => {
     input.focus();
   });
 
-  const pf = process.env.REACT_APP_PUBLIC_FOLDER;
-
   return (
     <Center minHeight='70vh'>
       <Row>
         <Col span={12}>
           <h3 className='login__title'>
-            <img src={pf + '/img/logo.svg'}></img>
+            <img src={MainLogo}></img>
           </h3>
           <span className='login__description'>
             Cement friendship and family relations with "F_Network"
@@ -62,7 +63,7 @@ const Login = () => {
           <Card
             hoverable
             className='register__card'
-            cover={<img alt='example' src={pf + '/img/login.jpg'} />}
+            cover={<img alt='example' src={LoginIllustration} />}
           >
             {loginError && (
               <>
