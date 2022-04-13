@@ -9,8 +9,8 @@ import './register.scss';
 import Center from '../../components/Center';
 import { useEffect } from 'react';
 
-import RegisterIllustration from './.././../img/registration.png';
-import MainLogo from './.././../img/logo.svg';
+import RegisterIllustration from './.././../assets/img/registration.png';
+import MainLogo from './.././../img/assets/logo.svg';
 
 const layout = {
   labelCol: {
