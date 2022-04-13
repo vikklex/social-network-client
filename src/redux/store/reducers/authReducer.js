@@ -1,10 +1,10 @@
-import { TYPES } from '../../actions/authActions';
+import { Types } from '../../actions/authActions';
 
 const defaultState = {};
 
 const authReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case TYPES.AUTH:
+    case Types.AUTH:
       return action.payload;
     default:
       return state;

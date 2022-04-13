@@ -1,23 +1,51 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Form, Input, Button, Checkbox, Card, Row, Col } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Card,
+  Row,
+  Col,
+  message,
+  Alert,
+} from 'antd';
 
 import './login.scss';
-import { login } from '../../redux/actions/authActions';
+import { Types, login } from '../../redux/actions/authActions';
 import Center from '../../components/Center';
+
+console.log();
 
 const Login = () => {
   const dispatch = useDispatch();
+  const ref = useRef();
+
+  const loginError = useSelector((state) => state.alert.error);
 
   const onFinish = (values) => {
+    const onSuccess = (status) => {
+      if (status === Types.LOGIN_SUCCESS) {
+        message.success('You are successfully login');
+      }
+    };
+
     const data = {
       email: values.email,
       password_hash: values.password_hash,
     };
 
-    dispatch(login(data));
+    dispatch(login(data)).then(onSuccess);
   };
+
+  useEffect(() => {
+    const { input } = ref.current;
+    input.focus();
+  });
 
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -38,13 +66,17 @@ const Login = () => {
             className='register__card'
             cover={<img alt='example' src={pf + '/img/login.jpg'} />}
           >
+            {loginError && (
+              <>
+                <Alert message={loginError} type='error' />
+                <br />
+              </>
+            )}
+
             <Form
               name='basic'
               labelCol={{
                 span: 8,
-              }}
-              wrapperCol={{
-                span: 16,
               }}
               initialValues={{
                 remember: true,
@@ -63,7 +95,7 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input ref={ref} />
               </Form.Item>
 
               <Form.Item
@@ -87,7 +119,6 @@ const Login = () => {
                 valuePropName='checked'
                 wrapperCol={{
                   offset: 8,
-                  span: 16,
                 }}
               >
                 <Checkbox>Remember me</Checkbox>
@@ -96,7 +127,6 @@ const Login = () => {
               <Form.Item
                 wrapperCol={{
                   offset: 8,
-                  span: 16,
                 }}
               >
                 <Button type='primary' htmlType='submit'>

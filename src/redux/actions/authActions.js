@@ -1,23 +1,25 @@
 import ClientAPI from '../../utils/ClientAPI';
-import { ALERT_TYPES } from './alertActions';
-import Messages from '../../utils/Messages';
+import { Alert_Types } from './alertActions';
 
-export const TYPES = {
-  'AUTH': 'AUTH',
+export const Types = {
+  AUTH: 'AUTH',
+  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+  LOGIN_FAILED: 'LOGIN_FAILED',
 };
 
 export const login = (data) => async (dispatch) => {
   try {
     dispatch({
-      type: ALERT_TYPES.ALERT,
+      type: Alert_Types.ALERT,
       payload: {
         loading: true,
       },
     });
 
     const res = await ClientAPI.postData('login', data);
+
     dispatch({
-      type: TYPES.AUTH,
+      type: Types.AUTH,
       payload: {
         token: res.data.msg.access_token,
         user: res.data.msg.user,
@@ -29,27 +31,28 @@ export const login = (data) => async (dispatch) => {
     localStorage.setItem('token', res.data.msg.access_token);
 
     dispatch({
-      type: ALERT_TYPES.ALERT,
+      type: Alert_Types.ALERT,
       payload: {
         success: res.data.msg,
       },
     });
 
-    Messages.onSuccess('login');
+    return Types.LOGIN_SUCCESS;
   } catch (error) {
     dispatch({
-      type: ALERT_TYPES.ALERT,
+      type: Alert_Types.ALERT,
       payload: {
         error: error.response.data.msg,
       },
     });
-    Messages.onError('login');
+
+    return Types.LOGIN_FAILED;
   }
 };
 
 export const register = (data) => async (dispatch) => {
   try {
-    dispatch({ type: ALERT_TYPES.ALERT, payload: { loading: true } });
+    dispatch({ type: Alert_Types.ALERT, payload: { loading: true } });
 
     const res = await ClientAPI.postData('registration', data);
 
@@ -57,26 +60,28 @@ export const register = (data) => async (dispatch) => {
     localStorage.setItem('token', res.data.msg.access_token);
 
     dispatch({
-      type: TYPES.AUTH,
+      type: Types.AUTH,
       payload: {
         token: res.data.msg.access_token,
         user: res.data.msg.user,
       },
     });
     dispatch({
-      type: ALERT_TYPES.ALERT,
+      type: Alert_Types.ALERT,
       payload: {
         success: res.data.msg,
       },
     });
-    Messages.onSuccess('registrate');
+
+    return Types.LOGIN_SUCCESS;
   } catch (error) {
     dispatch({
-      type: ALERT_TYPES.ALERT,
+      type: Alert_Types.ALERT,
       payload: {
         error: error.response.data.msg,
       },
     });
-    Messages.onError('register');
+
+    return Types.LOGIN_FAILED;
   }
 };

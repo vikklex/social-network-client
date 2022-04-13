@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Input, Button, Row, Col, message, Alert } from 'antd';
 import { Card } from 'antd';
 
-import { register } from '../../redux/actions/authActions';
+import { Types, register } from '../../redux/actions/authActions';
 import './register.scss';
 import Center from '../../components/Center';
+import { useEffect } from 'react';
 
 const layout = {
   labelCol: {
@@ -27,8 +28,16 @@ const validateMessages = {
 
 export default function Register() {
   const dispatch = useDispatch();
+  const ref = useRef();
+
+  const registerError = useSelector((state) => state.alert.error);
 
   const onFinish = (values) => {
+    const onSuccess = (status) => {
+      if (status === Types.LOGIN_SUCCESS) {
+        message.success('You are successfully registered');
+      }
+    };
     const data = {
       first_name: values.user.first_name,
       last_name: values.user.last_name,
@@ -36,8 +45,13 @@ export default function Register() {
       password_hash: values.password_hash,
     };
 
-    dispatch(register(data));
+    dispatch(register(data)).then(onSuccess);
   };
+
+  useEffect(() => {
+    const { input } = ref.current;
+    input.focus();
+  });
 
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -58,6 +72,12 @@ export default function Register() {
             className='register__card'
             cover={<img alt='example' src={pf + '/img/registration.png'} />}
           >
+            {registerError && (
+              <>
+                <Alert message={registerError} type='error' />
+                <br />
+              </>
+            )}
             <Form
               {...layout}
               name='register'
@@ -109,7 +129,7 @@ export default function Register() {
                   },
                 ]}
               >
-                <Input />
+                <Input ref={ref} />
               </Form.Item>
               <Form.Item
                 label='Password'

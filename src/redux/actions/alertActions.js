@@ -1,3 +1,3 @@
-export const ALERT_TYPES = {
+export const Alert_Types = {
   ALERT: 'ALERT',
 };

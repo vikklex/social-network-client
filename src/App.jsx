@@ -1,37 +1,38 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Layout from 'antd/lib/layout/layout';
 
 import MainPage from './pages/main/MainPage';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 
 function App() {
-  const { auth } = useSelector((state) => state);
+  const token = useSelector((state) => state.auth.token);
 
   return (
-    <div className='app-wrapper'>
+    <Layout>
       <Router>
         <Routes>
           <Route
             exact
             path='/'
-            element={auth.token ? <MainPage /> : <Login />}
+            element={token ? <MainPage /> : <Login />}
           ></Route>
 
           <Route
             exact
             path='/login'
-            element={auth.token ? <MainPage /> : <Login />}
+            element={token ? <MainPage /> : <Login />}
           ></Route>
 
           <Route
             exact
             path='/register'
-            element={auth.token ? <MainPage /> : <Register />}
+            element={token ? <MainPage /> : <Register />}
           ></Route>
         </Routes>
       </Router>
-    </div>
+    </Layout>
   );
 }
 

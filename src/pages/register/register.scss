@@ -1,68 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
 
-.login {
-  width: 100vw;
-  height: 100vh;
-  background-color: cornflowerblue;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login__wrapper {
-  width: 70%;
-  height: 93%;
-  background-color: cornflowerblue;
-  display: flex;
-}
-
-.login__wrapper_left,
-.login__wrapper_right {
-  width: 50%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.login__title {
-  font-size: 50px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 10px;
-}
-.login__area {
-  height: 500px;
-  background-color: #fff;
-  padding: 20px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.login__input {
-  height: 50px;
-  border: 1px solid grey;
-  padding-left: 20px;
-  margin-bottom: 10px;
-}
-
-.login__input:focus {
-  outline: none;
-}
-
-.login__button {
-  height: 50px;
-  border-radius: 10px;
-  border: none;
-  color: rgb(248, 248, 248);
-
-  font-size: 20px;
-  cursor: pointer;
-}
-.login__forgot {
-  text-align: center;
-  color: blue;
-}
 .login__register_button > .ant-btn-primary {
   width: 100%;
   align-self: center;
@@ -72,9 +9,6 @@
   cursor: pointer;
 }
 
-.register__card {
-  width: 80%;
-}
 .ant-card-cover img {
   border-radius: 2px 2px 0 0;
   height: 30vh;
