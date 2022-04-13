@@ -19,8 +19,6 @@ import './login.scss';
 import { Types, login } from '../../redux/actions/authActions';
 import Center from '../../components/Center';
 
-console.log();
-
 const Login = () => {
   const dispatch = useDispatch();
   const ref = useRef();

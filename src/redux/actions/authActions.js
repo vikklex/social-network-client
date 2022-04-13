@@ -85,3 +85,18 @@ export const register = (data) => async (dispatch) => {
     return Types.LOGIN_FAILED;
   }
 };
+
+export const logout = () => async (dispatch) => {
+  try {
+    localStorage.removeItem('login');
+    await ClientAPI.postData('logout');
+    window.location.href = '/login';
+  } catch (error) {
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};

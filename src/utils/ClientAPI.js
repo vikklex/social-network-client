@@ -10,7 +10,7 @@ class ClientAPI {
     const res = await this.instance.get(`/v1/users/${url}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
+    console.log(res);
     return res;
   };
 
