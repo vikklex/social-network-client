@@ -5,6 +5,7 @@ import Layout from 'antd/lib/layout/layout';
 import MainPage from './pages/main/MainPage';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import Header from './../src/components/Header/Header';
 
 function App() {
   const token = useSelector((state) => state.auth.token);
@@ -12,6 +13,7 @@ function App() {
   return (
     <Layout>
       <Router>
+        {token && <Header />}
         <Routes>
           <Route
             exact
