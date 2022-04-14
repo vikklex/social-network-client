@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
 
 import SubMenu from 'antd/lib/menu/SubMenu';
+
 import {
   HomeOutlined,
   UsergroupAddOutlined,
@@ -24,7 +25,7 @@ export const FullMenu = () => {
     if (pn === pathname) return 'active';
   };
   return (
-    <div className='navbar__wrapper'>
+    <>
       <Menu style={{ width: 256 }} mode='vertical' className='navbar__list'>
         <Link to='/'>
           <SubMenu
@@ -82,8 +83,6 @@ export const FullMenu = () => {
           ></SubMenu>
         </Link>
       </Menu>
-      <hr className='navbar__line' />
-      <ul className='navbar__friend_list'></ul>
-    </div>
+    </>
   );
 };

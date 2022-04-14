@@ -3,3 +3,11 @@
 .ant-layout {
   background-color: cornflowerblue;
 }
+.ant-layout-content {
+  background-color: white;
+}
+aside {
+  background: white !important;
+  flex: 0 0 256px !important;
+  max-width: 30% !important;
+}
