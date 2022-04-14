@@ -14,7 +14,7 @@ import { logout } from './../../redux/actions/authActions';
 import ClientAPI from '../../utils/ClientAPI';
 import './header.scss';
 
-import HeaderLogo from './../../assets/img/mini.jpg';
+import HeaderLogo from './../../assets/img/logo2.png';
 import NoAvatar from './../../assets/img/noavatar.png';
 
 const { Header } = Layout;
@@ -71,12 +71,10 @@ export default function HeaderNav() {
   return (
     <Layout>
       <Header>
-        <Row justify='center' align='middle'>
-          <Col span={5}>
-            <Avatar size={64} className='avatar__mini' />
-          </Col>
+        <Row justify='space-between' align='middle'>
+          <Col span={5}></Col>
           <Col span={7}>
-            <Input.Group compact>
+            <Input.Group compact className='search__group'>
               <Input.Search
                 allowClear
                 style={{ width: '100%' }}
@@ -121,7 +119,7 @@ export default function HeaderNav() {
             </Row>
           </Col>
           <Col span={2}>
-            <Avatar size={64} src={HeaderLogo} className='avatar__mini' />
+            <Avatar size={64} className='avatar__mini' />
           </Col>
           <Col span={2}>
             <h4>{user.first_name}</h4>

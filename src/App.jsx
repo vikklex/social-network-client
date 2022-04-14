@@ -11,30 +11,28 @@ function App() {
   const token = useSelector((state) => state.auth.token);
 
   return (
-    <Layout>
-      <Router>
-        {token && <Header />}
-        <Routes>
-          <Route
-            exact
-            path='/'
-            element={token ? <MainPage /> : <Login />}
-          ></Route>
+    <Router>
+      {token && <Header />}
+      <Routes>
+        <Route
+          exact
+          path='/'
+          element={token ? <MainPage /> : <Login />}
+        ></Route>
 
-          <Route
-            exact
-            path='/login'
-            element={token ? <MainPage /> : <Login />}
-          ></Route>
+        <Route
+          exact
+          path='/login'
+          element={token ? <MainPage /> : <Login />}
+        ></Route>
 
-          <Route
-            exact
-            path='/register'
-            element={token ? <MainPage /> : <Register />}
-          ></Route>
-        </Routes>
-      </Router>
-    </Layout>
+        <Route
+          exact
+          path='/register'
+          element={token ? <MainPage /> : <Register />}
+        ></Route>
+      </Routes>
+    </Router>
   );
 }
 
