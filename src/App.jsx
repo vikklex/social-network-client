@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Layout from 'antd/lib/layout/layout';
 
 import MainPage from './pages/main/MainPage';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Header from './../src/components/Header/Header';
+import { FullMenu } from './components/Menu/FullMenu';
 
 function App() {
   const token = useSelector((state) => state.auth.token);
@@ -13,6 +13,7 @@ function App() {
   return (
     <Router>
       {token && <Header />}
+      {token && <FullMenu />}
       <Routes>
         <Route
           exact
