@@ -10,7 +10,7 @@ import Center from '../../components/Center';
 import { useEffect } from 'react';
 
 import RegisterIllustration from './.././../assets/img/registration.png';
-import MainLogo from './.././../img/assets/logo.svg';
+import MainLogo from './.././../assets/img/logo.svg';
 
 const layout = {
   labelCol: {

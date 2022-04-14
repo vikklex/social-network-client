@@ -1,135 +1,20 @@
-@mixin flex-layout-header {
-  display: flex;
-  align-items: center;
-}
-@mixin circle {
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 $main-background: linear-gradient(#00a3ff, #ffa5a5);
-.header_container {
-  height: 8vh;
-  background-color: white;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  @include flex-layout-header();
-}
-.header_container__center {
-  @include flex-layout-header();
-  width: 80%;
-  margin: 0 auto;
-  height: 100%;
-}
-.header_container__left {
-  flex: 3;
-}
 
-.header_container__middle {
-  flex: 3;
-}
-.search_area__close {
-  position: absolute;
-  top: 38%;
-  left: 53%;
-}
-
-.header_container__right {
-  @include flex-layout-header();
-  flex: 4;
-  justify-content: space-around;
-  color: white;
-}
-
-.header__logo {
-  @include circle();
-  @include flex-layout-header();
-  background: $main-background;
-  width: 80px;
-  height: 80px;
-  justify-content: center;
-  color: white;
-  font-size: 50px;
-}
-
-.header_container__search {
-  width: 100%;
-  height: 35%;
-  border-radius: 30px;
-  background-color: #fff;
-  padding: 2%;
-  border: 1px solid rgb(167, 167, 167);
-}
-
-.header_container__search_input {
-  border: none;
-  width: 80%;
-}
-
-.header_container__search_input:focus {
-  outline: none;
-}
-.search-icon {
-  font-size: 22px !important;
-  margin-left: 10px;
-}
 .right_icon_antd {
   font-size: 22px;
-}
-.right_links {
-  margin-left: 10px;
-  font-size: 14px;
-  display: flex;
-  cursor: pointer;
-  width: 20%;
-  justify-content: space-around;
-}
-.right_link {
-  margin-left: 2%;
-  color: black;
-}
-.right_icons {
-  display: flex;
-}
-.right_icon {
-  margin-right: 15px;
-  cursor: pointer;
-  position: relative;
-  color: black;
-}
-.right_icon_num {
-  width: 15px;
-  height: 15px;
-  background-color: rgb(85, 114, 243);
-  border-radius: 50%;
-  color: white;
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  @include flex-layout-header();
-  justify-content: center;
-  font-size: 12px;
 }
 
 .search_area {
   position: absolute;
-  height: 22vh;
+  height: 18vh;
   overflow-y: scroll;
-  width: 33%;
-}
-
-.ant-input-group > .ant-input:first-child,
-.ant-input-group-addon:first-child {
-  border: none;
-}
-.header_container__middle > .ant-btn-primary {
-  background-color: none;
+  width: 100%;
 }
 
 .ant-avatar-image {
   background-color: #ffa5a5 !important;
 }
 .ant-layout-header {
-  background: wheat !important;
+  background-color: cornflowerblue !important;
+  height: 10% !important;
 }

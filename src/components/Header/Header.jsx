@@ -1,35 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
+import { Avatar, Badge, Col, Input, Row, Layout, Menu } from 'antd';
 import {
   MessageOutlined,
   UserOutlined,
   NotificationOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
-import { Avatar, Badge, Col, Input, Row } from 'antd';
-import { Layout } from 'antd';
 
-import './header.scss';
 import { logout } from './../../redux/actions/authActions';
-import { useEffect, useState } from 'react';
 import ClientAPI from '../../utils/ClientAPI';
+import './header.scss';
 
-import { Space } from 'antd';
-const { Search } = Input;
+import HeaderLogo from './../../assets/img/mini.jpg';
+import NoAvatar from './../../assets/img/noavatar.png';
+
 const { Header } = Layout;
 
-//import { UserCard } from '../userCard/userCard';
-//import Avatar from '../avatar/Avatar';
-
 export default function HeaderNav() {
-  const pf = process.env.REACT_APP_PUBLIC_FOLDER;
-
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
 
   const [search, setSearch] = useState('');
   const [users, setUsers] = useState([]);
+
+  const onChange = (event) => {
+    setSearch(event.target.value);
+  };
 
   const onSearch = (value) => {
     const onSuccess = (res) => {
@@ -38,6 +38,7 @@ export default function HeaderNav() {
     try {
       const res = ClientAPI.getData(`search/search?username=${value}`, token);
       res.then(onSuccess);
+      setSearch(value);
     } catch (error) {
       dispatch({
         type: 'ALERT',
@@ -47,28 +48,58 @@ export default function HeaderNav() {
       });
     }
   };
-  console.log(users);
+
+  useEffect(() => {
+    if (search && token) {
+      ClientAPI.getData(`search/search?username=${search}`, token)
+        .then((res) => {
+          setUsers(res.data.msg.users);
+        })
+        .catch((err) => {
+          dispatch({
+            type: 'ALERT',
+            payload: {
+              error: err.response.data.msg,
+            },
+          });
+        });
+    } else {
+      setUsers([]);
+    }
+  }, [search, token, dispatch]);
 
   return (
     <Layout>
       <Header>
         <Row justify='center' align='middle'>
           <Col span={5}>
-            <Avatar
-              size={64}
-              src={pf + '/img/mini.jpg'}
-              className='avatar__mini'
-            />
+            <Avatar size={64} className='avatar__mini' />
           </Col>
           <Col span={7}>
             <Input.Group compact>
               <Input.Search
                 allowClear
                 style={{ width: '100%' }}
+                value={search}
                 placeholder='Let search your friend'
                 onSearch={onSearch}
+                onChange={onChange}
               />
             </Input.Group>
+
+            {search && (
+              <Menu className='search_area'>
+                {users.map((user) => (
+                  <Menu.Item key={user._id}>
+                    <Link to={`user/${user._id}`} key={user._id}></Link>
+                    <Avatar
+                      src={user.avatar ? user.avatar : { NoAvatar }}
+                    ></Avatar>
+                    {user.first_name} {user.last_name}
+                  </Menu.Item>
+                ))}
+              </Menu>
+            )}
           </Col>
           <Col span={6}>
             <Row justify='center'>
@@ -90,11 +121,7 @@ export default function HeaderNav() {
             </Row>
           </Col>
           <Col span={2}>
-            <Avatar
-              size={64}
-              src={pf + '/img/mini.jpg'}
-              className='avatar__mini'
-            />
+            <Avatar size={64} src={HeaderLogo} className='avatar__mini' />
           </Col>
           <Col span={2}>
             <h4>{user.first_name}</h4>
