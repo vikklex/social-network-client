@@ -14,7 +14,6 @@ import { logout } from './../../redux/actions/authActions';
 import ClientAPI from '../../utils/ClientAPI';
 import './header.scss';
 
-import HeaderLogo from './../../assets/img/logo2.png';
 import NoAvatar from './../../assets/img/noavatar.png';
 
 const { Header } = Layout;
@@ -36,7 +35,7 @@ export default function HeaderNav() {
       setUsers(res.data.msg.users);
     };
     try {
-      const res = ClientAPI.getData(`search/search?username=${value}`, token);
+      const res = ClientAPI.searchUser(value);
       res.then(onSuccess);
       setSearch(value);
     } catch (error) {
@@ -51,7 +50,7 @@ export default function HeaderNav() {
 
   useEffect(() => {
     if (search && token) {
-      ClientAPI.getData(`search/search?username=${search}`, token)
+      ClientAPI.searchUser(search)
         .then((res) => {
           setUsers(res.data.msg.users);
         })

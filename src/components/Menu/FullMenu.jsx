@@ -29,6 +29,7 @@ export const FullMenu = () => {
       <Menu style={{ width: 256 }} mode='vertical' className='navbar__list'>
         <Link to='/'>
           <SubMenu
+            key='sub1'
             icon={<HomeOutlined />}
             title='My page'
             className={`${isActive('/')}`}
@@ -37,6 +38,7 @@ export const FullMenu = () => {
 
         <Link to='/friends'>
           <SubMenu
+            key='sub2'
             icon={<UsergroupAddOutlined />}
             title='My friends'
             className={`${isActive('/friends')}`}
@@ -45,6 +47,7 @@ export const FullMenu = () => {
 
         <Link to='/about'>
           <SubMenu
+            key='sub3'
             icon={<IdcardOutlined />}
             title='About me'
             className={`${isActive('/about')}`}
@@ -53,6 +56,7 @@ export const FullMenu = () => {
 
         <Link to='/posts'>
           <SubMenu
+            key='sub4'
             icon={<ContactsOutlined />}
             title='Posts of my friends'
             className={`${isActive('/posts')}`}
@@ -61,6 +65,7 @@ export const FullMenu = () => {
 
         <Link to='/reactions'>
           <SubMenu
+            key='sub5'
             icon={<HeartOutlined />}
             title='Reactions'
             className={`${isActive('/reactions')}`}
@@ -69,6 +74,7 @@ export const FullMenu = () => {
 
         <Link to='/meetings'>
           <SubMenu
+            key='sub6'
             icon={<CalendarFilled />}
             title='Meetings'
             className={`${isActive('/meetings')}`}
@@ -77,6 +83,7 @@ export const FullMenu = () => {
 
         <Link to='/settings'>
           <SubMenu
+            key='sub7'
             icon={<SettingOutlined />}
             title='Settings'
             className={`${isActive('/settings')}`}

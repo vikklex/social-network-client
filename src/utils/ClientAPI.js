@@ -4,22 +4,38 @@ class ClientAPI {
   constructor() {
     this.instance = axios.create({
       baseURL: 'http://localhost:8080',
+      responseType: 'json',
+    });
+    this.instance.interceptors.request.use((config) => {
+      config.headers.Authorization = localStorage.getItem('token');
+      return config;
     });
   }
-  getData = async (url, token) => {
-    const res = await this.instance.get(`/v1/users/${url}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
 
-    return res;
+  login = async ({ email, password_hash }) => {
+    return await this.instance.post('/v1/auth/login', {
+      email: email,
+      password_hash: password_hash,
+    });
   };
 
-  postData = async (url, post, token) => {
-    const res = await this.instance.post(`/v1/auth/${url}`, post, {
-      headers: { Authorization: `Bearer ${token}` },
+  register = async ({ first_name, last_name, email, password_hash }) => {
+    return await this.instance.post('/v1/auth/registration', {
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      password_hash: password_hash,
     });
+  };
 
-    return res;
+  logout = async () => {
+    return await this.instance.post('/v1/auth/logout');
+  };
+
+  searchUser = async (username) => {
+    return await this.instance.get(
+      `/v1/users/search/search?username=${username}`,
+    );
   };
 }
 

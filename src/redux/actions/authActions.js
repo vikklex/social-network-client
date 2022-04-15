@@ -16,7 +16,7 @@ export const login = (data) => async (dispatch) => {
       },
     });
 
-    const res = await ClientAPI.postData('login', data);
+    const res = await ClientAPI.login(data);
 
     dispatch({
       type: Types.AUTH,
@@ -54,7 +54,7 @@ export const register = (data) => async (dispatch) => {
   try {
     dispatch({ type: Alert_Types.ALERT, payload: { loading: true } });
 
-    const res = await ClientAPI.postData('registration', data);
+    const res = await ClientAPI.register(data);
 
     localStorage.setItem('login', true);
     localStorage.setItem('token', res.data.msg.access_token);
@@ -89,7 +89,9 @@ export const register = (data) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     localStorage.removeItem('login');
-    await ClientAPI.postData('logout');
+    localStorage.removeItem('token');
+    await ClientAPI.logout();
+
     window.location.href = '/login';
   } catch (error) {
     dispatch({
