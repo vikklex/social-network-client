@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap');
+$grey: #e7e7e7;
+$text-secondary: #818c99;
+@mixin text-value {
+  font-size: 17px;
+  line-height: 25px;
+  font-weight: 500;
+  font-family: 'Roboto';
+}
+@mixin center {
+  margin: 0 auto;
+  width: 85%;
+}
+@mixin flex {
+  display: flex;
+  align-items: center;
+}
+
+.profile__personal_avatar {
+  width: 100%;
+}
+
+.username {
+  @include text-value();
+  padding-left: 3%;
+  height: 5vh;
+}
+
+.status {
+  color: $text-secondary;
+}
+
+.personal_primary_key {
+  margin-right: 15px;
+  font-weight: 500;
+}
+.personal_primary_value {
+  font-weight: 300;
+}
+
+.personal_description {
+  font-size: 15px;
+  margin: 2% 0 2% 0;
+  padding-left: 3%;
+  font-weight: 300;
+}
+.personal__numbers {
+  padding-left: 3%;
+}
+
+.profile__personal_numbers {
+  @include center();
+  @include flex();
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.personal__numbers_item {
+  @include flex();
+  flex-direction: column;
+}
+.personal__numbers_number {
+  font-size: 21px;
+  color: $text-secondary;
+}
+
+//antd
+.rightbar__wrapper_button {
+  @include flex();
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+.ant-btn {
+  background: $grey;
+  color: black;
+  font-size: 21px;
+  border: none;
+  text-align: center;
+  width: 100%;
+  height: 10%;
+}
+
+.site-card-border-less-wrapper {
+  background: #ececec;
+  width: 100%;
+}
+.desc {
+  padding: 0;
+}

@@ -1,13 +1,20 @@
 @import '~antd/dist/antd.css';
 
 .ant-layout {
-  background-color: cornflowerblue;
+  background-color: rgb(123, 162, 235);
+  height: 100vh;
 }
 .ant-layout-content {
   background-color: white;
 }
+
 aside {
   background: white !important;
   flex: 0 0 256px !important;
   max-width: 30% !important;
+  margin: 3vh 0 0 10vh;
+}
+
+main {
+  margin: 3vh 10vh 0 5vh;
 }

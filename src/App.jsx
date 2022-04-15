@@ -1,20 +1,25 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Layout } from 'antd';
 
 import MainPage from './pages/main/MainPage';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
-import Header from './../src/components/Header/Header';
+import HeaderNav from './../src/components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
-import Layout, { Content } from 'antd/lib/layout/layout';
-import Sider from 'antd/lib/layout/Sider';
+
+const { Header, Sider, Content } = Layout;
 
 function App() {
   const token = useSelector((state) => state.auth.token);
 
   return (
     <Router>
-      {token && <Header />}
+      {token && (
+        <Header>
+          <HeaderNav />
+        </Header>
+      )}
       <Layout>
         {token && (
           <Sider>
@@ -24,10 +29,10 @@ function App() {
         <Content>
           <Routes>
             <Route
-              exact
-              path='/'
+              path='/user/:id'
               element={token ? <MainPage /> : <Login />}
             ></Route>
+            <Route path='/' element={token ? <MainPage /> : <Login />}></Route>
 
             <Route
               exact

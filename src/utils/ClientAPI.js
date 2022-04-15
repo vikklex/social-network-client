@@ -37,6 +37,10 @@ class ClientAPI {
       `/v1/users/search/search?username=${username}`,
     );
   };
+
+  getUser = async (id) => {
+    return await this.instance.get(`/v1/users/${id}`);
+  };
 }
 
 export default new ClientAPI();

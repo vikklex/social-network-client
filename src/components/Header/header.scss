@@ -12,8 +12,15 @@ $main-background: linear-gradient(#00a3ff, #ffa5a5);
 }
 
 .ant-layout-header {
-  background-color: cornflowerblue !important;
-  height: 8% !important;
+  background-color: white !important;
+  height: 7vh !important;
+}
+
+@media (max-width: 1520px) {
+  .ant-layout-header {
+    background-color: white !important;
+    height: 10vh !important;
+  }
 }
 .ant-input-wrapper .ant-input-group {
   border-radius: 15%;
