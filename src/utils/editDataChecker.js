@@ -10,12 +10,7 @@ export const editDataChecker = (values, authUser) => {
 
     job: values.user.job || authUser.job || '',
 
-    birthday:
-      new Date(values.user.birthday.utc(true).toDate()).toLocaleString([], {
-        dateStyle: 'short',
-      }) ||
-      authUser.birthday ||
-      '',
+    birthday: values.user.birthday || authUser.birthday || '',
 
     desc: values.user.desc || authUser.desc || '',
 

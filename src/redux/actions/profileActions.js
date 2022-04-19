@@ -41,18 +41,18 @@ export const updateUser = (data, auth) => async (dispatch) => {
       },
     });
 
-    const res = await ClientAPI.updateUser(data, auth.user._id);
-    console.log(res);
-    dispatch({
-      type: Types.AUTH,
-      payload: {
-        ...auth,
-        user: {
-          ...auth.user,
-          ...data,
+    ClientAPI.updateUser(data, auth.user._id).then(
+      dispatch({
+        type: Types.AUTH,
+        payload: {
+          ...auth,
+          user: {
+            ...auth.user,
+            ...data,
+          },
         },
-      },
-    });
+      }),
+    );
 
     dispatch({
       type: Alert_Types.ALERT,
@@ -61,7 +61,6 @@ export const updateUser = (data, auth) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: Alert_Types.ALERT,
       payload: {

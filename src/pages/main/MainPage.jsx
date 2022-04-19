@@ -18,7 +18,7 @@ export default function MainPage() {
     if (authUser_condition) {
       setUserData([auth.user]);
     } else {
-      dispatch(getUserProfile({ users: profile.users, id, auth }));
+      id && dispatch(getUserProfile({ users: profile.users, id, auth }));
       const newData = profile.users.filter((user) => user._id === id);
       setUserData(newData);
     }

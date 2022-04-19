@@ -4,8 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { Menu } from 'antd';
 
-import SubMenu from 'antd/lib/menu/SubMenu';
-
 import {
   HomeOutlined,
   UsergroupAddOutlined,
@@ -21,74 +19,55 @@ import './menu.scss';
 export const FullMenu = () => {
   const { pathname } = useLocation();
 
-  const isActive = (pn) => {
-    if (pn === pathname) return 'active';
-  };
   return (
     <>
-      <Menu style={{ width: 256 }} mode='vertical' className='navbar__list'>
-        <Link to='/'>
-          <SubMenu
-            key='sub1'
-            icon={<HomeOutlined />}
-            title='My page'
-            className={`${isActive('/')}`}
-          ></SubMenu>
-        </Link>
+      <Menu
+        style={{ width: 256 }}
+        mode='vertical'
+        className='navbar__list'
+        selectedKeys={pathname}
+      >
+        <Menu.Item key='sub1' icon={<HomeOutlined />}>
+          <Link to='/'>
+            <span>My Page</span>
+          </Link>
+        </Menu.Item>
 
-        <Link to='/friends'>
-          <SubMenu
-            key='sub2'
-            icon={<UsergroupAddOutlined />}
-            title='My friends'
-            className={`${isActive('/friends')}`}
-          ></SubMenu>
-        </Link>
+        <Menu.Item key='sub2' icon={<UsergroupAddOutlined />}>
+          <Link to='/friends'>
+            <span>My friends</span>
+          </Link>
+        </Menu.Item>
 
-        <Link to='/about'>
-          <SubMenu
-            key='sub3'
-            icon={<IdcardOutlined />}
-            title='About me'
-            className={`${isActive('/about')}`}
-          ></SubMenu>
-        </Link>
+        <Menu.Item key='sub3' icon={<IdcardOutlined />}>
+          <Link to='/about'>
+            <span>About me</span>
+          </Link>
+        </Menu.Item>
 
-        <Link to='/posts'>
-          <SubMenu
-            key='sub4'
-            icon={<ContactsOutlined />}
-            title='Posts of my friends'
-            className={`${isActive('/posts')}`}
-          ></SubMenu>
-        </Link>
+        <Menu.Item key='sub4' icon={<ContactsOutlined />}>
+          <Link to='/posts'>
+            <span>Posts of my friends</span>
+          </Link>
+        </Menu.Item>
 
-        <Link to='/reactions'>
-          <SubMenu
-            key='sub5'
-            icon={<HeartOutlined />}
-            title='Reactions'
-            className={`${isActive('/reactions')}`}
-          ></SubMenu>
-        </Link>
+        <Menu.Item key='sub5' icon={<HeartOutlined />}>
+          <Link to='/reactions'>
+            <span>Reactions</span>
+          </Link>
+        </Menu.Item>
 
-        <Link to='/meetings'>
-          <SubMenu
-            key='sub6'
-            icon={<CalendarFilled />}
-            title='Meetings'
-            className={`${isActive('/meetings')}`}
-          ></SubMenu>
-        </Link>
+        <Menu.Item key='sub6' icon={<CalendarFilled />}>
+          <Link to='/meetings'>
+            <span>Meetings</span>
+          </Link>
+        </Menu.Item>
 
-        <Link to='/settings'>
-          <SubMenu
-            key='sub7'
-            icon={<SettingOutlined />}
-            title='Settings'
-            className={`${isActive('/settings')}`}
-          ></SubMenu>
-        </Link>
+        <Menu.Item key='sub7' icon={<SettingOutlined />}>
+          <Link to='/settings'>
+            <span>Settings</span>
+          </Link>
+        </Menu.Item>
       </Menu>
     </>
   );

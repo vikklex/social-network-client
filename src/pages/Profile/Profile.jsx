@@ -26,6 +26,10 @@ const Profile = (data) => {
 
   const [edit, setEdit] = useState(false);
 
+  const birthday = user.birthday
+    ? new Date(user.birthday).toLocaleDateString()
+    : '';
+
   return (
     <>
       <Row justify='center' style={{ marginTop: '3%' }}>
@@ -55,9 +59,7 @@ const Profile = (data) => {
               <Card title='Personal info:' bordered={false}>
                 <p>
                   <span className='personal_primary_key'>Birthday:</span>
-                  <span className='personal_primary_value'>
-                    {user.birthday}
-                  </span>
+                  <span className='personal_primary_value'>{birthday}</span>
                 </p>
                 <p>
                   <span className='personal_primary_key'>City:</span>

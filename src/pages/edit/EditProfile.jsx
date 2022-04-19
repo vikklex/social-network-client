@@ -220,6 +220,7 @@ const EditProfile = () => {
           >
             <Input />
           </Form.Item>
+
           <Form.Item name={['user', 'birthday']} label='Birthday'>
             <DatePicker />
           </Form.Item>
