@@ -1,3 +1,4 @@
+import { storage } from '../../storage';
 import ClientAPI from '../../utils/ClientAPI';
 import { Alert_Types } from './alertActions';
 
@@ -27,8 +28,8 @@ export const login = (data) => async (dispatch) => {
       },
     });
 
-    localStorage.setItem('login', true);
-    localStorage.setItem('token', res.data.msg.access_token);
+    storage.login.Set(true);
+    storage.accessToken.Set(res.data.msg.access_token);
 
     dispatch({
       type: Alert_Types.ALERT,
@@ -56,8 +57,8 @@ export const register = (data) => async (dispatch) => {
 
     const res = await ClientAPI.register(data);
 
-    localStorage.setItem('login', true);
-    localStorage.setItem('token', res.data.msg.access_token);
+    storage.login.Set(true);
+    storage.accessToken.Set(res.data.msg.access_token);
 
     dispatch({
       type: Types.AUTH,
@@ -88,8 +89,9 @@ export const register = (data) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    localStorage.removeItem('login');
-    localStorage.removeItem('token');
+    storage.accessToken.Remove();
+    storage.login.Remove();
+
     await ClientAPI.logout();
 
     window.location.href = '/login';

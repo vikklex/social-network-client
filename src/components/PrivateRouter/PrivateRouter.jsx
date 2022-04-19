@@ -1,8 +1,9 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { storage } from '../../storage';
 
 export const PrivateRouter = ({ children }) => {
-  const login = localStorage.getItem('login');
+  const login = storage.login.Get();
   return login ? children : <Navigate to='/' />;
 };
 

@@ -1,13 +1,14 @@
 import axios from 'axios';
+import { storage } from '../storage';
 
 class ClientAPI {
   constructor() {
     this.instance = axios.create({
-      baseURL: 'http://localhost:8080',
+      baseURL: process.env.REACT_APP_BASE_URL,
       responseType: 'json',
     });
     this.instance.interceptors.request.use((config) => {
-      config.headers.Authorization = localStorage.getItem('token');
+      config.headers.Authorization = storage.accessToken.Get();
       return config;
     });
   }
@@ -43,6 +44,7 @@ class ClientAPI {
   getUserPosts(id) {
     return this.instance.get(`v1/posts/timeline/${id}`);
   }
+
   updateUser(data, id) {
     return this.instance.put(`v1/users/${id}`, {
       userId: id,
