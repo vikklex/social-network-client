@@ -45,6 +45,7 @@ export default function Posts() {
         <span className='comment-action'>{likes}</span>
       </span>
     </Tooltip>,
+
     <Tooltip key='comment-basic-dislike' title='Dislike'>
       <span>
         {React.createElement(
@@ -53,6 +54,7 @@ export default function Posts() {
         <span className='comment-action'>{dislikes}</span>
       </span>
     </Tooltip>,
+
     <span key='comment-basic-reply-to'>Reply to</span>,
   ];
   return (

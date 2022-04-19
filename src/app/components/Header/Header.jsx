@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { Avatar, Badge, Col, Input, Row, Layout, Menu } from 'antd';
+import { Avatar, Badge, Col, Input, Row, Menu } from 'antd';
 import {
   MessageOutlined,
   UserOutlined,
@@ -10,11 +10,11 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 
-import { logout } from './../../redux/actions/authActions';
-import ClientAPI from '../../utils/ClientAPI';
+import { logout } from './../../../redux/actions/authActions';
+import ClientAPI from './../../../utils/ClientAPI';
 import './header.scss';
 
-import NoAvatar from './../../assets/img/noavatar.png';
+import NoAvatar from './../../../assets/img/noavatar.png';
 
 export default function HeaderNav() {
   const dispatch = useDispatch();
@@ -100,11 +100,13 @@ export default function HeaderNav() {
                 <UserOutlined className='right_icon_antd' />
               </Badge>
             </Col>
+
             <Col span={4}>
               <Badge count={2}>
                 <MessageOutlined className='right_icon_antd' />
               </Badge>
             </Col>
+
             <Col span={4}>
               <Badge count={1}>
                 <NotificationOutlined className='right_icon_antd' />
@@ -112,6 +114,7 @@ export default function HeaderNav() {
             </Col>
           </Row>
         </Col>
+
         <Col span={2}>
           <Link to='/'>
             <Avatar
@@ -121,9 +124,11 @@ export default function HeaderNav() {
             />
           </Link>
         </Col>
+
         <Col span={2}>
           <h4>{user.first_name}</h4>
         </Col>
+
         <Col span={2}>
           <LogoutOutlined
             className='right_icon_antd'

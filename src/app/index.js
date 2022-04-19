@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Layout } from 'antd';
 
-import MainPage from './pages/Main/MainPage';
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
-import HeaderNav from './../src/components/Header/Header';
+import MainPage from './../pages/Main/MainPage';
+import Login from './../pages/Login/Login';
+import Register from './../pages/Register/Register';
+import HeaderNav from './components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
-import EditProfile from './pages/Edit/EditProfile';
+import EditProfile from './../pages/Edit/EditProfile';
 
 const { Header, Sider, Content } = Layout;
 
