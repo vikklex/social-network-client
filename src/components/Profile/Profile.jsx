@@ -1,22 +1,45 @@
-import React from 'react';
-import { Col, Row, Card, Divider } from 'antd';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Col, Row, Card, Divider, Button } from 'antd';
+
+import Feed from '../Feed/Feed';
+import { getPosts } from '../../redux/actions/postActions';
+import NewPost from '../NewPost/NewPost';
 
 import './profile.scss';
-
 import NoAvatar from './../../assets/img/noavatar.png';
+import { Navigate } from 'react-router-dom';
 
 const Profile = (data) => {
-  const user = data.data[0] ? data.data[0] : data.data;
+  const authorizedUser = useSelector((state) => state.auth.user);
+
+  const user = data.data[0] ? data.data[0] : authorizedUser;
+
+  const dispatch = useDispatch();
+
+  const posts = useSelector((state) => state.post.post);
+
+  useEffect(() => {
+    dispatch(getPosts(user._id));
+  }, [user._id, dispatch, posts.length]);
+
+  const [edit, setEdit] = useState(false);
+
   return (
     <>
       <Row justify='center' style={{ marginTop: '3%' }}>
         <Col span={6}>
           <img
-            src={user.avatar ? user.avatar : { NoAvatar }}
+            src={user.avatar ? user.avatar : NoAvatar}
             alt='personal_avatar'
             className='profile__personal_avatar'
           />
+          <Button type='primary' onClick={() => setEdit(true)}>
+            Edit profile
+          </Button>
         </Col>
+
         <Col span={16}>
           <Row>
             <Col span={22} className='username'>
@@ -26,20 +49,23 @@ const Profile = (data) => {
               online
             </Col>
           </Row>
+          {edit && <Navigate to='/edit' />}
           <Row>
             <div className='site-card-border-less-wrapper profile'>
               <Card title='Personal info:' bordered={false}>
                 <p>
                   <span className='personal_primary_key'>Birthday:</span>
-                  <span className='personal_primary_value'>14 February</span>
+                  <span className='personal_primary_value'>
+                    {user.birthday}
+                  </span>
                 </p>
                 <p>
                   <span className='personal_primary_key'>City:</span>
-                  <span className='personal_primary_value'>Miami</span>
+                  <span className='personal_primary_value'>{user.city}</span>
                 </p>
                 <p>
                   <span className='personal_primary_key'>From:</span>
-                  <span className='personal_primary_value'>Belarus</span>
+                  <span className='personal_primary_value'>{user.from}</span>
                 </p>
                 <p>
                   <span className='personal_primary_key'>Education:</span>
@@ -48,12 +74,7 @@ const Profile = (data) => {
               </Card>
             </div>
             <Divider orientation='left'>Personal description</Divider>
-            <p className='personal_description'>
-              I'm Helen Galachinskaya. I was born on the 23 of December 1993 in
-              Aktobe. My sign of the zodiac is Capricorn. Capricorns are
-              generally serious about whatever they do. Capricorns are
-              down-to-earth.
-            </p>
+            <p className='personal_description'>{user.desc}</p>
           </Row>
           <Divider />
           <Row justify='space-between' className='personal__numbers'>
@@ -70,13 +91,18 @@ const Profile = (data) => {
               <div className='personal__numbers_followers'>Followings</div>
             </Col>
             <Col span={4}>
-              <div className='personal__numbers_number'>3</div>
+              <div className='personal__numbers_number'>{posts.length}</div>
               <div className='personal__numbers_posts'>Posts</div>
             </Col>
           </Row>
+          {user._id === authorizedUser._id && <NewPost />}
         </Col>
       </Row>
-      <Row></Row>
+      <Row>
+        <Col>
+          <Feed />
+        </Col>
+      </Row>
     </>
   );
 };

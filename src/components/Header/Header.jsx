@@ -82,13 +82,11 @@ export default function HeaderNav() {
           </Input.Group>
 
           {search && (
-            <Menu className='search_area'  style={{ zIndex: 1 }}>
+            <Menu className='search_area' style={{ zIndex: 1 }}>
               {users.map((user) => (
                 <Menu.Item key={user._id}>
                   <Link to={`/user/${user._id}`} key={user._id}></Link>
-                  <Avatar
-                    src={user.avatar ? user.avatar : { NoAvatar }}
-                  ></Avatar>
+                  <Avatar src={user.avatar ? user.avatar : NoAvatar}></Avatar>
                   {user.first_name} {user.last_name}
                 </Menu.Item>
               ))}
@@ -115,7 +113,13 @@ export default function HeaderNav() {
           </Row>
         </Col>
         <Col span={2}>
-          <Avatar size={64} className='avatar__mini' />
+          <Link to='/'>
+            <Avatar
+              src={user.avatar ? user.avatar : NoAvatar}
+              size={64}
+              className='avatar__mini'
+            />
+          </Link>
         </Col>
         <Col span={2}>
           <h4>{user.first_name}</h4>

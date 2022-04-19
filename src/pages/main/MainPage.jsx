@@ -23,10 +23,8 @@ export default function MainPage() {
   }, [id, profile.users, auth, auth.user, dispatch]);
 
   return (
-    <>
-      <Profile
-        data={userData.length === 0 ? auth.user : userData.map((user) => user)}
-      ></Profile>
-    </>
+    <Profile
+      data={userData.length === 0 ? auth.user : userData.map((user) => user)}
+    ></Profile>
   );
 }

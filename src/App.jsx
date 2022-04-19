@@ -7,6 +7,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import HeaderNav from './../src/components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
+import EditProfile from './pages/edit/EditProfile';
 
 const { Header, Sider, Content } = Layout;
 
@@ -33,6 +34,7 @@ function App() {
               element={token ? <MainPage /> : <Login />}
             ></Route>
             <Route path='/' element={token ? <MainPage /> : <Login />}></Route>
+            <Route path='/edit' element={token && <EditProfile />}></Route>
 
             <Route
               exact

@@ -63,7 +63,7 @@ const Register = () => {
         <Row>
           <Col span={12}>
             <h3 className='login__title'>
-              <img src={MainLogo}></img>
+              <img src={MainLogo} alt='main_logo'></img>
             </h3>
             <span className='login__description'>
               Cement friendship and family relations with "F-network"

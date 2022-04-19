@@ -1,5 +1,6 @@
 import ClientAPI from '../../utils/ClientAPI';
 import { Alert_Types } from './alertActions';
+import { Types } from './authActions';
 
 export const Profile_Types = {
   LOADING: 'LOADING',
@@ -9,7 +10,6 @@ export const Profile_Types = {
 export const getUserProfile =
   ({ users, id }) =>
   async (dispatch) => {
-    //console.log({ users, id, auth });
     if (users.every((user) => user._id !== id)) {
       try {
         dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
@@ -19,6 +19,7 @@ export const getUserProfile =
           type: Profile_Types.GET_USER,
           payload: res.data,
         });
+
         dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
       } catch (error) {
         dispatch({
@@ -30,3 +31,42 @@ export const getUserProfile =
       }
     }
   };
+
+export const updateUser = (data, auth) => async (dispatch) => {
+  try {
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        loading: true,
+      },
+    });
+
+    const res = await ClientAPI.updateUser(data, auth.user._id);
+    console.log(res);
+    dispatch({
+      type: Types.AUTH,
+      payload: {
+        ...auth,
+        user: {
+          ...auth.user,
+          ...data,
+        },
+      },
+    });
+
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        loading: false,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};

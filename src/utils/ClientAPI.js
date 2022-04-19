@@ -41,6 +41,33 @@ class ClientAPI {
   getUser = async (id) => {
     return await this.instance.get(`/v1/users/${id}`);
   };
+
+  getUserPosts = async (id) => {
+    return await this.instance.get(`v1/posts/timeline/${id}`);
+  };
+  updateUser = async (data, id) => {
+    return await this.instance.put(`v1/users/${id}`, {
+      userId: id,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      password_hash: data.password_hash,
+      job: data.job,
+      birthday: data.birthday,
+      desc: data.desc,
+      gender: data.gender,
+      relationships: data.relationships,
+      city: data.city,
+      from: data.from,
+    });
+  };
+
+  createPost = async ({ userId, content }) => {
+    return await this.instance.post('v1/posts/', {
+      userId: userId,
+      desc: content,
+    });
+  };
 }
 
 export default new ClientAPI();
