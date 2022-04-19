@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, Card, Divider, Button } from 'antd';
 
-import Feed from '../Feed/Feed';
+import Feed from './components/Feed/Feed';
 import { getPosts } from '../../redux/actions/postActions';
-import NewPost from '../NewPost/NewPost';
+import NewPost from './components/NewPost/NewPost';
 
 import './profile.scss';
 import NoAvatar from './../../assets/img/noavatar.png';

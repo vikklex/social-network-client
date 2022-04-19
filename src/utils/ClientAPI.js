@@ -12,41 +12,39 @@ class ClientAPI {
     });
   }
 
-  login = async ({ email, password_hash }) => {
-    return await this.instance.post('/v1/auth/login', {
+  login({ email, password_hash }) {
+    return this.instance.post('/v1/auth/login', {
       email: email,
       password_hash: password_hash,
     });
-  };
+  }
 
-  register = async ({ first_name, last_name, email, password_hash }) => {
-    return await this.instance.post('/v1/auth/registration', {
+  register({ first_name, last_name, email, password_hash }) {
+    return this.instance.post('/v1/auth/registration', {
       first_name: first_name,
       last_name: last_name,
       email: email,
       password_hash: password_hash,
     });
-  };
+  }
 
-  logout = async () => {
-    return await this.instance.post('/v1/auth/logout');
-  };
+  logout() {
+    return this.instance.post('/v1/auth/logout');
+  }
 
-  searchUser = async (username) => {
-    return await this.instance.get(
-      `/v1/users/search/search?username=${username}`,
-    );
-  };
+  searchUser(username) {
+    return this.instance.get(`/v1/users/search/search?username=${username}`);
+  }
 
-  getUser = async (id) => {
-    return await this.instance.get(`/v1/users/${id}`);
-  };
+  getUser(id) {
+    return this.instance.get(`/v1/users/${id}`);
+  }
 
-  getUserPosts = async (id) => {
-    return await this.instance.get(`v1/posts/timeline/${id}`);
-  };
-  updateUser = async (data, id) => {
-    return await this.instance.put(`v1/users/${id}`, {
+  getUserPosts(id) {
+    return this.instance.get(`v1/posts/timeline/${id}`);
+  }
+  updateUser(data, id) {
+    return this.instance.put(`v1/users/${id}`, {
       userId: id,
       first_name: data.first_name,
       last_name: data.last_name,
@@ -60,14 +58,14 @@ class ClientAPI {
       city: data.city,
       from: data.from,
     });
-  };
+  }
 
-  createPost = async ({ userId, content }) => {
-    return await this.instance.post('v1/posts/', {
+  createPost({ userId, content }) {
+    return this.instance.post('v1/posts/', {
       userId: userId,
       desc: content,
     });
-  };
+  }
 }
 
 export default new ClientAPI();

@@ -34,7 +34,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const ref = useRef();
 
-  const registerError = useSelector((state) => state.alert.error);
+  const error = useSelector((state) => state.alert.error);
 
   const onFinish = (values) => {
     const onSuccess = (status) => {
@@ -75,12 +75,13 @@ const Register = () => {
               className='register__card'
               cover={<img alt='example' src={RegisterIllustration} />}
             >
-              {registerError && (
+              {error && (
                 <>
-                  <Alert message={registerError} type='error' />
+                  <Alert message={error} type='error' />
                   <br />
                 </>
               )}
+
               <Form
                 {...layout}
                 name='register'
@@ -102,6 +103,7 @@ const Register = () => {
                 >
                   <Input />
                 </Form.Item>
+
                 <Form.Item
                   name={['user', 'last_name']}
                   label='Surname'
@@ -117,6 +119,7 @@ const Register = () => {
                 >
                   <Input />
                 </Form.Item>
+
                 <Form.Item
                   name={['user', 'email']}
                   label='Email'
@@ -134,6 +137,7 @@ const Register = () => {
                 >
                   <Input ref={ref} />
                 </Form.Item>
+
                 <Form.Item
                   label='Password'
                   name='password_hash'
@@ -149,6 +153,7 @@ const Register = () => {
                 >
                   <Input.Password />
                 </Form.Item>
+
                 <Form.Item
                   name='confirm'
                   label='Confirm Password'

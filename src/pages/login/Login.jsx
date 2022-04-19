@@ -27,7 +27,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const ref = useRef();
 
-  const loginError = useSelector((state) => state.alert.error);
+  const error = useSelector((state) => state.alert.error);
 
   const onFinish = (values) => {
     const onSuccess = (status) => {
@@ -67,9 +67,9 @@ const Login = () => {
               className='register__card'
               cover={<img alt='example' src={LoginIllustration} />}
             >
-              {loginError && (
+              {error && (
                 <>
-                  <Alert message={loginError} type='error' />
+                  <Alert message={error} type='error' />
                   <br />
                 </>
               )}

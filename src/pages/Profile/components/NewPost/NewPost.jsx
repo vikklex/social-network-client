@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import {
   Comment,
   Avatar,
@@ -10,15 +12,11 @@ import {
   Col,
   Tag,
 } from 'antd';
-import moment from 'moment';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../redux/actions/postActions';
-import { useSelector } from 'react-redux';
-
-import { PermMedia, Label, Room } from '@material-ui/icons';
 import { PictureOutlined, PushpinFilled } from '@ant-design/icons';
 
-import NoAvatar from './../../assets/img/noavatar.png';
+import { createPost } from '../../../../redux/actions/postActions';
+import NoAvatar from './../../../../assets/img/noavatar.png';
+
 import './newPost.scss';
 const { TextArea } = Input;
 

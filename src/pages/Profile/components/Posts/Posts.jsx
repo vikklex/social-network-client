@@ -14,8 +14,8 @@ import {
 
 import moment from 'moment';
 
-import './post.scss';
-import NoAvatar from './../../assets/img/noavatar.png';
+import './posts.scss';
+import NoAvatar from './../../../../assets/img/noavatar.png';
 
 export default function Posts() {
   const posts = useSelector((state) => state.post.post);
