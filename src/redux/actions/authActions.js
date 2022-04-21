@@ -74,7 +74,11 @@ export const register = (data) => async (dispatch) => {
       },
     });
 
-    return Types.LOGIN_SUCCESS;
+    return {
+      status: Types.LOGIN_SUCCESS,
+      user: res.data.msg.user,
+      token: res.data.msg.access_token,
+    };
   } catch (error) {
     dispatch({
       type: Alert_Types.ALERT,

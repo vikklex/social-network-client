@@ -23,8 +23,12 @@ $text-secondary: #818c99;
 
 .username {
   @include text-value();
-  padding-left: 3%;
   height: 5vh;
+}
+.status-desc {
+  color: $text-secondary;
+  font-size: 12px;
+  height: 3%;
 }
 
 .status {
@@ -88,4 +92,8 @@ $text-secondary: #818c99;
 }
 .desc {
   padding: 0;
+}
+
+.ant-card * {
+  padding-left: 0 !important;
 }

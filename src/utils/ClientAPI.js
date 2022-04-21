@@ -59,7 +59,12 @@ class ClientAPI {
       relationships: data.relationships,
       city: data.city,
       from: data.from,
+      status: data.status,
     });
+  }
+
+  updateAvatar(id, data, config) {
+    return this.instance.put(`v1/users/${id}/user-profile`, data, config);
   }
 
   createPost({ userId, content }) {
@@ -67,6 +72,10 @@ class ClientAPI {
       userId: userId,
       desc: content,
     });
+  }
+
+  updatePostImage(id, data, config) {
+    return this.instance.put(`v1/posts/${id}/post-image`, data, config);
   }
 }
 

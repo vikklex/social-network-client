@@ -69,3 +69,41 @@ export const updateUser = (data, auth) => async (dispatch) => {
     });
   }
 };
+
+export const updateAvatar = (auth, data, config) => async (dispatch) => {
+  try {
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        loading: true,
+      },
+    });
+
+    ClientAPI.updateAvatar(auth.user._id, data, config).then((res) =>
+      dispatch({
+        type: Types.AUTH,
+        payload: {
+          ...auth,
+          user: {
+            ...auth.user,
+            ...res.data,
+          },
+        },
+      }),
+    );
+
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        loading: false,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};

@@ -3,7 +3,7 @@ import { createElement, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Comment, Tooltip } from 'antd';
+import { Comment, Image, Tooltip } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import {
   DislikeOutlined,
@@ -57,27 +57,42 @@ export default function Posts() {
 
     <span key='comment-basic-reply-to'>Reply to</span>,
   ];
+
   return (
     <>
       {posts &&
         posts.length > 0 &&
         posts.map((post) => (
-          <Comment
-            key={post._id}
-            actions={actions}
-            author={
-              <p>
-                {user.first_name} {user.last_name}
-              </p>
-            }
-            avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
-            content={<p>{post.desc}</p>}
-            datetime={
-              <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment(post.createdAt).fromNow()}</span>
-              </Tooltip>
-            }
-          />
+          <>
+            <Comment
+              key={post._id}
+              actions={actions}
+              author={
+                <p>
+                  {user.first_name} {user.last_name}
+                </p>
+              }
+              avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+              content={
+                <>
+                  <p>{post.desc}</p>
+                  {post.img &&
+                    post.img.map((image) => (
+                      <Image
+                        width={post.img.length <= 2 ? 250 : 200}
+                        padding={20}
+                        src={image}
+                      />
+                    ))}
+                </>
+              }
+              datetime={
+                <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
+                  <span>{moment(post.createdAt).fromNow()}</span>
+                </Tooltip>
+              }
+            />
+          </>
         ))}
     </>
   );

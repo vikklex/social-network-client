@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Row, Col, message, Alert } from 'antd';
+import { Form, Input, Button, Row, Col, message, Alert, Upload } from 'antd';
 import { Card } from 'antd';
 
 import { Types, register } from '../../redux/actions/authActions';
@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import RegisterIllustration from './.././../assets/img/registration.png';
 import MainLogo from './.././../assets/img/logo.svg';
 import Layout from 'antd/lib/layout/layout';
+import { PictureOutlined, UploadOutlined } from '@ant-design/icons';
+import { updateAvatar } from '../../redux/actions/profileActions';
 
 const layout = {
   labelCol: {
@@ -36,8 +38,32 @@ const Register = () => {
 
   const error = useSelector((state) => state.alert.error);
 
+  const [fileList, setFileList] = useState([]);
+  const [uploading, setUploading] = useState(false);
+
+  const { auth } = useSelector((state) => state);
+
+  const handleUpload = (auth) => {
+    const formData = new FormData();
+    fileList.forEach((file) => {
+      formData.append('avatar', file);
+    });
+    setUploading(true);
+
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+
+    dispatch(updateAvatar(auth, formData, config));
+    setUploading(false);
+    setFileList([]);
+  };
+
   const onFinish = (values) => {
-    const onSuccess = (status) => {
+    const onSuccess = ({ status }) => {
+      console.log(status, 'status');
       if (status === Types.LOGIN_SUCCESS) {
         message.success('You are successfully registered');
       }
@@ -49,13 +75,26 @@ const Register = () => {
       password_hash: values.password_hash,
     };
 
-    dispatch(register(data)).then(onSuccess);
+    //dispatch(register(data)).then(onSuccess);
+    dispatch(register(data)).then((res) => {
+      console.log(res);
+      handleUpload(res);
+    });
+    //.then(onSuccess);
   };
 
   useEffect(() => {
     const { input } = ref.current;
     input.focus();
   });
+
+  const props = {
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
+  };
 
   return (
     <Layout>
@@ -183,6 +222,12 @@ const Register = () => {
                   ]}
                 >
                   <Input.Password />
+                </Form.Item>
+
+                <Form.Item>
+                  <Upload {...props}>
+                    <Button icon={<UploadOutlined />}>Select File</Button>
+                  </Upload>
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

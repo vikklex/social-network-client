@@ -54,10 +54,6 @@ const EditProfile = () => {
   const { auth } = useSelector((state) => state);
   const authUser = useSelector((state) => state.auth.user);
 
-  //const [avatar, setAvatar] = useState('');
-
-  const changeAvatar = () => {};
-
   const [form] = Form.useForm();
 
   const dispatch = useDispatch();
@@ -75,19 +71,7 @@ const EditProfile = () => {
 
   return (
     <Row className='edit__profile'>
-      <Col span={6}>
-        <img
-          //src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
-          alt='avatar'
-          className='edit__avatar'
-        ></img>
-        <input
-          type='file'
-          id='file-upload'
-          accept='image/*'
-          onChange={changeAvatar}
-        ></input>
-      </Col>
+      <Col span={6}></Col>
 
       <Col span={18}>
         <Form
@@ -124,34 +108,6 @@ const EditProfile = () => {
             ]}
           >
             <Input />
-          </Form.Item>
-          <Form.Item
-            name={['user', 'email']}
-            label='E-mail'
-            rules={[
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                message: 'Please input your E-mail!',
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={['user', 'password_hash']}
-            label='Password'
-            rules={[
-              {
-                message: 'Please input your password!',
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password />
           </Form.Item>
 
           <Form.Item
