@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons';
 
 import './menu.scss';
+import MenuItem from './MenuItem/MenuItem';
 
 export const FullMenu = () => {
   const { pathname } = useLocation();
@@ -27,47 +28,43 @@ export const FullMenu = () => {
         className='navbar__list'
         selectedKeys={pathname}
       >
-        <Menu.Item key='sub1' icon={<HomeOutlined />}>
-          <Link to='/'>
-            <span>My Page</span>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item key='sub2' icon={<UsergroupAddOutlined />}>
-          <Link to='/friends'>
-            <span>My friends</span>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item key='sub3' icon={<IdcardOutlined />}>
-          <Link to='/about'>
-            <span>About me</span>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item key='sub4' icon={<ContactsOutlined />}>
-          <Link to='/posts'>
-            <span>Posts of my friends</span>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item key='sub5' icon={<HeartOutlined />}>
-          <Link to='/reactions'>
-            <span>Reactions</span>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item key='sub6' icon={<CalendarFilled />}>
-          <Link to='/meetings'>
-            <span>Meetings</span>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item key='sub7' icon={<SettingOutlined />}>
-          <Link to='/settings'>
-            <span>Settings</span>
-          </Link>
-        </Menu.Item>
+        <MenuItem key='sub1' icon={<HomeOutlined />} link='/' text='My page' />
+        <MenuItem
+          key='sub2'
+          icon={<UsergroupAddOutlined />}
+          link='/friends'
+          text='My friends'
+        />
+        <MenuItem
+          key='sub3'
+          icon={<IdcardOutlined />}
+          link='/about'
+          text='About me'
+        />
+        <MenuItem
+          key='sub4'
+          icon={<ContactsOutlined />}
+          link='/posts'
+          text='Posts of my friends'
+        />
+        <MenuItem
+          key='sub7'
+          icon={<HeartOutlined />}
+          link='/reactions'
+          text='Reaction'
+        />
+        <MenuItem
+          key='sub5'
+          icon={<CalendarFilled />}
+          link='/meetings'
+          text='Meetings'
+        />
+        <MenuItem
+          key='sub6'
+          icon={<SettingOutlined />}
+          link='/settings'
+          text='Settings'
+        />
       </Menu>
     </>
   );

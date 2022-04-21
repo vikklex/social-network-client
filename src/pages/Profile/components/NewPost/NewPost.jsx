@@ -13,11 +13,7 @@ import {
   Tag,
   Upload,
 } from 'antd';
-import {
-  PictureOutlined,
-  PushpinFilled,
-  UploadOutlined,
-} from '@ant-design/icons';
+import { PictureOutlined, PushpinFilled } from '@ant-design/icons';
 
 import { createPost } from '../../../../redux/actions/postActions';
 import { updatePostImage } from '../../../../redux/actions/postActions';
@@ -55,6 +51,7 @@ const Editor = ({
           value={value}
           placeholder={`What's new, ${user.first_name}?`}
         />
+
         <Row>
           <Col span={6}>
             <Upload {...props}>

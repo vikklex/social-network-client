@@ -1,5 +1,5 @@
 import React from 'react';
-import { createElement, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -19,15 +19,11 @@ import NoAvatar from './../../../../assets/img/noavatar.png';
 
 export default function Posts() {
   const posts = useSelector((state) => state.post.post);
-
   const users = useSelector((state) => state.profile.users);
-
   const { id } = useParams();
 
   const searchUser = users.filter((user) => user._id === id)[0];
-
   const authUser = useSelector((state) => state.auth.user);
-
   const user = !searchUser ? authUser : searchUser;
 
   posts.sort(function (a, b) {
@@ -41,18 +37,14 @@ export default function Posts() {
   const actions = [
     <Tooltip key='comment-basic-like' title='Like'>
       <span>
-        {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
+        {action === 'liked' ? <LikeFilled /> : <LikeOutlined />}
         <span className='comment-action'>{likes}</span>
       </span>
     </Tooltip>,
 
     <Tooltip key='comment-basic-dislike' title='Dislike'>
-      <span>
-        {React.createElement(
-          action === 'disliked' ? DislikeFilled : DislikeOutlined,
-        )}
-        <span className='comment-action'>{dislikes}</span>
-      </span>
+      {action === 'disliked' ? <DislikeFilled /> : <DislikeOutlined />}
+      <span className='comment-action'>{dislikes}</span>
     </Tooltip>,
 
     <span key='comment-basic-reply-to'>Reply to</span>,

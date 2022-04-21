@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row, Card, Divider, Button, Upload, message, Input } from 'antd';
+import { Col, Row, Card, Divider, Button, Input } from 'antd';
 
 import Feed from './components/Feed/Feed';
 import { getPosts } from '../../redux/actions/postActions';
