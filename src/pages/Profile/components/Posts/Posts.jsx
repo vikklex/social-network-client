@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Comment, Image, Tooltip } from 'antd';
+import { Comment, Image, Tooltip, List } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import {
   DislikeOutlined,
@@ -16,15 +16,14 @@ import moment from 'moment';
 
 import './posts.scss';
 import NoAvatar from './../../../../assets/img/noavatar.png';
+import { getOneComment } from '../../../../redux/actions/commentActions';
 
 export default function Posts() {
-  const posts = useSelector((state) => state.post.post);
-  const users = useSelector((state) => state.profile.users);
-  const { id } = useParams();
+  const dispatch = useDispatch();
 
-  const searchUser = users.filter((user) => user._id === id)[0];
-  const authUser = useSelector((state) => state.auth.user);
-  const user = !searchUser ? authUser : searchUser;
+  const posts = useSelector((state) => state.post.post);
+  const user = useSelector((state) => state.profile.user);
+  const { id } = useParams();
 
   posts.sort(function (a, b) {
     return new Date(b.updatedAt) - new Date(a.updatedAt);
@@ -50,42 +49,87 @@ export default function Posts() {
     <span key='comment-basic-reply-to'>Reply to</span>,
   ];
 
+  const Reply = ({ children, content }) => {
+    return (
+      <Comment
+        author={<a>Han Solo</a>}
+        avatar={
+          <Avatar src='https://joeschmoe.io/api/v1/random' alt='Han Solo' />
+        }
+        content={<p>{content}</p>}
+      >
+        {children}
+      </Comment>
+    );
+  };
+
   return (
-    <>
-      {posts &&
-        posts.length > 0 &&
-        posts.map((post) => (
-          <>
-            <Comment
-              key={post._id}
-              actions={actions}
-              author={
-                <p>
-                  {user.first_name} {user.last_name}
-                </p>
-              }
-              avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
-              content={
-                <>
-                  <p>{post.desc}</p>
-                  {post.img &&
-                    post.img.map((image) => (
-                      <Image
-                        width={post.img.length <= 2 ? 250 : 200}
-                        padding={20}
-                        src={image}
-                      />
-                    ))}
-                </>
-              }
-              datetime={
-                <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                  <span>{moment(post.createdAt).fromNow()}</span>
-                </Tooltip>
-              }
-            />
-          </>
-        ))}
-    </>
+    <List
+      itemLayout='horizontal'
+      dataSource={posts}
+      locale={{ emptyText: () => null }}
+      renderItem={(post) => (
+        <List.Item key={post._id}>
+          <Comment
+            actions={actions}
+            author={
+              <p>
+                {user.first_name} {user.last_name}
+              </p>
+            }
+            avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+            content={
+              <>
+                <p>{post.desc}</p>
+                <List
+                  itemLayout='horizontal'
+                  dataSource={post.comments}
+                  locale={{ emptyText: () => null }}
+                  renderItem={(comment) => (
+                    <List.Item>
+                      <Reply content={comment} />
+                    </List.Item>
+                  )}
+                />
+                {post.img && post.img.length !== 0 && (
+                  <List
+                    grid={{
+                      gutter: 8,
+                      xs: 1,
+                    }}
+                    dataSource={post.img}
+                    locale={{ emptyText: () => null }}
+                    renderItem={(img) => (
+                      <List.Item>
+                        <Image
+                          width={post.img.length <= 2 ? 250 : 150}
+                          padding={20}
+                          src={img}
+                        />
+                      </List.Item>
+                    )}
+                  />
+                )}
+              </>
+            }
+            datetime={
+              <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
+                <span>{moment(post.createdAt).fromNow()}</span>
+              </Tooltip>
+            }
+          />
+        </List.Item>
+      )}
+    />
   );
 }
+/*   <List
+                  itemLayout='horizontal'
+                  dataSource={post.comments}
+                  renderItem={(comment) => (
+                    <List.Item key={comment._id}>
+                      <Reply />
+                    </List.Item>
+                  )} */
+// {post.comments &&
+//post.comments.map((comment) => comment && <Reply />)}

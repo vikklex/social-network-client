@@ -1,11 +1,26 @@
+import { storage } from '../../../storage';
 import { Types } from '../../actions/authActions';
 
-const defaultState = {};
+const defaultState = {
+  loading: false,
+  profile: null,
+  token: storage.accessToken.Get(),
+};
 
 const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case Types.AUTH:
       return action.payload;
+    case Types.LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case Types.GET_USER:
+      return {
+        ...state,
+        profile: action.payload.user,
+      };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button, Row, Col, message, Alert, Upload } from 'antd';
 import { Card } from 'antd';
@@ -34,6 +34,7 @@ const validateMessages = {
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate('/');
   const ref = useRef();
 
   const error = useSelector((state) => state.alert.error);
@@ -62,11 +63,11 @@ const Register = () => {
   };
 
   const onFinish = (values) => {
-    const onSuccess = ({ status }) => {
-      console.log(status, 'status');
+    const onSuccess = (status) => {
       if (status === Types.LOGIN_SUCCESS) {
         message.success('You are successfully registered');
       }
+      navigate('/');
     };
     const data = {
       first_name: values.user.first_name,
@@ -76,11 +77,11 @@ const Register = () => {
     };
 
     //dispatch(register(data)).then(onSuccess);
-    dispatch(register(data)).then((res) => {
-      console.log(res);
-      handleUpload(res);
-    });
-    //.then(onSuccess);
+    dispatch(register(data))
+      .then((res) => {
+        handleUpload(res);
+      })
+      .then(onSuccess);
   };
 
   useEffect(() => {
@@ -149,7 +150,7 @@ const Register = () => {
                   rules={[
                     {
                       min: 3,
-                      max: 12,
+                      max: 18,
                       whitespace: false,
                       required: true,
                       message: 'Surname should be at least 3 characters',

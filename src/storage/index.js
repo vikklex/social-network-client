@@ -15,5 +15,4 @@ function createStorage(key) {
 
 export const storage = {
   accessToken: createStorage('token'),
-  login: createStorage('login'),
 };

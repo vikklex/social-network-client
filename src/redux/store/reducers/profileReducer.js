@@ -2,7 +2,7 @@ import { Profile_Types } from './../../actions/profileActions';
 
 const defaultState = {
   loading: false,
-  users: [],
+  user: null,
   posts: [],
 };
 
@@ -16,7 +16,12 @@ const profileReducer = (state = defaultState, action) => {
     case Profile_Types.GET_USER:
       return {
         ...state,
-        users: [...state.users, action.payload.user],
+        user: action.payload.user,
+      };
+    case Profile_Types.SET_USER:
+      return {
+        ...state,
+        user: action.payload.user,
       };
     default:
       return state;

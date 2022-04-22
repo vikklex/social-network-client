@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
 import { Col, Row, Card, Divider, Button, Input } from 'antd';
+
+import jwt_decode from 'jwt-decode';
 
 import Feed from './components/Feed/Feed';
 import { getPosts } from '../../redux/actions/postActions';
@@ -13,36 +17,53 @@ import { Navigate } from 'react-router-dom';
 import Avatar from './components/AvatarUpload/Avatar';
 import { updateUser } from '../../redux/actions/profileActions';
 
-const Profile = (data) => {
-  const authorizedUser = useSelector((state) => state.auth.user);
+import { getUserProfile } from '../../redux/actions/profileActions';
+
+const Profile = () => {
+  const { id } = useParams();
+
+  const dispatch = useDispatch();
 
   const { auth } = useSelector((state) => state);
 
-  const user = data.data[0] ? data.data[0] : authorizedUser;
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.profile.user);
 
+  const [statusText, setStatusText] = useState(user?.status);
   const [edit, setEdit] = useState(false);
-
-  const dispatch = useDispatch();
 
   const posts = useSelector((state) => state.post.post);
 
   useEffect(() => {
-    dispatch(getPosts(user._id));
-  }, [user._id, dispatch, posts.length]);
+    if (id) {
+      const onSuccess = () => {
+        setStatusText('');
+      };
 
-  const [statusText, setStatusText] = useState(user.status ? user.status : '');
+      dispatch(getUserProfile({ id: id })).then(onSuccess);
+    } else {
+      dispatch(getUserProfile({ id: jwt_decode(token).id }));
+    }
+  }, [dispatch, id, token]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getPosts(user._id));
+    }
+  }, [user, dispatch, posts.length]);
+
   const [visibleInput, setVisibleInput] = useState(true);
   const [visibleStatus, setVisibleStatus] = useState(false);
 
+  if (!user) {
+    return null;
+  }
+
   const onPressEnter = () => {
-    dispatch(updateUser({ status: statusText }, auth));
+    dispatch(updateUser({ status: statusText }, auth, user));
     setStatusText('');
     setVisibleInput(true);
     setVisibleStatus(false);
-  };
-
-  const onChange = (event) => {
-    setStatusText(event.target.value);
   };
 
   const changeVisibility = () => {
@@ -66,9 +87,11 @@ const Profile = (data) => {
       <Row justify='center' style={{ marginTop: '3%' }}>
         <Col span={6}>
           <Avatar auth={auth} user={user} />
-          <Button type='primary' onClick={() => setEdit(true)}>
-            Edit profile
-          </Button>
+          {!id && (
+            <Button type='primary' size='large' onClick={() => setEdit(true)}>
+              Edit profile
+            </Button>
+          )}
         </Col>
 
         <Col span={16} offset={1}>
@@ -91,7 +114,7 @@ const Profile = (data) => {
               bordered={false}
               onPressEnter={onPressEnter}
               value={statusText}
-              onChange={onChange}
+              onChange={(event) => setStatusText(event.target.value)}
               style={inputDisplay}
             />
           </Row>
@@ -155,7 +178,7 @@ const Profile = (data) => {
               <div className='personal__numbers_posts'>Posts</div>
             </Col>
           </Row>
-          {user._id === authorizedUser._id && <NewPost />}
+          {user && <NewPost />}
         </Col>
       </Row>
       <Row>

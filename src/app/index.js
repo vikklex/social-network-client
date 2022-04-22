@@ -1,18 +1,32 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from 'antd';
 
-import MainPage from './../pages/Main/MainPage';
 import Login from './../pages/Login/Login';
 import Register from './../pages/Register/Register';
+import Profile from './../pages/Profile/Profile';
 import HeaderNav from './components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
+import PrivateRoute from '../components/PrivateRoute';
 import EditProfile from './../pages/Edit/EditProfile';
+
+import { getUserProfile } from '../redux/actions/authActions';
+
+import jwt_decode from 'jwt-decode';
 
 const { Header, Sider, Content } = Layout;
 
 function App() {
+  const dispatch = useDispatch();
+
   const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserProfile({ id: jwt_decode(token).id }));
+    }
+  }, [dispatch, token]);
 
   return (
     <Router>
@@ -31,24 +45,19 @@ function App() {
 
         <Content>
           <Routes>
-            <Route
-              path='/user/:id'
-              element={token ? <MainPage /> : <Login />}
-            ></Route>
-            <Route path='/' element={token ? <MainPage /> : <Login />}></Route>
-            <Route path='/edit' element={token && <EditProfile />}></Route>
+            <Route path='/' element={token ? <Profile /> : <Login />}></Route>
 
-            <Route
-              exact
-              path='/login'
-              element={token ? <MainPage /> : <Login />}
-            ></Route>
+            <Route exact path='/login' element={<Login />} />
 
-            <Route
-              exact
-              path='/register'
-              element={token ? <MainPage /> : <Register />}
-            ></Route>
+            <Route exact path='/register' element={<Register />} />
+
+            <Route exact path='/user/:id' element={<PrivateRoute />}>
+              <Route exact path='/user/:id' element={<Profile />} />
+            </Route>
+
+            <Route exact path='/edit' element={<PrivateRoute />}>
+              <Route exact path='/edit' element={<EditProfile />} />
+            </Route>
           </Routes>
         </Content>
       </Layout>

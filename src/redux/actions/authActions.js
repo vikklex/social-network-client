@@ -3,9 +3,11 @@ import ClientAPI from '../../utils/ClientAPI';
 import { Alert_Types } from './alertActions';
 
 export const Types = {
-  AUTH: 'AUTH',
-  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-  LOGIN_FAILED: 'LOGIN_FAILED',
+  AUTH: 'AUTH_AUTH',
+  GET_USER: 'AUTH_GET_USER',
+  LOADING: 'AUTH_LOADING',
+  LOGIN_SUCCESS: 'AUTH_LOGIN_SUCCESS',
+  LOGIN_FAILED: 'AUTH_LOGIN_FAILED',
 };
 
 export const login = (data) => async (dispatch) => {
@@ -28,7 +30,6 @@ export const login = (data) => async (dispatch) => {
       },
     });
 
-    storage.login.Set(true);
     storage.accessToken.Set(res.data.msg.access_token);
 
     dispatch({
@@ -57,7 +58,6 @@ export const register = (data) => async (dispatch) => {
 
     const res = await ClientAPI.register(data);
 
-    storage.login.Set(true);
     storage.accessToken.Set(res.data.msg.access_token);
 
     dispatch({
@@ -94,7 +94,6 @@ export const register = (data) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     storage.accessToken.Remove();
-    storage.login.Remove();
 
     await ClientAPI.logout();
 
@@ -108,3 +107,26 @@ export const logout = () => async (dispatch) => {
     });
   }
 };
+
+export const getUserProfile =
+  ({ id }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: Types.LOADING, payload: { loading: true } });
+      const res = await ClientAPI.getUser(id);
+
+      dispatch({
+        type: Types.GET_USER,
+        payload: res.data,
+      });
+
+      dispatch({ type: Types.LOADING, payload: { loading: false } });
+    } catch (error) {
+      dispatch({
+        type: Alert_Types.ALERT,
+        payload: {
+          error: error.response.data.msg,
+        },
+      });
+    }
+  };

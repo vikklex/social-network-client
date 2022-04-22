@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
   Form,
@@ -25,6 +25,7 @@ import Layout from 'antd/lib/layout/layout';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const ref = useRef();
 
   const error = useSelector((state) => state.alert.error);
@@ -33,6 +34,7 @@ const Login = () => {
     const onSuccess = (status) => {
       if (status === Types.LOGIN_SUCCESS) {
         message.success('You are successfully login');
+        navigate('/');
       }
     };
 
@@ -61,6 +63,7 @@ const Login = () => {
               Cement friendship and family relations with "F_Network"
             </span>
           </Col>
+
           <Col span={12}>
             <Card
               hoverable

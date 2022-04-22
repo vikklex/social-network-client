@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { Avatar, Badge, Col, Input, Row, Menu } from 'antd';
+
 import {
   MessageOutlined,
   UserOutlined,
@@ -18,8 +19,9 @@ import NoAvatar from './../../../assets/img/noavatar.png';
 
 export default function HeaderNav() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+
   const token = useSelector((state) => state.auth.token);
+  const profile = useSelector((state) => state.auth.profile);
 
   const [search, setSearch] = useState('');
   const [users, setUsers] = useState([]);
@@ -32,9 +34,9 @@ export default function HeaderNav() {
     const onSuccess = (res) => {
       setUsers(res.data.msg.users);
     };
+
     try {
-      const res = ClientAPI.searchUser(value);
-      res.then(onSuccess);
+      ClientAPI.searchUser(value).then(onSuccess);
       setSearch(value);
     } catch (error) {
       dispatch({
@@ -64,6 +66,10 @@ export default function HeaderNav() {
       setUsers([]);
     }
   }, [search, token, dispatch]);
+
+  if (!profile) {
+    return null;
+  }
 
   return (
     <div>
@@ -118,7 +124,7 @@ export default function HeaderNav() {
         <Col span={2}>
           <Link to='/'>
             <Avatar
-              src={user.avatar ? user.avatar : NoAvatar}
+              src={profile.avatar ? profile.avatar : NoAvatar}
               size={64}
               className='avatar__mini'
             />
@@ -126,7 +132,7 @@ export default function HeaderNav() {
         </Col>
 
         <Col span={2}>
-          <h4>{user.first_name}</h4>
+          <h4>{profile.first_name}</h4>
         </Col>
 
         <Col span={2}>

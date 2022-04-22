@@ -1,65 +1,47 @@
 import ClientAPI from '../../utils/ClientAPI';
 import { Alert_Types } from './alertActions';
-import { Types } from './authActions';
 
 export const Profile_Types = {
-  LOADING: 'LOADING',
-  GET_USER: 'GET_USER',
+  LOADING: 'PROFILE_LOADING',
+  GET_USER: 'PROFILE_GET_USER',
+  SET_USER: 'PROFILE_SET_USER',
+  SUCCESS: 'PROFILE_SUCCESS',
 };
 
 export const getUserProfile =
-  ({ users, id }) =>
+  ({ id }) =>
   async (dispatch) => {
-    if (users.every((user) => user._id !== id)) {
-      try {
-        dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
-        const res = await ClientAPI.getUser(`${id}`);
+    try {
+      dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+      const res = await ClientAPI.getUser(id);
 
-        dispatch({
-          type: Profile_Types.GET_USER,
-          payload: res.data,
-        });
+      dispatch({
+        type: Profile_Types.GET_USER,
+        payload: res.data,
+      });
 
-        dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
-      } catch (error) {
-        dispatch({
-          type: Alert_Types.ALERT,
-          payload: {
-            error: error.response.data.msg,
-          },
-        });
-      }
+      dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+    } catch (error) {
+      dispatch({
+        type: Alert_Types.ALERT,
+        payload: {
+          error: error.response.data.msg,
+        },
+      });
     }
   };
 
-export const updateUser = (data, auth) => async (dispatch) => {
+export const setUserProfile = (id) => async (dispatch) => {
   try {
-    dispatch({
-      type: Alert_Types.ALERT,
-      payload: {
-        loading: true,
-      },
-    });
-
-    ClientAPI.updateUser(data, auth.user._id).then(
-      dispatch({
-        type: Types.AUTH,
-        payload: {
-          ...auth,
-          user: {
-            ...auth.user,
-            ...data,
-          },
-        },
-      }),
-    );
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+    const res = await ClientAPI.getUser(id);
 
     dispatch({
-      type: Alert_Types.ALERT,
-      payload: {
-        loading: false,
-      },
+      type: Profile_Types.GET_USER,
+      payload: res.data,
     });
+
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
   } catch (error) {
     dispatch({
       type: Alert_Types.ALERT,
@@ -70,7 +52,70 @@ export const updateUser = (data, auth) => async (dispatch) => {
   }
 };
 
-export const updateAvatar = (auth, data, config) => async (dispatch) => {
+export const updateUser =
+  ({
+    id,
+    first_name,
+    last_name,
+    email,
+    job,
+    birthday,
+    desc,
+    gender,
+    relationships,
+    city,
+    from,
+    status,
+  }) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: Alert_Types.ALERT,
+        payload: {
+          loading: true,
+        },
+      });
+
+      ClientAPI.updateUser(
+        id,
+        first_name,
+        last_name,
+        email,
+        job,
+        birthday,
+        desc,
+        gender,
+        relationships,
+        city,
+        from,
+        status,
+      ).then((resp) => {
+        dispatch({
+          type: Profile_Types.SET_USER,
+          payload: {
+            user: resp.data.msg,
+          },
+        });
+      });
+
+      dispatch({
+        type: Alert_Types.ALERT,
+        payload: {
+          loading: false,
+        },
+      });
+      return Profile_Types.SUCCESS;
+    } catch (error) {
+      dispatch({
+        type: Alert_Types.ALERT,
+        payload: {
+          error: error.response.data.msg,
+        },
+      });
+    }
+  };
+
+export const updateAvatar = (auth, user, data, config) => async (dispatch) => {
   try {
     dispatch({
       type: Alert_Types.ALERT,
@@ -79,13 +124,13 @@ export const updateAvatar = (auth, data, config) => async (dispatch) => {
       },
     });
 
-    ClientAPI.updateAvatar(auth.user._id, data, config).then((res) =>
+    ClientAPI.updateAvatar(user._id, data, config).then((res) =>
       dispatch({
-        type: Types.AUTH,
+        type: Profile_Types.SET_USER,
         payload: {
           ...auth,
           user: {
-            ...auth.user,
+            ...user,
             ...res.data,
           },
         },

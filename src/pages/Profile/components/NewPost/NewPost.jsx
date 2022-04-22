@@ -87,7 +87,7 @@ const Editor = ({
 };
 
 const NewPost = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.profile.user);
   const userId = user._id;
   const [content, setContent] = useState('');
   const dispatch = useDispatch();

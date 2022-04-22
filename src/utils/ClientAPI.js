@@ -45,21 +45,37 @@ class ClientAPI {
     return this.instance.get(`v1/posts/timeline/${id}`);
   }
 
-  updateUser(data, id) {
+  getOneComment(id) {
+    return this.instance.get(`v1/comments/${id}`);
+  }
+
+  updateUser(
+    id,
+    first_name,
+    last_name,
+    email,
+    job,
+    birthday,
+    desc,
+    gender,
+    relationships,
+    city,
+    from,
+    status,
+  ) {
     return this.instance.put(`v1/users/${id}`, {
       userId: id,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      email: data.email,
-      password_hash: data.password_hash,
-      job: data.job,
-      birthday: data.birthday,
-      desc: data.desc,
-      gender: data.gender,
-      relationships: data.relationships,
-      city: data.city,
-      from: data.from,
-      status: data.status,
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      job: job,
+      birthday: birthday,
+      desc: desc,
+      gender: gender,
+      relationships: relationships,
+      city: city,
+      from: from,
+      status: status,
     });
   }
 

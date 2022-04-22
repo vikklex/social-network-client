@@ -2,14 +2,17 @@ import ClientAPI from '../../utils/ClientAPI';
 import { Alert_Types } from './alertActions';
 
 export const Post_Types = {
-  CREATE_POST: 'CREATE_POST',
-  GET_POSTS: 'GET_POSTS',
-  LOADING_POSTS: 'LOADING_POSTS',
+  CREATE_POST: 'POST_CREATE_POST',
+  GET_POSTS: 'POST_GET_POSTS',
+  LOADING_POSTS: 'POST_LOADING_POSTS',
 };
 
 export const createPost = (data) => async (dispatch) => {
   try {
-    const res = await ClientAPI.createPost(data);
+    const res = await ClientAPI.createPost({
+      userId: data.userId,
+      content: data.content,
+    });
     dispatch({ type: Post_Types.CREATE_POST, payload: res.data });
     return res;
   } catch (error) {

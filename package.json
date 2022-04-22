@@ -12,6 +12,7 @@
     "antd": "^4.19.3",
     "antd-password-input-strength": "^2.0.1",
     "axios": "^0.26.1",
+    "jwt-decode": "^3.1.2",
     "less": "^4.1.2",
     "moment": "^2.29.1",
     "react": "^17.0.2",

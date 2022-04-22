@@ -9,6 +9,7 @@ const UploadFile = () => {
   const dispatch = useDispatch();
 
   const { auth } = useSelector((state) => state);
+  const user = useSelector((state) => state.profile.user);
 
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -26,7 +27,7 @@ const UploadFile = () => {
       },
     };
 
-    dispatch(updateAvatar(auth, formData, config));
+    dispatch(updateAvatar(auth, user, formData, config));
     setUploading(false);
     setFileList([]);
   };

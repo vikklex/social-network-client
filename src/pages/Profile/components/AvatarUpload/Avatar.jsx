@@ -4,6 +4,7 @@ import UploadFile from '../UploadFile/UploadFile';
 import NoAvatar from './../../../../assets/img/noavatar.png';
 
 const Avatar = ({ user }) => {
+  
   const content = <UploadFile />;
   return (
     <>
