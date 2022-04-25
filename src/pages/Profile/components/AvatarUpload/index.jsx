@@ -1,5 +1,5 @@
 import { Popover } from 'antd';
-import UploadFile from '../UploadFile/UploadFile';
+import UploadFile from '../UploadFile';
 
 import NoAvatar from './../../../../assets/img/noavatar.png';
 

@@ -5,6 +5,7 @@ import { Alert_Types } from './alertActions';
 export const Types = {
   AUTH: 'AUTH_AUTH',
   GET_USER: 'AUTH_GET_USER',
+  SET_USER: 'AUTH_SET_USER',
   LOADING: 'AUTH_LOADING',
   LOGIN_SUCCESS: 'AUTH_LOGIN_SUCCESS',
   LOGIN_FAILED: 'AUTH_LOGIN_FAILED',
@@ -67,6 +68,7 @@ export const register = (data) => async (dispatch) => {
         user: res.data.msg.user,
       },
     });
+
     dispatch({
       type: Alert_Types.ALERT,
       payload: {

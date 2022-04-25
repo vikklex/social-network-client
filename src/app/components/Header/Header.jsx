@@ -52,7 +52,7 @@ export default function HeaderNav() {
     if (search && token) {
       ClientAPI.searchUser(search)
         .then((res) => {
-          setUsers(res.data.msg.users);
+          setUsers(res.data.msg);
         })
         .catch((err) => {
           dispatch({
@@ -90,8 +90,8 @@ export default function HeaderNav() {
           {search && (
             <Menu className='search_area' style={{ zIndex: 1 }}>
               {users.map((user) => (
-                <Menu.Item key={user._id}>
-                  <Link to={`/user/${user._id}`} key={user._id}></Link>
+                <Menu.Item key={user.id}>
+                  <Link to={`/user/${user.id}`} key={user.id}></Link>
                   <Avatar src={user.avatar ? user.avatar : NoAvatar}></Avatar>
                   {user.first_name} {user.last_name}
                 </Menu.Item>

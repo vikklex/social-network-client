@@ -1,5 +1,6 @@
 import ClientAPI from '../../utils/ClientAPI';
 import { Alert_Types } from './alertActions';
+import { Types } from './authActions';
 
 export const Profile_Types = {
   LOADING: 'PROFILE_LOADING',
@@ -68,6 +69,8 @@ export const updateUser =
     status,
   }) =>
   async (dispatch) => {
+    console.log({ status });
+    console.log({ id });
     try {
       dispatch({
         type: Alert_Types.ALERT,
@@ -90,8 +93,9 @@ export const updateUser =
         from,
         status,
       ).then((resp) => {
+        console.log(resp);
         dispatch({
-          type: Profile_Types.SET_USER,
+          type: Types.SET_USER,
           payload: {
             user: resp.data.msg,
           },
@@ -124,7 +128,7 @@ export const updateAvatar = (auth, user, data, config) => async (dispatch) => {
       },
     });
 
-    ClientAPI.updateAvatar(user._id, data, config).then((res) =>
+    ClientAPI.updateAvatar(user.id, data, config).then((res) =>
       dispatch({
         type: Profile_Types.SET_USER,
         payload: {

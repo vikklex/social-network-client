@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import './feed.scss';
-import Posts from '../Posts/Posts';
+import Posts from '../Posts';
 
 export default function Feed() {
   const userPosts = useSelector((state) => state.post);

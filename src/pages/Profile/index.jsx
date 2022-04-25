@@ -7,14 +7,14 @@ import { Col, Row, Card, Divider, Button, Input } from 'antd';
 
 import jwt_decode from 'jwt-decode';
 
-import Feed from './components/Feed/Feed';
+import Feed from './components/Feed';
 import { getPosts } from '../../redux/actions/postActions';
-import NewPost from './components/NewPost/NewPost';
+import NewPost from './components/NewPost';
 
 import './profile.scss';
 import { Navigate } from 'react-router-dom';
 
-import Avatar from './components/AvatarUpload/Avatar';
+import Avatar from './components/AvatarUpload';
 import { updateUser } from '../../redux/actions/profileActions';
 
 import { getUserProfile } from '../../redux/actions/profileActions';
@@ -39,16 +39,15 @@ const Profile = () => {
       const onSuccess = () => {
         setStatusText('');
       };
-
       dispatch(getUserProfile({ id: id })).then(onSuccess);
     } else {
       dispatch(getUserProfile({ id: jwt_decode(token).id }));
     }
-  }, [dispatch, id, token]);
+  }, [dispatch, id, token, user]);
 
   useEffect(() => {
     if (user) {
-      dispatch(getPosts(user._id));
+      dispatch(getPosts(user.id));
     }
   }, [user, dispatch, posts.length]);
 
@@ -60,7 +59,7 @@ const Profile = () => {
   }
 
   const onPressEnter = () => {
-    dispatch(updateUser({ status: statusText }, auth, user));
+    dispatch(updateUser({ status: statusText, id: user.id }));
     setStatusText('');
     setVisibleInput(true);
     setVisibleStatus(false);
@@ -109,14 +108,16 @@ const Profile = () => {
                 {user.status}
               </span>
             )}
-            <Input
-              placeholder={'Set status...'}
-              bordered={false}
-              onPressEnter={onPressEnter}
-              value={statusText}
-              onChange={(event) => setStatusText(event.target.value)}
-              style={inputDisplay}
-            />
+            {!id && (
+              <Input
+                placeholder={user.status || 'Set status...'}
+                bordered={false}
+                onPressEnter={onPressEnter}
+                value={statusText}
+                onChange={(event) => setStatusText(event.target.value)}
+                style={inputDisplay}
+              />
+            )}
           </Row>
           {edit && <Navigate to='/edit' />}
           <Row>

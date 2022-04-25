@@ -73,11 +73,12 @@ const EditProfile = () => {
     };
 
     const data = {
-      id: user._id,
+      id: user.id,
       status: user.status,
       ...values,
     };
 
+    console.log(data, 'data');
     dispatch(updateUser(data)).then(onSuccess);
   };
 
@@ -138,7 +139,7 @@ const EditProfile = () => {
               label='About'
               tooltip='Tell something interesting about you'
             >
-              <Input.TextArea showCount maxLength={100} />
+              <Input.TextArea showCount maxLength={800} />
             </Form.Item>
 
             <Form.Item name={'gender'} label='Gender'>

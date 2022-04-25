@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from 'antd';
 
-import Login from './../pages/Login/Login';
-import Register from './../pages/Register/Register';
-import Profile from './../pages/Profile/Profile';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import Profile from '../pages/Profile';
 import HeaderNav from './components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
 import PrivateRoute from '../components/PrivateRoute';
-import EditProfile from './../pages/Edit/EditProfile';
+import EditProfile from '../pages/Edit';
 
 import { getUserProfile } from '../redux/actions/authActions';
 

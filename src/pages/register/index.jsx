@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import RegisterIllustration from './.././../assets/img/registration.png';
 import MainLogo from './.././../assets/img/logo.svg';
 import Layout from 'antd/lib/layout/layout';
-import { PictureOutlined, UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { updateAvatar } from '../../redux/actions/profileActions';
 
 const layout = {
@@ -37,14 +37,15 @@ const Register = () => {
   const navigate = useNavigate('/');
   const ref = useRef();
 
+  const user = useSelector((state) => state.auth.user);
+  const auth = useSelector((state) => state.auth);
+
   const error = useSelector((state) => state.alert.error);
 
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
 
-  const { auth } = useSelector((state) => state);
-
-  const handleUpload = (auth) => {
+  const handleUpload = (data) => {
     const formData = new FormData();
     fileList.forEach((file) => {
       formData.append('avatar', file);
@@ -57,14 +58,16 @@ const Register = () => {
       },
     };
 
-    dispatch(updateAvatar(auth, formData, config));
+    dispatch(updateAvatar(auth, data.user, formData, config));
     setUploading(false);
     setFileList([]);
+
+    return 'success';
   };
 
   const onFinish = (values) => {
     const onSuccess = (status) => {
-      if (status === Types.LOGIN_SUCCESS) {
+      if (status.status === Types.LOGIN_SUCCESS) {
         message.success('You are successfully registered');
       }
       navigate('/');
@@ -76,12 +79,10 @@ const Register = () => {
       password_hash: values.password_hash,
     };
 
-    //dispatch(register(data)).then(onSuccess);
-    dispatch(register(data))
-      .then((res) => {
-        handleUpload(res);
-      })
-      .then(onSuccess);
+    dispatch(register(data)).then((res) => {
+      handleUpload(res);
+      onSuccess(res);
+    });
   };
 
   useEffect(() => {

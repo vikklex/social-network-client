@@ -88,7 +88,7 @@ const Editor = ({
 
 const NewPost = () => {
   const user = useSelector((state) => state.profile.user);
-  const userId = user._id;
+  const userId = user.id;
   const [content, setContent] = useState('');
   const dispatch = useDispatch();
 
@@ -122,7 +122,7 @@ const NewPost = () => {
   };
   const handleSubmit = () => {
     dispatch(createPost({ userId, content })).then((res) => {
-      handleUpload(res.data._id);
+      handleUpload(res.data.id);
     });
     setContent('');
   };
