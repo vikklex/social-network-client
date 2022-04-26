@@ -1,3 +1,4 @@
+import { DeleteData } from '../../actions/alertActions';
 import { Post_Types } from './../../actions/postActions';
 
 const defaultState = {
@@ -21,6 +22,11 @@ const postReducer = (state = defaultState, action) => {
       return {
         ...state,
         post: action.payload,
+      };
+    case Post_Types.DELETE_POST:
+      return {
+        ...state,
+        post: DeleteData(state.post, action.payload.id),
       };
     default:
       return state;

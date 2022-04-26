@@ -59,7 +59,7 @@ const EditProfile = () => {
     },
   };
 
-  const user = useSelector((state) => state.profile.user);
+  const user = useSelector((state) => state.auth.profile);
 
   const [form] = Form.useForm();
 
@@ -78,7 +78,6 @@ const EditProfile = () => {
       ...values,
     };
 
-    console.log(data, 'data');
     dispatch(updateUser(data)).then(onSuccess);
   };
 

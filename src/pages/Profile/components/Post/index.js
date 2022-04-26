@@ -8,11 +8,13 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import NoAvatar from './../../../../assets/img/noavatar.png';
-import { updatePost } from '../../../../redux/actions/postActions';
+import { deletePost, updatePost } from '../../../../redux/actions/postActions';
+import { useParams } from 'react-router-dom';
 
 const { TextArea } = Input;
 
 const Post = ({ post }) => {
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.profile.user);
@@ -26,6 +28,10 @@ const Post = ({ post }) => {
   const savePost = () => {
     dispatch(updatePost(post.id, user.id, text));
     setIsEditMode(false);
+  };
+
+  const handleDelete = () => {
+    dispatch(deletePost(post, user.id));
   };
 
   const actions = [
@@ -44,9 +50,14 @@ const Post = ({ post }) => {
     <span key='comment-basic-reply-to'>Reply to</span>,
 
     <>
-      {!isEditMode && (
+      {!isEditMode && !id && (
         <span key='comment-basic-edit' onClick={() => setIsEditMode(true)}>
           Edit
+        </span>
+      )}
+      {!id && (
+        <span key='comment-basic-delete' onClick={handleDelete}>
+          Delete
         </span>
       )}
     </>,

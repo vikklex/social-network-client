@@ -69,8 +69,6 @@ export const updateUser =
     status,
   }) =>
   async (dispatch) => {
-    console.log({ status });
-    console.log({ id });
     try {
       dispatch({
         type: Alert_Types.ALERT,
@@ -93,7 +91,6 @@ export const updateUser =
         from,
         status,
       ).then((resp) => {
-        console.log(resp);
         dispatch({
           type: Types.SET_USER,
           payload: {

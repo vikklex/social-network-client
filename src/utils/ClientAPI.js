@@ -63,7 +63,6 @@ class ClientAPI {
     from,
     status,
   ) {
-    console.log(`v1/users/${id}`);
     return this.instance.put(`v1/users/${id}`, {
       userId: id,
       first_name: first_name,
@@ -96,6 +95,10 @@ class ClientAPI {
 
   updatePostImage(id, data, config) {
     return this.instance.put(`v1/posts/${id}/post-image`, data, config);
+  }
+
+  deletePost(id, userId) {
+    return this.instance.delete(`v1/posts/${id}`, userId);
   }
 }
 

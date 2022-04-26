@@ -43,7 +43,7 @@ const Profile = () => {
     } else {
       dispatch(getUserProfile({ id: jwt_decode(token).id }));
     }
-  }, [dispatch, id, token, user]);
+  }, [dispatch, id, token]);
 
   useEffect(() => {
     if (user) {
@@ -179,7 +179,7 @@ const Profile = () => {
               <div className='personal__numbers_posts'>Posts</div>
             </Col>
           </Row>
-          {user && <NewPost />}
+          {!id && <NewPost />}
         </Col>
       </Row>
       <Row>
