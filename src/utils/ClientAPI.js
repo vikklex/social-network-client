@@ -45,6 +45,10 @@ class ClientAPI {
     return this.instance.get(`v1/posts/timeline/${id}`);
   }
 
+  getFriendsPosts(id) {
+    return this.instance.get(`v1/posts/friendsPosts/${id}`);
+  }
+
   getOneComment(id) {
     return this.instance.get(`v1/comments/${id}`);
   }

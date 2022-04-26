@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile from '../pages/Profile';
+import FriendsPosts from '../pages/FriendsPosts';
 import HeaderNav from './components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
 import PrivateRoute from '../components/PrivateRoute';
@@ -53,6 +54,10 @@ function App() {
 
             <Route exact path='/user/:id' element={<PrivateRoute />}>
               <Route exact path='/user/:id' element={<Profile />} />
+            </Route>
+
+            <Route exact path='/posts' element={<PrivateRoute />}>
+              <Route exact path='/posts' element={<FriendsPosts />} />
             </Route>
 
             <Route exact path='/edit' element={<PrivateRoute />}>

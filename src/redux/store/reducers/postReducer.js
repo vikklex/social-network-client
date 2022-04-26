@@ -23,6 +23,7 @@ const postReducer = (state = defaultState, action) => {
         ...state,
         post: action.payload,
       };
+
     case Post_Types.DELETE_POST:
       return {
         ...state,

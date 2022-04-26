@@ -10,6 +10,7 @@ import moment from 'moment';
 import NoAvatar from './../../../../assets/img/noavatar.png';
 import { deletePost, updatePost } from '../../../../redux/actions/postActions';
 import { useParams } from 'react-router-dom';
+import { getUserProfile } from '../../../../redux/actions/authActions';
 
 const { TextArea } = Input;
 
