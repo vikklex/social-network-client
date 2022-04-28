@@ -6,7 +6,8 @@ import Posts from '../Profile/components/Posts';
 
 const FriendsPosts = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.profile.user);
+  //const user = useSelector((state) => state.profile.user);
+  const user = useSelector((state) => state.auth.profile);
 
   useEffect(() => {
     if (user) {
@@ -17,7 +18,7 @@ const FriendsPosts = () => {
   const posts = useSelector((state) => state.friendPosts.friendPost);
   return (
     <>
-      <Posts posts={posts} />
+      <Posts posts={posts} isUserProfile={false} />
     </>
   );
 };

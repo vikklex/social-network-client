@@ -46,6 +46,7 @@ class ClientAPI {
   }
 
   getFriendsPosts(id) {
+    console.log(id);
     return this.instance.get(`v1/posts/friendsPosts/${id}`);
   }
 
@@ -83,8 +84,20 @@ class ClientAPI {
     });
   }
 
+  addFriend(id, userId) {
+    return this.instance.put(`v1/users/${id}/follow`, { userId: userId });
+  }
+
+  deleteFriend(id, userId) {
+    return this.instance.put(`v1/users/${id}/unfollow`, { userId: userId });
+  }
+
   updateAvatar(id, data, config) {
     return this.instance.put(`v1/users/${id}/user-profile`, data, config);
+  }
+
+  updateAlbum(id, data, config) {
+    return this.instance.put(`v1/users/${id}/user-album`, data, config);
   }
 
   createPost({ userId, content }) {

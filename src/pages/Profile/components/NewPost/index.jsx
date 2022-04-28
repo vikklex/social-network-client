@@ -6,7 +6,6 @@ import {
   Avatar,
   Form,
   Button,
-  List,
   Input,
   Row,
   Col,
@@ -22,15 +21,6 @@ import NoAvatar from './../../../../assets/img/noavatar.png';
 import './newPost.scss';
 
 const { TextArea } = Input;
-
-const CommentList = ({ comments }) => (
-  <List
-    dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
-    itemLayout='horizontal'
-    renderItem={(props) => <Comment {...props} />}
-  />
-);
 
 const Editor = ({
   onChange,

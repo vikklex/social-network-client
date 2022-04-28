@@ -1,17 +1,11 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
-
 import { List } from 'antd';
 
 import Post from '../Post';
 import './posts.scss';
 
-export default function Posts({ posts }) {
-  //const posts = useSelector((state) => state.post.post);
-
-  //const friendsPosts = useSelector((state) => state.friendPosts.friendPost);
-
+export default function Posts({ posts, isUserProfile }) {
   posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return (
@@ -21,7 +15,7 @@ export default function Posts({ posts }) {
       locale={{ emptyText: () => null }}
       renderItem={(post) => (
         <List.Item key={post.id}>
-          <Post post={post} />
+          <Post post={post} isUserProfile={isUserProfile} />
         </List.Item>
       )}
     />

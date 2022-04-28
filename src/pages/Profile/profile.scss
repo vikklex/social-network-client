@@ -97,3 +97,19 @@ $text-secondary: #818c99;
 .ant-card * {
   padding-left: 0 !important;
 }
+
+.personal__album {
+  height: 12%;
+  overflow: hidden;
+}
+
+.personal__album_href {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.personal__photos_upload {
+  font-size: 14px;
+  color: $text-secondary;
+  cursor: pointer;
+}

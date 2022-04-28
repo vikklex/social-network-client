@@ -3,34 +3,41 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Col, Row, Card, Divider, Button, Input } from 'antd';
+import { Col, Row, Card, Divider, Button, Input, Upload } from 'antd';
 
 import jwt_decode from 'jwt-decode';
 
 import Feed from './components/Feed';
-import { getPosts } from '../../redux/actions/postActions';
 import NewPost from './components/NewPost';
+import Album from './components/Album';
+import ModalArea from './Modal';
+import { getPosts } from '../../redux/actions/postActions';
 
 import './profile.scss';
 import { Navigate } from 'react-router-dom';
 
 import Avatar from './components/AvatarUpload';
-import { updateUser } from '../../redux/actions/profileActions';
+import { updateAlbum, updateUser } from '../../redux/actions/profileActions';
 
 import { getUserProfile } from '../../redux/actions/profileActions';
+import { CheckOutlined, PaperClipOutlined } from '@ant-design/icons';
+import AddFriend from './components/AddFriend';
 
 const Profile = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const { auth } = useSelector((state) => state);
-
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.profile.user);
 
   const [statusText, setStatusText] = useState(user?.status);
   const [edit, setEdit] = useState(false);
+
+  const [visibleInput, setVisibleInput] = useState(true);
+  const [visibleStatus, setVisibleStatus] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [fileList, setFileList] = useState([]);
 
   const posts = useSelector((state) => state.post.post);
 
@@ -43,16 +50,13 @@ const Profile = () => {
     } else {
       dispatch(getUserProfile({ id: jwt_decode(token).id }));
     }
-  }, [dispatch, id, token]);
+  }, [dispatch, id, token, statusText]);
 
   useEffect(() => {
     if (user) {
       dispatch(getPosts(user.id));
     }
   }, [user, dispatch, posts.length]);
-
-  const [visibleInput, setVisibleInput] = useState(true);
-  const [visibleStatus, setVisibleStatus] = useState(false);
 
   if (!user) {
     return null;
@@ -81,16 +85,41 @@ const Profile = () => {
   const inputDisplay =
     user.status && visibleInput ? { display: 'none' } : { display: 'block' };
 
+  const props = {
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
+  };
+
+  const handleUpload = () => {
+    const formData = new FormData();
+    fileList.forEach((file) => {
+      formData.append('album', file);
+    });
+
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+
+    dispatch(updateAlbum(user, formData, config));
+    setFileList([]);
+  };
+
   return (
     <>
       <Row justify='center' style={{ marginTop: '3%' }}>
         <Col span={6}>
-          <Avatar auth={auth} user={user} />
+          <Avatar id={id} user={user} />
           {!id && (
             <Button type='primary' size='large' onClick={() => setEdit(true)}>
               Edit profile
             </Button>
           )}
+          {id && <AddFriend user={user} />}
         </Col>
 
         <Col span={16} offset={1}>
@@ -164,19 +193,76 @@ const Profile = () => {
           <Row justify='space-between' className='personal__numbers'>
             <Col span={4}>
               <div className='personal__numbers_number'>
-                {user.followers.length ? user.followers.length : 0}
+                {user.followings.length ? user.followings.length : 0}
               </div>
-              <div className='personal__numbers_following'>Followers</div>
+              <div className='personal__numbers_following'>
+                Following I follow
+              </div>
             </Col>
             <Col span={4}>
               <div className='personal__numbers_number'>
-                {user.followings.length ? user.followings.length : 0}
+                {user.followers.length ? user.followers.length : 0}
               </div>
-              <div className='personal__numbers_followers'>Followings</div>
+              <div className='personal__numbers_followers'>Followers</div>
             </Col>
             <Col span={4}>
               <div className='personal__numbers_number'>{posts.length}</div>
               <div className='personal__numbers_posts'>Posts</div>
+            </Col>
+          </Row>
+          <Row justify='space-between' style={{ marginBottom: 20 }}>
+            <Col className='personal_primary_key'>
+              {`${user.first_name}'s photos`} ({user.album.length})
+            </Col>
+            {user.album.length !== 0 && (
+              <Col>
+                <span
+                  onClick={() => setVisibleModal(true)}
+                  className='personal__album_href'
+                >
+                  See all photos
+                </span>
+              </Col>
+            )}
+          </Row>
+
+          <ModalArea
+            visibleModal={visibleModal}
+            setVisibleModal={setVisibleModal}
+            images={user.album}
+            username={user.first_name}
+          />
+          {user.album.length !== 0 && (
+            <Row
+              justify='space-around'
+              className='personal__album'
+              style={{ marginBottom: 30 }}
+            >
+              <p style={{ marginLeft: 25 }}>
+                <Album images={user.album} />
+              </p>
+            </Row>
+          )}
+          <Row>
+            <Col>
+              {!id && (
+                <Upload {...props}>
+                  <span className='personal__photos_upload'>
+                    <PaperClipOutlined />
+                    Add photos to album
+                  </span>
+                </Upload>
+              )}
+              {fileList.length !== 0 && (
+                <span
+                  className='personal__photos_upload'
+                  onClick={handleUpload}
+                  disabled={fileList.length === 0}
+                >
+                  <CheckOutlined />
+                  Press to start upload
+                </span>
+              )}
             </Col>
           </Row>
           {!id && <NewPost />}

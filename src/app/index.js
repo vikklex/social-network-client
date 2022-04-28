@@ -6,11 +6,13 @@ import { Layout } from 'antd';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Profile from '../pages/Profile';
+import EditProfile from '../pages/Edit';
 import FriendsPosts from '../pages/FriendsPosts';
+import Friends from '../pages/Friends';
+
 import HeaderNav from './components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
 import PrivateRoute from '../components/PrivateRoute';
-import EditProfile from '../pages/Edit';
 
 import { getUserProfile } from '../redux/actions/authActions';
 
@@ -22,12 +24,17 @@ function App() {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token);
+  const profile = useSelector((state) => state.auth.profile);
 
   useEffect(() => {
     if (token) {
       dispatch(getUserProfile({ id: jwt_decode(token).id }));
     }
   }, [dispatch, token]);
+
+  if (!profile) {
+    //return null;
+  }
 
   return (
     <Router>
@@ -58,6 +65,10 @@ function App() {
 
             <Route exact path='/posts' element={<PrivateRoute />}>
               <Route exact path='/posts' element={<FriendsPosts />} />
+            </Route>
+
+            <Route exact path='/friends' element={<PrivateRoute />}>
+              <Route exact path='/friends' element={<Friends />} />
             </Route>
 
             <Route exact path='/edit' element={<PrivateRoute />}>

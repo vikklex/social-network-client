@@ -10,11 +10,11 @@ import moment from 'moment';
 import NoAvatar from './../../../../assets/img/noavatar.png';
 import { deletePost, updatePost } from '../../../../redux/actions/postActions';
 import { useParams } from 'react-router-dom';
-import { getUserProfile } from '../../../../redux/actions/authActions';
+
 
 const { TextArea } = Input;
 
-const Post = ({ post }) => {
+const Post = ({ post, isUserProfile }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -35,6 +35,12 @@ const Post = ({ post }) => {
     dispatch(deletePost(post, user.id));
   };
 
+  const postAuthor = isUserProfile
+    ? `${user.first_name} ${user.last_name}`
+    : `${post.first_name} ${post.last_name}`;
+
+  const userAvatar = isUserProfile ? user.avatar : post.avatar;
+
   const actions = [
     <Tooltip key='comment-basic-like' title='Like'>
       <span>
@@ -51,12 +57,12 @@ const Post = ({ post }) => {
     <span key='comment-basic-reply-to'>Reply to</span>,
 
     <>
-      {!isEditMode && !id && (
+      {!isEditMode && !id && isUserProfile && (
         <span key='comment-basic-edit' onClick={() => setIsEditMode(true)}>
           Edit
         </span>
       )}
-      {!id && (
+      {!id && isUserProfile && (
         <span key='comment-basic-delete' onClick={handleDelete}>
           Delete
         </span>
@@ -64,7 +70,7 @@ const Post = ({ post }) => {
     </>,
 
     <>
-      {isEditMode && (
+      {isEditMode && isUserProfile && (
         <span key='comment-basic-save' onClick={savePost}>
           Save
         </span>
@@ -76,12 +82,8 @@ const Post = ({ post }) => {
     <>
       <Comment
         actions={actions}
-        author={
-          <p>
-            {user.first_name} {user.last_name}
-          </p>
-        }
-        avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+        author={<p>{postAuthor}</p>}
+        avatar={<Avatar src={userAvatar ? userAvatar : NoAvatar} />}
         content={
           <>
             <TextArea

@@ -23,6 +23,16 @@ const profileReducer = (state = defaultState, action) => {
         ...state,
         user: action.payload.user,
       };
+    case Profile_Types.ADD_FRIEND:
+      return {
+        ...state,
+        user: action.payload.user,
+      };
+    case Profile_Types.DELETE_FRIEND:
+      return {
+        ...state,
+        user: action.payload.user,
+      };
     default:
       return state;
   }

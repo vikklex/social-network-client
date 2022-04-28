@@ -37,7 +37,6 @@ const Register = () => {
   const navigate = useNavigate('/');
   const ref = useRef();
 
-  const user = useSelector((state) => state.auth.user);
   const auth = useSelector((state) => state.auth);
 
   const error = useSelector((state) => state.alert.error);

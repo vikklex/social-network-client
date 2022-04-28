@@ -40,6 +40,12 @@ export const login = (data) => async (dispatch) => {
       },
     });
 
+    dispatch({
+      type: Alert_Types.ALERT,
+      payload: {
+        loading: true,
+      },
+    });
     return Types.LOGIN_SUCCESS;
   } catch (error) {
     dispatch({

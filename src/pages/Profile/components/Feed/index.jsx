@@ -15,7 +15,7 @@ export default function Feed() {
         {userPosts && !userPosts.loading ? (
           <p>Loading....</p>
         ) : (
-          <Posts posts={posts} />
+          <Posts posts={posts} isUserProfile={true} />
         )}
       </div>
     </div>
