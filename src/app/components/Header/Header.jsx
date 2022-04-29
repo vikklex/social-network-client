@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { Avatar, Badge, Col, Input, Row, Menu } from 'antd';
+import { Avatar, Badge, Col, Row } from 'antd';
+import { AutoComplete } from 'antd';
 
 import {
   MessageOutlined,
@@ -16,9 +17,11 @@ import ClientAPI from './../../../utils/ClientAPI';
 import './header.scss';
 
 import NoAvatar from './../../../assets/img/noavatar.png';
+const { Option } = AutoComplete;
 
 export default function HeaderNav() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const token = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => state.auth.profile);
@@ -26,8 +29,8 @@ export default function HeaderNav() {
   const [search, setSearch] = useState('');
   const [users, setUsers] = useState([]);
 
-  const onChange = (event) => {
-    setSearch(event.target.value);
+  const onChange = (value) => {
+    setSearch(value);
   };
 
   const onSearch = (value) => {
@@ -46,6 +49,11 @@ export default function HeaderNav() {
         },
       });
     }
+  };
+
+  const onSelect = (value, option) => {
+    navigate(`/user/${option.key}`);
+    setSearch('');
   };
 
   useEffect(() => {
@@ -76,28 +84,25 @@ export default function HeaderNav() {
       <Row justify='space-between' align='middle'>
         <Col span={5}></Col>
         <Col span={7}>
-          <Input.Group compact className='search__group'>
-            <Input.Search
-              allowClear
-              style={{ width: '100%' }}
-              value={search}
-              placeholder='Let search your friend'
-              onSearch={onSearch}
-              onChange={onChange}
-            />
-          </Input.Group>
-
-          {search && (
-            <Menu className='search_area' style={{ zIndex: 1 }}>
-              {users.map((user) => (
-                <Menu.Item key={user.id}>
-                  <Link to={`/user/${user.id}`} key={user.id}></Link>
+          <AutoComplete
+            style={{
+              width: 300,
+            }}
+            placeholder='Let search your friend'
+            allowClear
+            value={search}
+            onSearch={onSearch}
+            onChange={onChange}
+            onSelect={onSelect}
+          >
+            {users &&
+              users.map((user) => (
+                <Option key={user.id} value={user.first_name}>
                   <Avatar src={user.avatar ? user.avatar : NoAvatar}></Avatar>
                   {user.first_name} {user.last_name}
-                </Menu.Item>
+                </Option>
               ))}
-            </Menu>
-          )}
+          </AutoComplete>
         </Col>
         <Col span={6}>
           <Row justify='center'>
