@@ -120,7 +120,7 @@ export const getUserProfile =
   ({ id }) =>
   async (dispatch) => {
     try {
-      dispatch({ type: Types.LOADING, payload: { loading: true } });
+      dispatch({ type: Types.LOADING, payload: true });
       const res = await ClientAPI.getUser(id);
 
       dispatch({
@@ -128,7 +128,7 @@ export const getUserProfile =
         payload: res.data,
       });
 
-      dispatch({ type: Types.LOADING, payload: { loading: false } });
+      dispatch({ type: Types.LOADING, payload: false });
     } catch (error) {
       dispatch({
         type: Alert_Types.ALERT,

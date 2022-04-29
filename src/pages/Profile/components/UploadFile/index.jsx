@@ -1,9 +1,13 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
+import { Button, message, Upload } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserProfile } from '../../../../redux/actions/authActions';
 
-import { updateAvatar } from '../../../../redux/actions/profileActions';
+import {
+  Profile_Types,
+  updateAvatar,
+} from '../../../../redux/actions/profileActions';
 
 const UploadFile = () => {
   const dispatch = useDispatch();
@@ -15,6 +19,13 @@ const UploadFile = () => {
   const [uploading, setUploading] = useState(false);
 
   const handleUpload = () => {
+    const onSuccess = (status) => {
+      if (status === Profile_Types.SUCCESS) {
+        message.success('You are successfully update avatar');
+        //console.log(dispatch(getUserProfile({ id: user.id })));
+        dispatch(getUserProfile({ id: user.id }));
+      }
+    };
     const formData = new FormData();
     fileList.forEach((file) => {
       formData.append('avatar', file);
@@ -27,7 +38,8 @@ const UploadFile = () => {
       },
     };
 
-    dispatch(updateAvatar(auth, user, formData, config));
+    dispatch(updateAvatar(auth, user, formData, config)).then(onSuccess);
+
     setUploading(false);
     setFileList([]);
   };

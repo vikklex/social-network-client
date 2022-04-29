@@ -21,6 +21,8 @@ import { updateAlbum, updateUser } from '../../redux/actions/profileActions';
 
 import { getUserProfile } from '../../redux/actions/profileActions';
 import { CheckOutlined, PaperClipOutlined } from '@ant-design/icons';
+
+import Spinner from './../../components/Spinner';
 import AddFriend from './components/AddFriend';
 
 const Profile = () => {
@@ -29,7 +31,9 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token);
+  const isLoading = useSelector((state) => state.auth.loading);
   const user = useSelector((state) => state.profile.user);
+  const posts = useSelector((state) => state.post.post);
 
   const [statusText, setStatusText] = useState(user?.status);
   const [edit, setEdit] = useState(false);
@@ -38,8 +42,6 @@ const Profile = () => {
   const [visibleStatus, setVisibleStatus] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
   const [fileList, setFileList] = useState([]);
-
-  const posts = useSelector((state) => state.post.post);
 
   useEffect(() => {
     if (id) {
@@ -110,7 +112,7 @@ const Profile = () => {
   };
 
   return (
-    <>
+    <Spinner spinning={isLoading}>
       <Row justify='center' style={{ marginTop: '3%' }}>
         <Col span={6}>
           <Avatar id={id} user={user} />
@@ -273,7 +275,7 @@ const Profile = () => {
           <Feed />
         </Col>
       </Row>
-    </>
+    </Spinner>
   );
 };
 

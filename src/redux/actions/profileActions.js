@@ -140,6 +140,7 @@ export const updateAvatar = (auth, user, data, config) => async (dispatch) => {
     );
 
     dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+    return Profile_Types.SUCCESS;
   } catch (error) {
     dispatch({
       type: Alert_Types.ALERT,

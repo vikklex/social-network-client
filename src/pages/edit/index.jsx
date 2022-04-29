@@ -17,6 +17,7 @@ import {
 import moment from 'moment';
 
 import { Profile_Types, updateUser } from '../../redux/actions/profileActions';
+import { getUserProfile } from '../../redux/actions/authActions';
 
 import './editProfile.scss';
 
@@ -67,7 +68,7 @@ const EditProfile = () => {
     const onSuccess = (status) => {
       if (status === Profile_Types.SUCCESS) {
         message.success('You are successfully update profile');
-
+        dispatch(getUserProfile({ id: user.id }));
         navigate('/');
       }
     };
