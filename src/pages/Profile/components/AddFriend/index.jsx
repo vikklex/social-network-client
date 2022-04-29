@@ -12,11 +12,15 @@ function AddFriend({ user }) {
   const dispatch = useDispatch();
   const [friend, setFriend] = useState(false);
 
+  const following = profile.followings.find((follow) => follow.id === user.id);
+
   useEffect(() => {
-    if (profile.following.find((follow) => follow._id === user.id)) {
+    if (profile.followings.find((follow) => follow.id === user.id)) {
       setFriend(true);
+    } else {
+      setFriend(false);
     }
-  }, [profile.following, user.id]);
+  }, [profile.followings, user.id]);
 
   const handleAddFriend = () => {
     setFriend(true);

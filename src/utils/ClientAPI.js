@@ -46,7 +46,6 @@ class ClientAPI {
   }
 
   getFriendsPosts(id) {
-    console.log(id);
     return this.instance.get(`v1/posts/friendsPosts/${id}`);
   }
 

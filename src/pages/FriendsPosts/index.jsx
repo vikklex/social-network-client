@@ -6,16 +6,15 @@ import Posts from '../Profile/components/Posts';
 
 const FriendsPosts = () => {
   const dispatch = useDispatch();
-  //const user = useSelector((state) => state.profile.user);
   const user = useSelector((state) => state.auth.profile);
+  const posts = useSelector((state) => state.friendPosts.friendPost);
 
   useEffect(() => {
     if (user) {
       dispatch(getFriendsPosts(user.id));
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, posts.length]);
 
-  const posts = useSelector((state) => state.friendPosts.friendPost);
   return (
     <>
       <Posts posts={posts} isUserProfile={false} />

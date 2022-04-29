@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Avatar, Comment, Image, List, Input, Tooltip } from 'antd';
+import { Avatar, Comment, Image, List, Input, Tooltip, Card } from 'antd';
 
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
@@ -9,13 +9,13 @@ import moment from 'moment';
 
 import NoAvatar from './../../../../assets/img/noavatar.png';
 import { deletePost, updatePost } from '../../../../redux/actions/postActions';
-import { useParams } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
 
 const { TextArea } = Input;
 
 const Post = ({ post, isUserProfile }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.profile.user);
@@ -40,6 +40,7 @@ const Post = ({ post, isUserProfile }) => {
     : `${post.first_name} ${post.last_name}`;
 
   const userAvatar = isUserProfile ? user.avatar : post.avatar;
+  const userId = isUserProfile ? user.id : post.userId;
 
   const actions = [
     <Tooltip key='comment-basic-like' title='Like'>
@@ -79,7 +80,12 @@ const Post = ({ post, isUserProfile }) => {
   ];
 
   return (
-    <>
+    <Card
+      bordered={false}
+      onClick={() => {
+        !isUserProfile && navigate(`/user/${userId}`);
+      }}
+    >
       <Comment
         actions={actions}
         author={<p>{postAuthor}</p>}
@@ -124,7 +130,7 @@ const Post = ({ post, isUserProfile }) => {
           </Tooltip>
         }
       />
-    </>
+    </Card>
   );
 };
 
