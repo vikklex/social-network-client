@@ -1,4 +1,4 @@
-import { Alert_Types } from '../../actions/alertActions';
+import { Alert_Types } from 'redux/actions/alertActions';
 
 const defaultState = {};
 

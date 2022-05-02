@@ -1,18 +1,16 @@
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfile } from '../../../../redux/actions/authActions';
 
-import {
-  Profile_Types,
-  updateAvatar,
-} from '../../../../redux/actions/profileActions';
+import { Button, message, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+
+import { getUserProfile } from 'redux/actions/authActions';
+import { Profile_Types, updateAvatar } from 'redux/actions/profileActions';
 
 const UploadFile = () => {
   const dispatch = useDispatch();
 
-  const { auth } = useSelector((state) => state);
+  const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.profile.user);
 
   const [fileList, setFileList] = useState([]);
@@ -45,6 +43,7 @@ const UploadFile = () => {
     setUploading(false);
     setFileList([]);
   };
+
   const props = {
     beforeUpload: (file) => {
       setFileList([...fileList, file]);
@@ -52,6 +51,7 @@ const UploadFile = () => {
     },
     fileList,
   };
+
   return (
     <>
       <Upload {...props}>

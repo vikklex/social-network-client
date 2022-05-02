@@ -1,19 +1,22 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import Layout from 'antd/lib/layout/layout';
+import { UploadOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Row, Col, message, Alert, Upload } from 'antd';
 import { Card } from 'antd';
 
-import { Types, register } from '../../redux/actions/authActions';
-import './register.scss';
-import Center from '../../components/Center';
-import { useEffect } from 'react';
+import { Types, register } from 'redux/actions/authActions';
+import { updateAvatar } from 'redux/actions/profileActions';
 
-import RegisterIllustration from './.././../assets/img/registration.png';
-import MainLogo from './.././../assets/img/logo.svg';
-import Layout from 'antd/lib/layout/layout';
-import { UploadOutlined } from '@ant-design/icons';
-import { updateAvatar } from '../../redux/actions/profileActions';
+import Center from 'components/Center';
+
+import RegisterIllustration from 'assets/img/registration.png';
+import MainLogo from 'assets/img/logo.svg';
+
+import 'pages/Register/register.scss';
 
 const layout = {
   labelCol: {
@@ -37,11 +40,10 @@ const Register = () => {
   const navigate = useNavigate('/');
   const ref = useRef();
 
-  const auth = useSelector((state) => state.auth);
-
-  const error = useSelector((state) => state.alert.error);
-
   const [fileList, setFileList] = useState([]);
+
+  const auth = useSelector((state) => state.auth);
+  const error = useSelector((state) => state.alert.error);
 
   const handleUpload = (data) => {
     const formData = new FormData();
@@ -113,12 +115,7 @@ const Register = () => {
               bordered={false}
               cover={<img alt='example' src={RegisterIllustration} />}
             >
-              {error && (
-                <>
-                  <Alert message={error} type='error' />
-                  <br />
-                </>
-              )}
+              {error && <Alert message={error} type='error' />}
 
               <Form
                 {...layout}

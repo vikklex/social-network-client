@@ -1,5 +1,5 @@
-import { DeleteData } from '../../actions/alertActions';
-import { Post_Types } from './../../actions/postActions';
+import { DeleteData } from 'redux/actions/alertActions';
+import { Post_Types } from 'redux/actions/postActions';
 
 const defaultState = {
   post: [],
@@ -13,11 +13,13 @@ const postReducer = (state = defaultState, action) => {
         ...state,
         post: [...state.post, action.payload],
       };
+
     case Post_Types.LOADING_POSTS:
       return {
         ...state,
         loading: action.payload,
       };
+
     case Post_Types.GET_POSTS:
       return {
         ...state,
@@ -29,6 +31,7 @@ const postReducer = (state = defaultState, action) => {
         ...state,
         post: DeleteData(state.post, action.payload.id),
       };
+
     default:
       return state;
   }

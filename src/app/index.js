@@ -3,19 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from 'antd';
 
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Profile from '../pages/Profile';
-import EditProfile from '../pages/Edit';
-import FriendsPosts from '../pages/FriendsPosts';
-import Friends from '../pages/Friends';
-import Settings from '../pages/Settings';
+import Login from 'pages/Login';
+import Register from 'pages/Register';
+import Profile from 'pages/Profile';
+import EditProfile from 'pages/Edit';
+import FriendsPosts from 'pages/FriendsPosts';
+import Friends from 'pages/Friends';
+import Settings from 'pages/Settings';
 
-import HeaderNav from './components/Header/Header';
-import { FullMenu } from './components/Menu/FullMenu';
-import PrivateRoute from '../components/PrivateRoute';
+import HeaderNav from 'app/components/Header/Header';
+import { FullMenu } from 'app/components/Menu/FullMenu';
+import PrivateRoute from 'components/PrivateRoute';
 
-import { getUserProfile } from '../redux/actions/authActions';
+import { getUserProfile } from 'redux/actions/authActions';
 
 import jwt_decode from 'jwt-decode';
 
@@ -48,12 +48,14 @@ function App() {
             <HeaderNav />
           </Header>
         )}
+
         <Layout>
           {token && (
             <Sider>
               <FullMenu />
             </Sider>
           )}
+
           <Content>
             <Routes>
               {isReady && (

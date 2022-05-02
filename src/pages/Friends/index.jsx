@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Tabs } from 'antd';
 
-import FriendsList from './FriendsList';
+import FriendsList from 'pages/Friends/FriendsList';
 
-import { getUserProfile } from '../../redux/actions/authActions';
+import { getUserProfile } from 'redux/actions/authActions';
 
 const { TabPane } = Tabs;
 
@@ -24,16 +24,14 @@ const Friends = () => {
   ]);
 
   return (
-    <>
-      <Tabs defaultActiveKey='1'>
-        <TabPane tab='Friends' key='1'>
-          <FriendsList persons={profile.followings} />
-        </TabPane>
-        <TabPane tab='Followers' key='2'>
-          <FriendsList persons={profile.followers} />
-        </TabPane>
-      </Tabs>
-    </>
+    <Tabs defaultActiveKey='1'>
+      <TabPane tab='Friends' key='1'>
+        <FriendsList persons={profile.followings} />
+      </TabPane>
+      <TabPane tab='Followers' key='2'>
+        <FriendsList persons={profile.followers} />
+      </TabPane>
+    </Tabs>
   );
 };
 

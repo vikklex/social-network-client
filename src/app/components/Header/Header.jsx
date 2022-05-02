@@ -12,11 +12,11 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 
-import { logout } from './../../../redux/actions/authActions';
-import ClientAPI from './../../../utils/ClientAPI';
-import './header.scss';
+import { logout } from 'redux/actions/authActions';
+import ClientAPI from 'utils/ClientAPI';
+import 'app/components/Header/header.scss';
 
-import NoAvatar from './../../../assets/img/noavatar.png';
+import NoAvatar from 'assets/img/noavatar.png';
 const { Option } = AutoComplete;
 
 export default function HeaderNav() {

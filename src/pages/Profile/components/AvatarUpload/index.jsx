@@ -1,10 +1,12 @@
 import { Popover } from 'antd';
-import UploadFile from '../UploadFile';
 
-import NoAvatar from './../../../../assets/img/noavatar.png';
+import UploadFile from 'pages/Profile/components/UploadFile';
+
+import NoAvatar from 'assets/img/noavatar.png';
 
 const Avatar = ({ id, user }) => {
   const content = <UploadFile />;
+
   const image = (
     <img
       src={user.avatar ? user.avatar : NoAvatar}
@@ -12,6 +14,7 @@ const Avatar = ({ id, user }) => {
       className='profile__personal_avatar'
     />
   );
+
   return (
     <>
       {!id && (

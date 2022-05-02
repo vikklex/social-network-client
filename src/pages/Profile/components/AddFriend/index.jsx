@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'antd';
-import {
-  addFriend,
-  deleteFriend,
-} from '../../../../redux/actions/profileActions';
+
+import { addFriend, deleteFriend } from 'redux/actions/profileActions';
 
 const AddFriend = ({ user }) => {
-  const profile = useSelector((state) => state.auth.profile); // auth user
-
   const dispatch = useDispatch();
+
+  const profile = useSelector((state) => state.auth.profile);
+
   const [friend, setFriend] = useState(false);
 
   useEffect(() => {

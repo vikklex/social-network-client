@@ -1,4 +1,4 @@
-import { FriendsPost_Types } from '../../actions/friendPostsAction';
+import { FriendsPost_Types } from 'redux/actions/friendPostsAction';
 
 const defaultState = {
   friendPost: [],

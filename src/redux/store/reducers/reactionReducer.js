@@ -1,4 +1,4 @@
-import { Reaction_Types } from '../../actions/reactionActions';
+import { Reaction_Types } from 'redux/actions/reactionActions';
 
 const defaultState = {
   reactions: [],
@@ -12,11 +12,13 @@ const reactionReducer = (state = defaultState, action) => {
         ...state,
         reactions: [...state.reactions, action.payload],
       };
+
     case Reaction_Types.LOADING_REACTIONS:
       return {
         ...state,
         loading: action.payload,
       };
+
     case Reaction_Types.GET_POST_REACTIONS:
       return {
         ...state,

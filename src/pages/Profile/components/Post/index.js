@@ -14,7 +14,7 @@ import {
   getPostReactions,
 } from '../../../../redux/actions/reactionActions';
 
-import { DATE_FORMAT } from './../../../../utils/Variables';
+import { DATE_FORMAT } from '../../../../utils/Constants';
 import NoAvatar from './../../../../assets/img/noavatar.png';
 
 const { TextArea } = Input;

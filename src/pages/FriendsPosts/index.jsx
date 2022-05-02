@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFriendsPosts } from '../../redux/actions/friendPostsAction';
 
-import Posts from '../Profile/components/Posts';
+import Posts from 'pages/Profile/components/Posts';
 
 const FriendsPosts = () => {
   const dispatch = useDispatch();

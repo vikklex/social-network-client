@@ -16,12 +16,12 @@ import {
   Layout,
 } from 'antd';
 
-import './login.scss';
-import { Types, login } from '../../redux/actions/authActions';
-import Center from '../../components/Center';
+import 'pages/Login/login.scss';
+import { Types, login } from 'redux/actions/authActions';
+import Center from 'components/Center';
 
-import LoginIllustration from './.././../assets/img/login.jpg';
-import MainLogo from './.././../assets/img/logo.svg';
+import LoginIllustration from 'assets/img/login.jpg';
+import MainLogo from 'assets/img/logo.svg';
 
 const Login = () => {
   const dispatch = useDispatch();

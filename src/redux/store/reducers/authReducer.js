@@ -1,5 +1,5 @@
-import { storage } from '../../../storage';
-import { Types } from '../../actions/authActions';
+import { storage } from 'storage';
+import { Types } from 'redux/actions/authActions';
 
 const defaultState = {
   loading: false,

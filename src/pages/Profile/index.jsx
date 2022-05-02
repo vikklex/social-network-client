@@ -2,32 +2,31 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { Col, Row, Divider, Button, Upload } from 'antd';
+import { CheckOutlined, PaperClipOutlined } from '@ant-design/icons';
 
 import jwt_decode from 'jwt-decode';
 
-import Feed from './components/Feed';
-import NewPost from './components/NewPost';
-import Album from './components/Album';
-import ModalArea from './Modal';
-import { getPosts } from '../../redux/actions/postActions';
+import { getPosts } from 'redux/actions/postActions';
+import { updateAlbum } from 'redux/actions/profileActions';
+import { getUserProfile } from 'redux/actions/profileActions';
 
-import './profile.scss';
-import { Navigate } from 'react-router-dom';
+import Spinner from 'components/Spinner';
 
-import Avatar from './components/AvatarUpload';
-import { updateAlbum } from '../../redux/actions/profileActions';
+import Feed from 'pages/Profile/components/Feed';
+import NewPost from 'pages/Profile/components/NewPost';
+import Album from 'pages/Profile/components/Album';
+import ModalArea from 'pages/Profile/Modal';
+import Avatar from 'pages/Profile/components/AvatarUpload';
+import AddFriend from 'pages/Profile/components/AddFriend';
+import Status from 'pages/Profile/components/Status';
+import UserInfo from 'pages/Profile/components/UserInfo';
+import UserNumbers from 'pages/Profile/components/UserNumbers';
+import FriendsPreview from 'pages/Profile/components/FriendsPreview';
 
-import { getUserProfile } from '../../redux/actions/profileActions';
-import { CheckOutlined, PaperClipOutlined } from '@ant-design/icons';
-
-import Spinner from './../../components/Spinner';
-import AddFriend from './components/AddFriend';
-import Status from './components/Status';
-import UserInfo from './components/UserInfo';
-import UserNumbers from './components/UserNumbers';
-import FriendsPreview from './components/FriendsPreview';
+import 'pages/Profile/profile.scss';
 
 const Profile = () => {
   const { id } = useParams();

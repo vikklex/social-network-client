@@ -1,4 +1,4 @@
-import { Comment_Types } from './../../actions/commentActions';
+import { Comment_Types } from 'redux/actions/commentActions';
 
 const defaultState = {
   comment: [],
@@ -12,16 +12,19 @@ const commentReducer = (state = defaultState, action) => {
         ...state,
         comment: [...state.comment, action.payload],
       };
+
     case Comment_Types.LOADING_COMMENTS:
       return {
         ...state,
         loading: action.payload,
       };
+
     case Comment_Types.GET_COMMENTS:
       return {
         ...state,
         comment: action.payload,
       };
+
     default:
       return state;
   }

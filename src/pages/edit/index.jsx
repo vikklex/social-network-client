@@ -16,8 +16,8 @@ import {
 
 import moment from 'moment';
 
-import { Profile_Types, updateUser } from '../../redux/actions/profileActions';
-import { getUserProfile } from '../../redux/actions/authActions';
+import { Profile_Types, updateUser } from 'redux/actions/profileActions';
+import { getUserProfile } from 'redux/actions/authActions';
 
 import './editProfile.scss';
 

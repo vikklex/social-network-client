@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, Card, Divider, Form, Input, message, Tabs } from 'antd';
 
-import SettingCard from './SettingCard';
+import { Profile_Types, updateUser } from 'redux/actions/profileActions';
+import { getUserProfile } from 'redux/actions/authActions';
 
-import { Profile_Types, updateUser } from '../../redux/actions/profileActions';
-import { getUserProfile } from '../../redux/actions/authActions';
+import SettingCard from 'pages/Settings/SettingCard';
 
 const { TabPane } = Tabs;
 
@@ -60,18 +60,21 @@ const Settings = () => {
               checked={user.posts_visibility}
             />
           </Form.Item>
+
           <Form.Item name='friends_visibility'>
             <SettingCard
               title={'Show my friend list'}
               checked={user.friends_visibility}
             />
           </Form.Item>
+
           <Form.Item name='album_visibility'>
             <SettingCard
               title={'Show my photo-album'}
               checked={user.album_visibility}
             />
           </Form.Item>
+
           <Form.Item>
             <Button type='primary' htmlType='submit' className='settings__btn'>
               Save changes
@@ -79,6 +82,7 @@ const Settings = () => {
           </Form.Item>
         </Form>
       </TabPane>
+
       <TabPane tab='Security' key='2'>
         <Divider className='divider'>Security</Divider>
         <Card>

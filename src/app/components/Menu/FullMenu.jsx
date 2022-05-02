@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useLocation } from 'react-router-dom';
 
 import { Menu } from 'antd';
@@ -7,15 +6,14 @@ import { Menu } from 'antd';
 import {
   HomeOutlined,
   UsergroupAddOutlined,
-  IdcardOutlined,
   ContactsOutlined,
   HeartOutlined,
   SettingOutlined,
   CalendarFilled,
 } from '@ant-design/icons';
 
-import './menu.scss';
-import MenuItem from './MenuItem/MenuItem';
+import 'app/components/Menu/menu.scss';
+import MenuItem from 'app/components/Menu/MenuItem/MenuItem';
 
 export const FullMenu = () => {
   const { pathname } = useLocation();

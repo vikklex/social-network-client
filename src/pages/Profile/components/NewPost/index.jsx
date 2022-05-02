@@ -41,6 +41,7 @@ const NewPost = () => {
     dispatch(updatePostImage(postId, formData, config));
     setFileList([]);
   };
+
   const handleChange = (e) => {
     setContent(e.target.value);
   };
