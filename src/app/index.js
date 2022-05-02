@@ -9,6 +9,7 @@ import Profile from '../pages/Profile';
 import EditProfile from '../pages/Edit';
 import FriendsPosts from '../pages/FriendsPosts';
 import Friends from '../pages/Friends';
+import Settings from '../pages/Settings';
 
 import HeaderNav from './components/Header/Header';
 import { FullMenu } from './components/Menu/FullMenu';
@@ -41,51 +42,55 @@ function App() {
 
   return (
     <Router>
-      {token && (
-        <Header>
-          <HeaderNav />
-        </Header>
-      )}
-
-      <Layout>
+      <Layout className='layout'>
         {token && (
-          <Sider>
-            <FullMenu />
-          </Sider>
+          <Header>
+            <HeaderNav />
+          </Header>
         )}
+        <Layout>
+          {token && (
+            <Sider>
+              <FullMenu />
+            </Sider>
+          )}
+          <Content>
+            <Routes>
+              {isReady && (
+                <>
+                  <Route
+                    path='/'
+                    element={token ? <Profile /> : <Login />}
+                  ></Route>
 
-        <Content>
-          <Routes>
-            {isReady && (
-              <>
-                <Route
-                  path='/'
-                  element={token ? <Profile /> : <Login />}
-                ></Route>
+                  <Route exact path='/login' element={<Login />} />
 
-                <Route exact path='/login' element={<Login />} />
+                  <Route exact path='/register' element={<Register />} />
 
-                <Route exact path='/register' element={<Register />} />
+                  <Route exact path='/user/:id' element={<PrivateRoute />}>
+                    <Route exact path='/user/:id' element={<Profile />} />
+                  </Route>
 
-                <Route exact path='/user/:id' element={<PrivateRoute />}>
-                  <Route exact path='/user/:id' element={<Profile />} />
-                </Route>
+                  <Route exact path='/posts' element={<PrivateRoute />}>
+                    <Route exact path='/posts' element={<FriendsPosts />} />
+                  </Route>
 
-                <Route exact path='/posts' element={<PrivateRoute />}>
-                  <Route exact path='/posts' element={<FriendsPosts />} />
-                </Route>
+                  <Route exact path='/friends' element={<PrivateRoute />}>
+                    <Route exact path='/friends' element={<Friends />} />
+                  </Route>
 
-                <Route exact path='/friends' element={<PrivateRoute />}>
-                  <Route exact path='/friends' element={<Friends />} />
-                </Route>
+                  <Route exact path='/edit' element={<PrivateRoute />}>
+                    <Route exact path='/edit' element={<EditProfile />} />
+                  </Route>
 
-                <Route exact path='/edit' element={<PrivateRoute />}>
-                  <Route exact path='/edit' element={<EditProfile />} />
-                </Route>
-              </>
-            )}
-          </Routes>
-        </Content>
+                  <Route exact path='/settings' element={<PrivateRoute />}>
+                    <Route exact path='/settings' element={<Settings />} />
+                  </Route>
+                </>
+              )}
+            </Routes>
+          </Content>
+        </Layout>
       </Layout>
     </Router>
   );

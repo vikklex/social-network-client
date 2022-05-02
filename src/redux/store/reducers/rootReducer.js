@@ -6,6 +6,7 @@ import profile from './profileReducer';
 import post from './postReducer';
 import comment from './commentReducer';
 import friendPosts from './friendsPostReducer';
+import reaction from './reactionReducer';
 
 export default combineReducers({
   auth,
@@ -14,4 +15,5 @@ export default combineReducers({
   post,
   friendPosts,
   comment,
+  reaction,
 });

@@ -87,15 +87,10 @@ $text-secondary: #818c99;
 }
 
 .site-card-border-less-wrapper {
-  background: #ececec;
   width: 100%;
 }
 .desc {
   padding: 0;
-}
-
-.ant-card * {
-  padding-left: 0 !important;
 }
 
 .personal__album {
@@ -112,4 +107,13 @@ $text-secondary: #818c99;
   font-size: 14px;
   color: $text-secondary;
   cursor: pointer;
+}
+
+.ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
+  margin: 10px 0px !important;
+}
+
+.edit__button {
+  background-color: rgb(206, 206, 206) !important;
+  border: none !important;
 }

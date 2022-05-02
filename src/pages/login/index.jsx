@@ -13,6 +13,7 @@ import {
   Col,
   message,
   Alert,
+  Layout,
 } from 'antd';
 
 import './login.scss';
@@ -21,7 +22,6 @@ import Center from '../../components/Center';
 
 import LoginIllustration from './.././../assets/img/login.jpg';
 import MainLogo from './.././../assets/img/logo.svg';
-import Layout from 'antd/lib/layout/layout';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const Login = () => {
   });
 
   return (
-    <Layout>
+    <Layout className='login__layout'>
       <Center minHeight='70vh'>
         <Row>
           <Col span={12}>
@@ -67,6 +67,7 @@ const Login = () => {
           <Col span={12}>
             <Card
               hoverable
+              bordered={false}
               className='register__card'
               cover={<img alt='example' src={LoginIllustration} />}
             >
@@ -137,12 +138,19 @@ const Login = () => {
                     Submit
                   </Button>
                 </Form.Item>
+                <Form.Item
+                  wrapperCol={{
+                    offset: 8,
+                  }}
+                >
+                  <Button
+                    type='primary'
+                    style={{ backgroundColor: 'silver', border: 'none' }}
+                  >
+                    <Link to='/register'>Create account</Link>
+                  </Button>
+                </Form.Item>
               </Form>
-              <div className='login__register_button'>
-                <Button type='primary'>
-                  <Link to='/register'>Create account</Link>
-                </Button>
-              </div>
             </Card>
           </Col>
         </Row>

@@ -35,8 +35,6 @@ export const FullMenu = () => {
         text='My friends'
       />
 
-      <MenuItem link='/about' icon={<IdcardOutlined />} text='About me' />
-
       <MenuItem
         link='/posts'
         icon={<ContactsOutlined />}

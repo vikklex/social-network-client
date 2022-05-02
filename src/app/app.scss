@@ -1,10 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .ant-layout {
-  background-color: rgb(123, 162, 235);
-}
-.ant-layout-content {
-  background-color: white;
+  min-height: 93vh;
 }
 
 aside {
@@ -15,5 +12,23 @@ aside {
 }
 
 main {
-  margin: 3vh 26vh 0 5vh;
+  margin: 3vh 3vh 0 5vh;
+  background-color: white;
+}
+
+.divider {
+  margin-top: 4% !important;
+  margin-bottom: 5% !important;
+}
+
+.settings__btn {
+  border: none !important;
+  width: 20%;
+  margin: 3% 0 0 2%;
+}
+
+.settings__password_btn {
+  width: 20%;
+  margin: 3% 0;
+  border: none;
 }

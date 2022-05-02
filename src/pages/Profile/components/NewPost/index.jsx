@@ -1,80 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  Comment,
-  Avatar,
-  Form,
-  Button,
-  Input,
-  Row,
-  Col,
-  Tag,
-  Upload,
-} from 'antd';
-import { PictureOutlined, PushpinFilled } from '@ant-design/icons';
+import { Comment, Avatar } from 'antd';
 
 import { createPost } from '../../../../redux/actions/postActions';
 import { updatePostImage } from '../../../../redux/actions/postActions';
 
 import NoAvatar from './../../../../assets/img/noavatar.png';
 import './newPost.scss';
-
-const { TextArea } = Input;
-
-const Editor = ({
-  onChange,
-  onSubmit,
-  submitting,
-  value,
-  user,
-  props,
-  fileList,
-}) => {
-  return (
-    <>
-      <Form.Item>
-        <TextArea
-          className='new__post'
-          rows={4}
-          onChange={onChange}
-          value={value}
-          placeholder={`What's new, ${user.first_name}?`}
-        />
-
-        <Row>
-          <Col span={6}>
-            <Upload {...props}>
-              <Button icon={<PictureOutlined className='post__icon' />}>
-                Select File
-              </Button>
-            </Upload>
-            <Button
-              type='primary'
-              disabled={fileList.length === 0}
-              style={{ marginTop: 16 }}
-            ></Button>
-          </Col>
-          <Col span={3}>
-            <PushpinFilled className='post__icon' />
-            <Tag color='blue'>Tag</Tag>
-          </Col>
-        </Row>
-      </Form.Item>
-
-      <Form.Item>
-        <Button
-          htmlType='submit'
-          loading={submitting}
-          onClick={onSubmit}
-          type='primary'
-        >
-          Share
-        </Button>
-      </Form.Item>
-    </>
-  );
-};
+import Editor from './components/Editor';
 
 const NewPost = () => {
   const user = useSelector((state) => state.profile.user);
@@ -119,7 +53,8 @@ const NewPost = () => {
 
   return (
     <Comment
-      avatar={<Avatar src={user.avatar || NoAvatar} alt='Han Solo' />}
+      avatar={<Avatar src={user.avatar || NoAvatar} alt='Avatar' />}
+      style={{ marginTop: '12%' }}
       content={
         <Editor
           value={[content]}

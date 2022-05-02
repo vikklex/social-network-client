@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Avatar, Comment, Image, List, Input, Tooltip, Card } from 'antd';
@@ -7,9 +8,14 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
-import NoAvatar from './../../../../assets/img/noavatar.png';
 import { deletePost, updatePost } from '../../../../redux/actions/postActions';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  createReaction,
+  getPostReactions,
+} from '../../../../redux/actions/reactionActions';
+
+import { DATE_FORMAT } from './../../../../utils/Variables';
+import NoAvatar from './../../../../assets/img/noavatar.png';
 
 const { TextArea } = Input;
 
@@ -19,12 +25,63 @@ const Post = ({ post, isUserProfile }) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.profile.user);
+  const profile = useSelector((state) => state.auth.profile);
 
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [isEditMode, setIsEditMode] = useState(false);
-
   const [text, setText] = useState(post.desc);
+
+  useEffect(() => {
+    if (post) {
+      dispatch(getPostReactions(post.id)).then((data) => {
+        const likes = data.filter(
+          (reaction) => reaction.reactionType === 'like',
+        );
+        const dislikes = data.filter(
+          (reaction) => reaction.reactionType === 'dislike',
+        );
+        setLikes(likes.length);
+        setDislikes(dislikes.length);
+      });
+    }
+  }, [post, dispatch]);
+
+  const setLike = () => {
+    dispatch(
+      createReaction({
+        reactionType: 'like',
+        userId: profile.id,
+        postId: post.id,
+      }),
+    ).then((data) => {
+      const likes = data.filter((reaction) => reaction.reactionType === 'like');
+      const dislikes = data.filter(
+        (reaction) => reaction.reactionType === 'dislike',
+      );
+
+      setLikes(likes.length);
+      setDislikes(dislikes.length);
+    });
+  };
+
+  const dislike = () => {
+    dispatch(
+      createReaction({
+        reactionType: 'dislike',
+        userId: profile.id,
+        postId: post.id,
+      }),
+    ).then((data) => {
+      const likes = data.filter((reaction) => reaction.reactionType === 'like');
+      const dislikes = data.filter(
+        (reaction) => reaction.reactionType === 'dislike',
+      );
+
+      setDislikes(dislikes.length);
+      setLikes(likes.length);
+    });
+  };
 
   const savePost = () => {
     dispatch(updatePost(post.id, user.id, text));
@@ -35,24 +92,25 @@ const Post = ({ post, isUserProfile }) => {
     dispatch(deletePost(post, user.id));
   };
 
-  const postAuthor = isUserProfile
-    ? `${user.first_name} ${user.last_name}`
-    : `${post.first_name} ${post.last_name}`;
-
-  const userAvatar = isUserProfile ? user.avatar : post.avatar;
+  const targetData = isUserProfile ? user : post;
   const userId = isUserProfile ? user.id : post.userId;
+
+  const postAuthor = `${targetData.first_name} ${targetData.last_name}`;
+  const userAvatar = targetData.avatar;
 
   const actions = [
     <Tooltip key='comment-basic-like' title='Like'>
-      <span>
+      <span onClick={setLike}>
         <LikeOutlined />
         <span className='comment-action'>{likes}</span>
       </span>
     </Tooltip>,
 
     <Tooltip key='comment-basic-dislike' title='Dislike'>
-      <DislikeOutlined />
-      <span className='comment-action'>{dislikes}</span>
+      <span onClick={dislike}>
+        <DislikeOutlined />
+        <span className='comment-action'>{dislikes}</span>
+      </span>
     </Tooltip>,
 
     <span key='comment-basic-reply-to'>Reply to</span>,
@@ -80,16 +138,18 @@ const Post = ({ post, isUserProfile }) => {
   ];
 
   return (
-    <Card
-      bordered={false}
-      onClick={() => {
-        !isUserProfile && navigate(`/user/${userId}`);
-      }}
-    >
+    <Card bordered={false} style={{ width: '100%' }}>
       <Comment
         actions={actions}
         author={<p>{postAuthor}</p>}
-        avatar={<Avatar src={userAvatar ? userAvatar : NoAvatar} />}
+        avatar={
+          <Avatar
+            onClick={() => {
+              !isUserProfile && navigate(`/user/${userId}`);
+            }}
+            src={userAvatar ? userAvatar : NoAvatar}
+          />
+        }
         content={
           <>
             <TextArea
@@ -125,7 +185,7 @@ const Post = ({ post, isUserProfile }) => {
           </>
         }
         datetime={
-          <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
+          <Tooltip title={moment().format(DATE_FORMAT)}>
             <span>{moment(post.createdAt).fromNow()}</span>
           </Tooltip>
         }

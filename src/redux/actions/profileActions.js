@@ -73,6 +73,9 @@ export const updateUser =
     city,
     from,
     status,
+    posts_visibility,
+    friends_visibility,
+    album_visibility,
   }) =>
   async (dispatch) => {
     try {
@@ -96,6 +99,9 @@ export const updateUser =
         city,
         from,
         status,
+        posts_visibility,
+        friends_visibility,
+        album_visibility,
       ).then((resp) => {
         dispatch({
           type: Types.SET_USER,

@@ -6,13 +6,11 @@ import {
   deleteFriend,
 } from '../../../../redux/actions/profileActions';
 
-function AddFriend({ user }) {
+const AddFriend = ({ user }) => {
   const profile = useSelector((state) => state.auth.profile); // auth user
 
   const dispatch = useDispatch();
   const [friend, setFriend] = useState(false);
-
-  const following = profile.followings.find((follow) => follow.id === user.id);
 
   useEffect(() => {
     if (profile.followings.find((follow) => follow.id === user.id)) {
@@ -46,6 +44,6 @@ function AddFriend({ user }) {
       )}
     </>
   );
-}
+};
 
 export default AddFriend;

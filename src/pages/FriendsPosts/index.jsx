@@ -6,6 +6,7 @@ import Posts from '../Profile/components/Posts';
 
 const FriendsPosts = () => {
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.auth.profile);
   const posts = useSelector((state) => state.friendPosts.friendPost);
 
@@ -15,11 +16,7 @@ const FriendsPosts = () => {
     }
   }, [user, dispatch, posts.length]);
 
-  return (
-    <>
-      <Posts posts={posts} isUserProfile={false} />
-    </>
-  );
+  return <Posts posts={posts} isUserProfile={false} />;
 };
 
 export default FriendsPosts;

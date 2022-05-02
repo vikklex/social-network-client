@@ -33,8 +33,10 @@ class ClientAPI {
     return this.instance.post('/v1/auth/logout');
   }
 
-  searchUser(username) {
-    return this.instance.get(`/v1/users/search/search?username=${username}`);
+  searchUser(username, id) {
+    return this.instance.put(`/v1/users/search/search?username=${username}`, {
+      userId: id,
+    });
   }
 
   getUser(id) {
@@ -66,6 +68,9 @@ class ClientAPI {
     city,
     from,
     status,
+    posts_visibility,
+    friends_visibility,
+    album_visibility,
   ) {
     return this.instance.put(`v1/users/${id}`, {
       userId: id,
@@ -80,6 +85,9 @@ class ClientAPI {
       city: city,
       from: from,
       status: status,
+      posts_visibility: posts_visibility,
+      friends_visibility: friends_visibility,
+      album_visibility: album_visibility,
     });
   }
 
@@ -105,6 +113,7 @@ class ClientAPI {
       desc: content,
     });
   }
+
   updatePost(id, userId, desc) {
     return this.instance.put(`v1/posts/${id}`, userId, desc);
   }
@@ -115,6 +124,18 @@ class ClientAPI {
 
   deletePost(id, userId) {
     return this.instance.delete(`v1/posts/${id}`, userId);
+  }
+
+  createReaction({ reactionType, userId, postId }) {
+    return this.instance.post('v1/reactions/', {
+      reactionType: reactionType,
+      userId: userId,
+      postId: postId,
+    });
+  }
+
+  getAllPostReactions(postId) {
+    return this.instance.get(`v1/reactions/${postId}`);
   }
 }
 

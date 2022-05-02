@@ -58,7 +58,7 @@ export default function HeaderNav() {
 
   useEffect(() => {
     if (search && token) {
-      ClientAPI.searchUser(search)
+      ClientAPI.searchUser(search, profile.id)
         .then((res) => {
           setUsers(res.data.msg);
         })

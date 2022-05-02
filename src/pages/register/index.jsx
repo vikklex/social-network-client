@@ -42,14 +42,12 @@ const Register = () => {
   const error = useSelector((state) => state.alert.error);
 
   const [fileList, setFileList] = useState([]);
-  const [uploading, setUploading] = useState(false);
 
   const handleUpload = (data) => {
     const formData = new FormData();
     fileList.forEach((file) => {
       formData.append('avatar', file);
     });
-    setUploading(true);
 
     const config = {
       headers: {
@@ -58,7 +56,6 @@ const Register = () => {
     };
 
     dispatch(updateAvatar(auth, data.user, formData, config));
-    setUploading(false);
     setFileList([]);
 
     return 'success';
@@ -98,7 +95,7 @@ const Register = () => {
   };
 
   return (
-    <Layout>
+    <Layout className='register__layout'>
       <Center>
         <Row>
           <Col span={12}>
@@ -113,6 +110,7 @@ const Register = () => {
             <Card
               hoverable
               className='register__card'
+              bordered={false}
               cover={<img alt='example' src={RegisterIllustration} />}
             >
               {error && (
@@ -225,9 +223,9 @@ const Register = () => {
                   <Input.Password />
                 </Form.Item>
 
-                <Form.Item>
+                <Form.Item label='Choose Avatar'>
                   <Upload {...props}>
-                    <Button icon={<UploadOutlined />}>Select File</Button>
+                    <Button icon={<UploadOutlined />}>Select file</Button>
                   </Upload>
                 </Form.Item>
 
@@ -236,12 +234,15 @@ const Register = () => {
                     Submit
                   </Button>
                 </Form.Item>
+                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                  <Button
+                    type='primary'
+                    style={{ backgroundColor: 'silver', border: 'none' }}
+                  >
+                    <Link to='/login'>Already have an account?</Link>
+                  </Button>
+                </Form.Item>
               </Form>
-              <div className='login__register_button'>
-                <Button type='primary'>
-                  <Link to='/login'>Already have an account?</Link>
-                </Button>
-              </div>
             </Card>
           </Col>
         </Row>

@@ -75,7 +75,6 @@ const EditProfile = () => {
 
     const data = {
       id: user.id,
-      status: user.status,
       ...values,
     };
 
@@ -94,14 +93,7 @@ const EditProfile = () => {
             name='register'
             onFinish={onFinish}
             initialValues={{
-              first_name: user?.first_name,
-              last_name: user?.last_name,
-              desc: user?.desc,
-              gender: user?.gender,
-              relationships: user?.relationships,
-              city: user?.city,
-              from: user?.from,
-              job: user?.job,
+              ...user,
               birthday: user?.birthday ? moment(user?.birthday) : moment(),
             }}
           >

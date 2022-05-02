@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Col, Row, Card, Divider, Button, Input, Upload } from 'antd';
+import { Col, Row, Divider, Button, Upload } from 'antd';
 
 import jwt_decode from 'jwt-decode';
 
@@ -17,13 +17,17 @@ import './profile.scss';
 import { Navigate } from 'react-router-dom';
 
 import Avatar from './components/AvatarUpload';
-import { updateAlbum, updateUser } from '../../redux/actions/profileActions';
+import { updateAlbum } from '../../redux/actions/profileActions';
 
 import { getUserProfile } from '../../redux/actions/profileActions';
 import { CheckOutlined, PaperClipOutlined } from '@ant-design/icons';
 
 import Spinner from './../../components/Spinner';
 import AddFriend from './components/AddFriend';
+import Status from './components/Status';
+import UserInfo from './components/UserInfo';
+import UserNumbers from './components/UserNumbers';
+import FriendsPreview from './components/FriendsPreview';
 
 const Profile = () => {
   const { id } = useParams();
@@ -33,13 +37,12 @@ const Profile = () => {
   const token = useSelector((state) => state.auth.token);
   const isLoading = useSelector((state) => state.auth.loading);
   const user = useSelector((state) => state.profile.user);
+  const profile = useSelector((state) => state.auth.profile);
   const posts = useSelector((state) => state.post.post);
 
   const [statusText, setStatusText] = useState(user?.status);
   const [edit, setEdit] = useState(false);
 
-  const [visibleInput, setVisibleInput] = useState(true);
-  const [visibleStatus, setVisibleStatus] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
   const [fileList, setFileList] = useState([]);
 
@@ -63,29 +66,6 @@ const Profile = () => {
   if (!user) {
     return null;
   }
-
-  const onPressEnter = () => {
-    dispatch(updateUser({ status: statusText, id: user.id }));
-    setStatusText('');
-    setVisibleInput(true);
-    setVisibleStatus(false);
-  };
-
-  const changeVisibility = () => {
-    setVisibleInput(false);
-    setVisibleStatus(true);
-  };
-
-  const birthday = user.birthday
-    ? new Date(user.birthday).toLocaleDateString()
-    : '';
-
-  const statusDisplay = visibleStatus
-    ? { display: 'none' }
-    : { display: 'block' };
-
-  const inputDisplay =
-    user.status && visibleInput ? { display: 'none' } : { display: 'block' };
 
   const props = {
     beforeUpload: (file) => {
@@ -117,11 +97,27 @@ const Profile = () => {
         <Col span={6}>
           <Avatar id={id} user={user} />
           {!id && (
-            <Button type='primary' size='large' onClick={() => setEdit(true)}>
+            <Button
+              type='primary'
+              onClick={() => setEdit(true)}
+              className='edit__button'
+            >
               Edit profile
             </Button>
           )}
           {id && <AddFriend user={user} />}
+          {(user.friends_visibility || !id) && (
+            <FriendsPreview
+              user={user}
+              profile={profile}
+              id={id}
+              style={{
+                minHeight: '5%',
+                maxHeight: '14%',
+                overflow: 'scroll',
+              }}
+            />
+          )}
         </Col>
 
         <Col span={16} offset={1}>
@@ -134,147 +130,94 @@ const Profile = () => {
             </Col>
           </Row>
           <Row className='status-desc'>
-            {user.status && (
-              <span onClick={changeVisibility} style={statusDisplay}>
-                {user.status}
-              </span>
-            )}
-            {!id && (
-              <Input
-                placeholder={user.status || 'Set status...'}
-                bordered={false}
-                onPressEnter={onPressEnter}
-                value={statusText}
-                onChange={(event) => setStatusText(event.target.value)}
-                style={inputDisplay}
-              />
-            )}
+            <Status
+              id={id}
+              user={user}
+              statusText={statusText}
+              setStatusText={setStatusText}
+            />
           </Row>
           {edit && <Navigate to='/edit' />}
           <Row>
-            <div className='site-card-border-less-wrapper profile'>
-              <Card title='Personal info:' bordered={false}>
-                <p>
-                  <span className='personal_primary_key'>Birthday:</span>
-                  <span className='personal_primary_value'>{birthday}</span>
-                </p>
-
-                <p>
-                  <span className='personal_primary_key'>City:</span>
-                  <span className='personal_primary_value'>{user.city}</span>
-                </p>
-
-                <p>
-                  <span className='personal_primary_key'>From:</span>
-                  <span className='personal_primary_value'>{user.from}</span>
-                </p>
-
-                {user.gender && (
-                  <p>
-                    <span className='personal_primary_key'>Gender:</span>
-                    <span className='personal_primary_value'>
-                      {user.gender}
-                    </span>
-                  </p>
-                )}
-
-                {user.relationships && (
-                  <p>
-                    <span className='personal_primary_key'>Relationships:</span>
-                    <span className='personal_primary_value'>
-                      {user.relationships}
-                    </span>
-                  </p>
-                )}
-              </Card>
-            </div>
-            <h3>Personal description:</h3>
-            <p className='personal_description'>{user.desc}</p>
+            <UserInfo user={user} />
           </Row>
           <Divider />
-          <Row justify='space-between' className='personal__numbers'>
-            <Col span={4}>
-              <div className='personal__numbers_number'>
-                {user.followings.length ? user.followings.length : 0}
-              </div>
-              <div className='personal__numbers_following'>
-                Following I follow
-              </div>
-            </Col>
-            <Col span={4}>
-              <div className='personal__numbers_number'>
-                {user.followers.length ? user.followers.length : 0}
-              </div>
-              <div className='personal__numbers_followers'>Followers</div>
-            </Col>
-            <Col span={4}>
-              <div className='personal__numbers_number'>{posts.length}</div>
-              <div className='personal__numbers_posts'>Posts</div>
-            </Col>
+          <Row justify='space-around' className='personal__numbers'>
+            <UserNumbers user={user} posts={posts} />
           </Row>
-          <Row justify='space-between' style={{ marginBottom: 20 }}>
-            <Col className='personal_primary_key'>
-              {`${user.first_name}'s photos`} ({user.album.length})
-            </Col>
-            {user.album.length !== 0 && (
-              <Col>
-                <span
-                  onClick={() => setVisibleModal(true)}
-                  className='personal__album_href'
-                >
-                  See all photos
-                </span>
-              </Col>
-            )}
-          </Row>
+          {(user.album_visibility || !id) && (
+            <>
+              <Row justify='space-between' style={{ marginBottom: 30 }}>
+                {user.album.length !== 0 && (
+                  <div className='site-card-border-less-wrapper profile'>
+                    <Col className='personal_primary_key'>
+                      {`${user.first_name}'s photos`} ({user.album.length}
+                      photo)
+                    </Col>
+                    <Col>
+                      <span
+                        onClick={() => setVisibleModal(true)}
+                        className='personal__album_href'
+                      >
+                        See all photos
+                      </span>
+                    </Col>
+                  </div>
+                )}
+              </Row>
 
-          <ModalArea
-            visibleModal={visibleModal}
-            setVisibleModal={setVisibleModal}
-            images={user.album}
-            username={user.first_name}
-          />
-          {user.album.length !== 0 && (
-            <Row
-              justify='space-around'
-              className='personal__album'
-              style={{ marginBottom: 30 }}
-            >
-              <p style={{ marginLeft: 25 }}>
-                <Album images={user.album} />
-              </p>
-            </Row>
-          )}
-          <Row>
-            <Col>
-              {!id && (
-                <Upload {...props}>
-                  <span className='personal__photos_upload'>
-                    <PaperClipOutlined />
-                    Add photos to album
-                  </span>
-                </Upload>
-              )}
-              {fileList.length !== 0 && (
-                <span
-                  className='personal__photos_upload'
-                  onClick={handleUpload}
-                  disabled={fileList.length === 0}
+              <ModalArea
+                visibleModal={visibleModal}
+                setVisibleModal={setVisibleModal}
+                images={user.album}
+                username={user.first_name}
+              />
+              {user.album.length !== 0 && (
+                <Row
+                  justify='space-around'
+                  className='personal__album'
+                  style={{ marginBottom: 50 }}
                 >
-                  <CheckOutlined />
-                  Press to start upload
-                </span>
+                  <span style={{ marginLeft: 25 }}>
+                    <Album images={user.album} />
+                  </span>
+                </Row>
               )}
-            </Col>
-          </Row>
+              <Row>
+                <Col>
+                  {!id && (
+                    <Upload {...props}>
+                      <span className='personal__photos_upload'>
+                        <PaperClipOutlined />
+                        Add photos to album
+                      </span>
+                    </Upload>
+                  )}
+                  {fileList.length !== 0 && (
+                    <span
+                      className='personal__photos_upload'
+                      onClick={handleUpload}
+                      disabled={fileList.length === 0}
+                    >
+                      <CheckOutlined />
+                      Press to start upload
+                    </span>
+                  )}
+                </Col>
+              </Row>
+            </>
+          )}
+
           {!id && <NewPost />}
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <Feed />
-        </Col>
-      </Row>
+      {(user.posts_visibility || !id) && (
+        <Row style={{ backgroundColor: 'white' }}>
+          <Col span={24}>
+            <Feed />
+          </Col>
+        </Row>
+      )}
     </Spinner>
   );
 };

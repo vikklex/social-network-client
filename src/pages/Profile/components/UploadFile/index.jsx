@@ -22,14 +22,16 @@ const UploadFile = () => {
     const onSuccess = (status) => {
       if (status === Profile_Types.SUCCESS) {
         message.success('You are successfully update avatar');
-        //console.log(dispatch(getUserProfile({ id: user.id })));
         dispatch(getUserProfile({ id: user.id }));
       }
     };
+
     const formData = new FormData();
+
     fileList.forEach((file) => {
       formData.append('avatar', file);
     });
+
     setUploading(true);
 
     const config = {

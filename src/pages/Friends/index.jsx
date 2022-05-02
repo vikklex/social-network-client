@@ -9,7 +9,7 @@ import { getUserProfile } from '../../redux/actions/authActions';
 
 const { TabPane } = Tabs;
 
-function Friends() {
+const Friends = () => {
   const dispatch = useDispatch();
 
   const profile = useSelector((state) => state.auth.profile);
@@ -35,6 +35,6 @@ function Friends() {
       </Tabs>
     </>
   );
-}
+};
 
 export default Friends;
