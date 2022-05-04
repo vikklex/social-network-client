@@ -1,6 +1,6 @@
-import { storage } from '../../storage';
-import ClientAPI from '../../utils/ClientAPI';
-import { Alert_Types } from './alertActions';
+import { storage } from 'storage';
+import ClientAPI from 'services/ClientAPI';
+import { Types as Alert } from './alertActions';
 
 export const Types = {
   AUTH: 'AUTH_AUTH',
@@ -14,7 +14,7 @@ export const Types = {
 export const login = (data) => async (dispatch) => {
   try {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         loading: true,
       },
@@ -34,14 +34,14 @@ export const login = (data) => async (dispatch) => {
     storage.accessToken.Set(res.data.msg.access_token);
 
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         success: res.data.msg,
       },
     });
 
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         loading: true,
       },
@@ -49,7 +49,7 @@ export const login = (data) => async (dispatch) => {
     return Types.LOGIN_SUCCESS;
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -61,7 +61,7 @@ export const login = (data) => async (dispatch) => {
 
 export const register = (data) => async (dispatch) => {
   try {
-    dispatch({ type: Alert_Types.ALERT, payload: { loading: true } });
+    dispatch({ type: Alert.ALERT, payload: { loading: true } });
 
     const res = await ClientAPI.register(data);
 
@@ -76,7 +76,7 @@ export const register = (data) => async (dispatch) => {
     });
 
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         success: res.data.msg,
       },
@@ -89,7 +89,7 @@ export const register = (data) => async (dispatch) => {
     };
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -108,7 +108,7 @@ export const logout = () => async (dispatch) => {
     window.location.href = '/login';
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -131,7 +131,7 @@ export const getUserProfile =
       dispatch({ type: Types.LOADING, payload: false });
     } catch (error) {
       dispatch({
-        type: Alert_Types.ALERT,
+        type: Alert.ALERT,
         payload: {
           error: error.response.data.msg,
         },

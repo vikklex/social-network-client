@@ -8,14 +8,14 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
-import { deletePost, updatePost } from '../../../../redux/actions/postActions';
+import { deletePost, updatePost } from 'redux/actions/postActions';
 import {
   createReaction,
   getPostReactions,
-} from '../../../../redux/actions/reactionActions';
+} from 'redux/actions/reactionActions';
 
-import { DATE_FORMAT } from '../../../../utils/Constants';
-import NoAvatar from './../../../../assets/img/noavatar.png';
+import { DATE_FORMAT } from 'utils/Constants';
+import NoAvatar from 'assets/img/noavatar.png';
 
 const { TextArea } = Input;
 
@@ -38,6 +38,7 @@ const Post = ({ post, isUserProfile }) => {
         const likes = data.filter(
           (reaction) => reaction.reactionType === 'like',
         );
+
         const dislikes = data.filter(
           (reaction) => reaction.reactionType === 'dislike',
         );
@@ -53,6 +54,7 @@ const Post = ({ post, isUserProfile }) => {
         reactionType: 'like',
         userId: profile.id,
         postId: post.id,
+        likedUser: user.id,
       }),
     ).then((data) => {
       const likes = data.filter((reaction) => reaction.reactionType === 'like');
@@ -71,6 +73,7 @@ const Post = ({ post, isUserProfile }) => {
         reactionType: 'dislike',
         userId: profile.id,
         postId: post.id,
+        likedUser: user.id,
       }),
     ).then((data) => {
       const likes = data.filter((reaction) => reaction.reactionType === 'like');

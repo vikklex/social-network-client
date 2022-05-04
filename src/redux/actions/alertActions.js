@@ -1,4 +1,4 @@
-export const Alert_Types = {
+export const Types = {
   ALERT: 'ALERT_ALERT',
 };
 

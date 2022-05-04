@@ -1,5 +1,5 @@
-import ClientAPI from '../../utils/ClientAPI';
-import { Alert_Types } from './alertActions';
+import ClientAPI from 'services/ClientAPI';
+import { Types as Alert } from './alertActions';
 
 export const Post_Types = {
   CREATE_POST: 'POST_CREATE_POST',
@@ -19,7 +19,7 @@ export const createPost = (data) => async (dispatch) => {
     return res;
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -35,7 +35,7 @@ export const getPosts = (data) => async (dispatch) => {
     dispatch({ type: 'ALERT', payload: { loading: false } });
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -58,14 +58,14 @@ export const updatePost = (id, userId, desc) => async (dispatch) => {
     });
 
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         loading: false,
       },
     });
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -88,14 +88,14 @@ export const updatePostImage = (id, data, config) => async (dispatch) => {
     });
 
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         loading: false,
       },
     });
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -109,7 +109,7 @@ export const deletePost = (post, userId) => async (dispatch) => {
     ClientAPI.deletePost(post.id, { userId }).then((res) => {});
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },

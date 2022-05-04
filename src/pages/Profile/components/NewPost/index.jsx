@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { Comment, Avatar } from 'antd';
 
-import { createPost } from '../../../../redux/actions/postActions';
-import { updatePostImage } from '../../../../redux/actions/postActions';
+import { createPost } from 'redux/actions/postActions';
+import { updatePostImage } from 'redux/actions/postActions';
 
-import NoAvatar from './../../../../assets/img/noavatar.png';
-import './newPost.scss';
 import Editor from './components/Editor';
+
+import NoAvatar from 'assets/img/noavatar.png';
+import './newPost.scss';
 
 const NewPost = () => {
   const user = useSelector((state) => state.profile.user);

@@ -1,5 +1,5 @@
-import ClientAPI from '../../utils/ClientAPI';
-import { Alert_Types } from './alertActions';
+import ClientAPI from 'services/ClientAPI';
+import { Types as Alert } from './alertActions';
 import { Types } from './authActions';
 
 export const Profile_Types = {
@@ -27,10 +27,11 @@ export const getUserProfile =
         type: Profile_Types.GET_USER,
         payload: res.data,
       });
+
       dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
     } catch (error) {
       dispatch({
-        type: Alert_Types.ALERT,
+        type: Alert.ALERT,
         payload: {
           error: error.response.data.msg,
         },
@@ -51,7 +52,7 @@ export const setUserProfile = (id) => async (dispatch) => {
     dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -80,7 +81,7 @@ export const updateUser =
   async (dispatch) => {
     try {
       dispatch({
-        type: Alert_Types.ALERT,
+        type: Alert.ALERT,
         payload: {
           loading: true,
         },
@@ -112,7 +113,7 @@ export const updateUser =
       });
 
       dispatch({
-        type: Alert_Types.ALERT,
+        type: Alert.ALERT,
         payload: {
           loading: false,
         },
@@ -120,7 +121,7 @@ export const updateUser =
       return Profile_Types.SUCCESS;
     } catch (error) {
       dispatch({
-        type: Alert_Types.ALERT,
+        type: Alert.ALERT,
         payload: {
           error: error.response.data.msg,
         },
@@ -149,7 +150,7 @@ export const updateAvatar = (auth, user, data, config) => async (dispatch) => {
     return Profile_Types.SUCCESS;
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -176,7 +177,7 @@ export const updateAlbum = (user, data, config) => async (dispatch) => {
     dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -209,7 +210,7 @@ export const addFriend = (data) => async (dispatch) => {
     await ClientAPI.addFriend(data.profile.id, data.user.id);
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
@@ -241,7 +242,7 @@ export const deleteFriend = (data) => async (dispatch) => {
     await ClientAPI.deleteFriend(data.profile.id, data.user.id);
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },

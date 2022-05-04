@@ -1,5 +1,5 @@
-import ClientAPI from '../../utils/ClientAPI';
-import { Alert_Types } from './alertActions';
+import ClientAPI from 'services/ClientAPI';
+import { Types as Alert } from './alertActions';
 
 export const Comment_Types = {
   CREATE_COMMENT: 'COMMENT_CREATE_COMMENT',
@@ -7,7 +7,7 @@ export const Comment_Types = {
   LOADING_COMMENTS: 'COMMENT_LOADING_COMMENTS',
 };
 
-/*export const createPost = (data) => async (dispatch) => {
+export const createComment = (data) => async (dispatch) => {
   try {
     const res = await ClientAPI.createPost({
       userId: data.userId,
@@ -17,13 +17,13 @@ export const Comment_Types = {
     return res;
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },
     });
   }
-};*/
+};
 
 export const getOneComment = (id) => async (dispatch) => {
   try {
@@ -38,7 +38,7 @@ export const getOneComment = (id) => async (dispatch) => {
     return res;
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },

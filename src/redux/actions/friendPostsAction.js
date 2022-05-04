@@ -1,5 +1,5 @@
-import ClientAPI from '../../utils/ClientAPI';
-import { Alert_Types } from './alertActions';
+import ClientAPI from 'services/ClientAPI';
+import { Types as Alert } from './alertActions';
 
 export const FriendsPost_Types = {
   GET_FRIENDS_POSTS: 'FRIENDS_POST_GET_FRIEND_POSTS',
@@ -19,7 +19,7 @@ export const getFriendsPosts = (data) => async (dispatch) => {
     dispatch({ type: 'ALERT', payload: { loading: false } });
   } catch (error) {
     dispatch({
-      type: Alert_Types.ALERT,
+      type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
       },

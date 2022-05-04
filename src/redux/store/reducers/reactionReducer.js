@@ -24,6 +24,11 @@ const reactionReducer = (state = defaultState, action) => {
         ...state,
       };
 
+    case Reaction_Types.GET_REACTIONS_FOR_USER:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

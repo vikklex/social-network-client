@@ -40,7 +40,8 @@ class ClientAPI {
   }
 
   getUser(id) {
-    return this.instance.get(`/v1/users/${id}`);
+    let d = this.instance.get(`/v1/users/${id}`);
+    return d;
   }
 
   getUserPosts(id) {
@@ -126,16 +127,21 @@ class ClientAPI {
     return this.instance.delete(`v1/posts/${id}`, userId);
   }
 
-  createReaction({ reactionType, userId, postId }) {
+  createReaction({ reactionType, userId, likedUser, postId }) {
     return this.instance.post('v1/reactions/', {
       reactionType: reactionType,
       userId: userId,
+      likedUser: likedUser,
       postId: postId,
     });
   }
 
   getAllPostReactions(postId) {
     return this.instance.get(`v1/reactions/${postId}`);
+  }
+
+  getAllReactionsForUser(likedUser) {
+    return this.instance.get(`v1/reactions/likedUser/${likedUser}`);
   }
 }
 

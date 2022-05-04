@@ -13,7 +13,7 @@ import {
 } from '@ant-design/icons';
 
 import { logout } from 'redux/actions/authActions';
-import ClientAPI from 'utils/ClientAPI';
+import ClientAPI from 'services/ClientAPI';
 import 'app/components/Header/header.scss';
 
 import NoAvatar from 'assets/img/noavatar.png';

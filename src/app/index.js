@@ -10,6 +10,7 @@ import EditProfile from 'pages/Edit';
 import FriendsPosts from 'pages/FriendsPosts';
 import Friends from 'pages/Friends';
 import Settings from 'pages/Settings';
+import Reactions from 'pages/Reactions';
 
 import HeaderNav from 'app/components/Header/Header';
 import { FullMenu } from 'app/components/Menu/FullMenu';
@@ -79,6 +80,10 @@ function App() {
 
                   <Route exact path='/friends' element={<PrivateRoute />}>
                     <Route exact path='/friends' element={<Friends />} />
+                  </Route>
+
+                  <Route exact path='/reactions' element={<PrivateRoute />}>
+                    <Route exact path='/reactions' element={<Reactions />} />
                   </Route>
 
                   <Route exact path='/edit' element={<PrivateRoute />}>

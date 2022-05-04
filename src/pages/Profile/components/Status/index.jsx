@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Input } from 'antd';
-import { updateUser } from '../../../../redux/actions/profileActions';
+import { updateUser } from 'redux/actions/profileActions';
 
 const Status = ({ id, user, statusText, setStatusText }) => {
   const dispatch = useDispatch();
