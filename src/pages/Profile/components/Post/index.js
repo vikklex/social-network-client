@@ -35,15 +35,15 @@ const Post = ({ post, isUserProfile }) => {
   useEffect(() => {
     if (post) {
       dispatch(getPostReactions(post.id)).then((data) => {
-        const likes = data.filter(
+        const likes = data?.filter(
           (reaction) => reaction.reactionType === 'like',
         );
 
-        const dislikes = data.filter(
+        const dislikes = data?.filter(
           (reaction) => reaction.reactionType === 'dislike',
         );
-        setLikes(likes.length);
-        setDislikes(dislikes.length);
+        setLikes(likes?.length);
+        setDislikes(dislikes?.length);
       });
     }
   }, [post, dispatch]);
@@ -54,16 +54,18 @@ const Post = ({ post, isUserProfile }) => {
         reactionType: 'like',
         userId: profile.id,
         postId: post.id,
-        likedUser: user.id,
+        likedUser: user.id || post.userId,
       }),
     ).then((data) => {
-      const likes = data.filter((reaction) => reaction.reactionType === 'like');
-      const dislikes = data.filter(
+      const likes = data?.filter(
+        (reaction) => reaction.reactionType === 'like',
+      );
+      const dislikes = data?.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
 
-      setLikes(likes.length);
-      setDislikes(dislikes.length);
+      setLikes(likes?.length);
+      setDislikes(dislikes?.length);
     });
   };
 
@@ -73,16 +75,18 @@ const Post = ({ post, isUserProfile }) => {
         reactionType: 'dislike',
         userId: profile.id,
         postId: post.id,
-        likedUser: user.id,
+        likedUser: user.id || post.userId,
       }),
     ).then((data) => {
-      const likes = data.filter((reaction) => reaction.reactionType === 'like');
-      const dislikes = data.filter(
+      const likes = data?.filter(
+        (reaction) => reaction.reactionType === 'like',
+      );
+      const dislikes = data?.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
 
-      setDislikes(dislikes.length);
-      setLikes(likes.length);
+      setDislikes(dislikes?.length);
+      setLikes(likes?.length);
     });
   };
 

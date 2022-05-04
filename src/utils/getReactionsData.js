@@ -18,6 +18,7 @@ const getReactionsData = (data, type) => {
           sum: counter[userId],
           type: type,
           userName: `${user.first_name} ${user.last_name}`,
+          gender: `${user.gender}`,
         };
       }
     });

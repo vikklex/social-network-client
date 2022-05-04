@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import ClientAPI from 'services/ClientAPI';
 
-const LikesPie = ({ userId, likeNumber, type }) => {
+const LikeList = ({ userId, likeNumber, type }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -23,4 +23,4 @@ const LikesPie = ({ userId, likeNumber, type }) => {
   );
 };
 
-export default LikesPie;
+export default LikeList;

@@ -8,6 +8,7 @@ const FriendsPosts = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.profile);
+  console.log(user);
   const posts = useSelector((state) => state.friendPosts.friendPost);
 
   useEffect(() => {

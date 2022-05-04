@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Statistic, Row, Col, Card } from 'antd';
+import { Statistic, Row, Col, Card, Divider } from 'antd';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import { getAllReactionsForUser } from 'redux/actions/reactionActions';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+
+import ReactionTable from './ReactionTable';
+import ReactionsGender from './ReactionsGender';
+import ReactionsDate from './ReactionsDate';
 
 import getReactionsData from 'utils/getReactionsData';
+import { getPercentValue } from 'utils/getPercentValue';
+
 import { LIKE } from 'utils/Constants';
 import { DISLIKE } from 'utils/Constants';
-import ReactionTable from './ReactionTable';
 
 const Reactions = () => {
   const dispatch = useDispatch();
@@ -20,36 +24,54 @@ const Reactions = () => {
   const [dislikes, setDislikes] = useState([]);
 
   useEffect(() => {
-    dispatch(getAllReactionsForUser(profile.id)).then((data) => {
-      const like = data.filter((reaction) => reaction.reactionType === LIKE);
-      setLikes(like);
+    const getReactionsByType = (reactions, type) => {
+      return reactions?.filter((reaction) => reaction.reactionType === type);
+    };
 
-      const dislike = data.filter(
-        (reaction) => reaction.reactionType === DISLIKE,
-      );
-      setDislikes(dislike);
+    dispatch(getAllReactionsForUser(profile.id)).then((data) => {
+      setLikes(getReactionsByType(data, LIKE));
+      setDislikes(getReactionsByType(data, DISLIKE));
     });
   }, [profile.id, dispatch]);
 
   const likeReaction = getReactionsData(likes, LIKE);
   const dislikeReaction = getReactionsData(dislikes, DISLIKE);
 
-  const positiveData = [];
-  const negativeData = [];
+  const getLikes = (likes) => {
+    let results = [];
 
-  likeReaction.map((result) => {
-    const obj = {};
-    obj.name = `${result.userName}`;
-    obj.value = result.sum;
-    positiveData.push(obj);
-  });
+    for (const like of likes) {
+      const data = {
+        name: `${like.userName}`,
+        value: getPercentValue(like.sum, likes.length),
+      };
 
-  dislikeReaction.map((result) => {
-    const obj = {};
-    obj.name = `${result.userName} `;
-    obj.value = result.sum;
-    negativeData.push(obj);
-  });
+      results.push(data);
+    }
+
+    return results;
+  };
+
+  const getLikesByGender = (reactions, gender) => {
+    return reactions.reduce(
+      (result, reaction) =>
+        reaction.gender === gender ? result + reaction.sum : result,
+      0,
+    );
+  };
+
+  const getReactionsByGender = (reactions) => {
+    return [
+      {
+        name: 'Male',
+        value: getLikesByGender(reactions, 'male'),
+      },
+      {
+        name: 'Female',
+        value: getLikesByGender(reactions, 'female'),
+      },
+    ];
+  };
 
   return (
     <Card>
@@ -61,6 +83,7 @@ const Reactions = () => {
             prefix={<LikeOutlined />}
           />
         </Col>
+
         <Col span={8}>
           <Statistic
             title='Dislikes all the time'
@@ -72,17 +95,39 @@ const Reactions = () => {
 
       <ReactionTable
         reaction={likeReaction}
-        data={positiveData}
+        data={getLikes(likeReaction)}
         title={'Likes:'}
         color={'#3CB371'}
       />
 
       <ReactionTable
         reaction={dislikeReaction}
-        data={negativeData}
+        data={getLikes(dislikeReaction)}
         title={'Dislikes:'}
         color={'#6495ED'}
       />
+
+      <Divider style={{ marginTop: '10%' }}>GENDER</Divider>
+
+      <Row>
+        <Col span={12}>
+          <ReactionsGender
+            data={getReactionsByGender(likeReaction)}
+            color={'#FF69B4'}
+            type='Likes'
+          />
+        </Col>
+        <Col span={12}>
+          <ReactionsGender
+            data={getReactionsByGender(dislikeReaction)}
+            color={'#87CEEB'}
+            type='Dislikes'
+          />
+        </Col>
+      </Row>
+      <Row style={{ width: '100%', height: '100%' }}>
+        <ReactionsDate reactions={likeReaction} />
+      </Row>
     </Card>
   );
 };
