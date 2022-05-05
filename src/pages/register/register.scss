@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+.login__register_button > .ant-btn-primary {
+  width: 100%;
+  align-self: center;
+  border: none;
+  color: white;
+  background-color: silver;
+  cursor: pointer;
+}
+
+.ant-card-cover img {
+  border-radius: 2px 2px 0 0;
+  height: 30vh;
+  object-fit: cover;
+}
+
+.login__description {
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+}
+
+@media screen and (max-width: 1350px) {
+  .register__card {
+    width: 80%;
+  }
+  .login__wrapper {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 950px) {
+  .login__wrapper {
+    flex-direction: column;
+    height: 90%;
+  }
+  .login__wrapper_left,
+  .login__wrapper_right {
+    width: 70%;
+    margin: 0 auto;
+  }
+  .register__card {
+    width: 100%;
+  }
+}
