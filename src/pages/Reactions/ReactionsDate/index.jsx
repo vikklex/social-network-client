@@ -10,11 +10,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
 
-const ReactionsDate = ({ reactions }) => {
+const ReactionsDate = ({ reactions, type, color }) => {
   const getStatisticsByWeekday = (weekday) => {
     return reactions.reduce((result, reaction) => {
       if (moment(reaction.createdAt).format('dddd') === weekday) {
@@ -35,8 +34,8 @@ const ReactionsDate = ({ reactions }) => {
   };
 
   return (
-    <Row style={{ marginTop: '10%' }}>
-      <h4 style={{ marginBottom: '10%' }}>Reaction statistics by date</h4>
+    <Row style={{ width: '45%' }}>
+      <h4 style={{ marginBottom: '10%' }}>{type}</h4>
       <ResponsiveContainer width='100%' height='100%'>
         <BarChart
           width={700}
@@ -58,7 +57,7 @@ const ReactionsDate = ({ reactions }) => {
           <YAxis />
           <Tooltip />
           <CartesianGrid strokeDasharray='3 3' />
-          <Bar dataKey='value' fill='#8884d8' background={{ fill: '#eee' }} />
+          <Bar dataKey='value' fill={color} background={{ fill: '#eee' }} />
         </BarChart>
       </ResponsiveContainer>
     </Row>

@@ -109,7 +109,7 @@ const Reactions = () => {
 
       <Divider style={{ marginTop: '10%' }}>GENDER</Divider>
 
-      <Row>
+      <Row style={{ width: '80%' }}>
         <Col span={12}>
           <ReactionsGender
             data={getReactionsByGender(likeReaction)}
@@ -125,8 +125,14 @@ const Reactions = () => {
           />
         </Col>
       </Row>
-      <Row style={{ width: '100%', height: '100%' }}>
-        <ReactionsDate reactions={likeReaction} />
+      <Divider style={{ marginTop: '10%' }}>REACTIONS BY WEEKDAYS</Divider>
+      <Row>
+        <ReactionsDate reactions={likeReaction} type='Likes' color='#8884d8' />
+        <ReactionsDate
+          reactions={dislikeReaction}
+          type='Dislikes'
+          color='#FFA07A'
+        />
       </Row>
     </Card>
   );

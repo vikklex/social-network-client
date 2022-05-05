@@ -19,6 +19,7 @@ const getReactionsData = (data, type) => {
           type: type,
           userName: `${user.first_name} ${user.last_name}`,
           gender: `${user.gender}`,
+          createdAt: user.createdAt,
         };
       }
     });
