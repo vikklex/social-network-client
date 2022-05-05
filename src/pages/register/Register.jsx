@@ -11,7 +11,9 @@ import { useEffect } from 'react';
 
 import RegisterIllustration from './.././../assets/img/registration.png';
 import MainLogo from './.././../assets/img/logo.svg';
+
 import Layout from 'antd/lib/layout/layout';
+
 
 const layout = {
   labelCol: {
