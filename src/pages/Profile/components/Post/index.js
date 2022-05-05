@@ -29,6 +29,10 @@ const Post = ({ post, isUserProfile }) => {
 
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [text, setText] = useState(post.desc);
 
@@ -38,15 +42,25 @@ const Post = ({ post, isUserProfile }) => {
         const likes = data?.filter(
           (reaction) => reaction.reactionType === 'like',
         );
+        for (const like of likes) {
+          setIsLiked(like.userId === profile.id);
+          setIsDisliked(false);
+        }
+
+        setLikes(likes?.length);
 
         const dislikes = data?.filter(
           (reaction) => reaction.reactionType === 'dislike',
         );
-        setLikes(likes?.length);
+        for (const dislike of dislikes) {
+          setIsDisliked(dislike.userId === profile.id);
+          setIsLiked(false);
+        }
+
         setDislikes(dislikes?.length);
       });
     }
-  }, [post, dispatch]);
+  }, [post, dispatch, likes, dislikes, profile.id]);
 
   const setLike = () => {
     dispatch(
@@ -108,14 +122,16 @@ const Post = ({ post, isUserProfile }) => {
   const actions = [
     <Tooltip key='comment-basic-like' title='Like'>
       <span onClick={setLike}>
-        <LikeOutlined />
+        {isLiked && <LikeOutlined style={{ color: 'blue' }} />}
+        {!isLiked && <LikeOutlined style={{ color: 'silver' }} />}
         <span className='comment-action'>{likes}</span>
       </span>
     </Tooltip>,
 
     <Tooltip key='comment-basic-dislike' title='Dislike'>
       <span onClick={dislike}>
-        <DislikeOutlined />
+        {isDisliked && <DislikeOutlined style={{ color: 'blue' }} />}
+        {!isDisliked && <DislikeOutlined style={{ color: 'silver' }} />}
         <span className='comment-action'>{dislikes}</span>
       </span>
     </Tooltip>,

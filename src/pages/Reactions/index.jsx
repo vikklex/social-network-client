@@ -6,6 +6,7 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import { getAllReactionsForUser } from 'redux/actions/reactionActions';
 
+import NoContent from 'components/NoContent';
 import ReactionTable from './ReactionTable';
 import ReactionsGender from './ReactionsGender';
 import ReactionsDate from './ReactionsDate';
@@ -15,6 +16,8 @@ import { getPercentValue } from 'utils/getPercentValue';
 
 import { LIKE } from 'utils/Constants';
 import { DISLIKE } from 'utils/Constants';
+
+import Statistics from 'assets/img/statistics.jpg';
 
 const Reactions = () => {
   const dispatch = useDispatch();
@@ -75,65 +78,88 @@ const Reactions = () => {
 
   return (
     <Card>
-      <Row gutter={16}>
-        <Col span={16}>
-          <Statistic
-            title='Likes all the time'
-            value={likes.length}
-            prefix={<LikeOutlined />}
-          />
-        </Col>
-
-        <Col span={8}>
-          <Statistic
-            title='Dislikes all the time'
-            value={dislikes.length}
-            prefix={<DislikeOutlined />}
-          />
-        </Col>
-      </Row>
-
-      <ReactionTable
-        reaction={likeReaction}
-        data={getLikes(likeReaction)}
-        title={'Likes:'}
-        color={'#3CB371'}
-      />
-
-      <ReactionTable
-        reaction={dislikeReaction}
-        data={getLikes(dislikeReaction)}
-        title={'Dislikes:'}
-        color={'#6495ED'}
-      />
-
-      <Divider style={{ marginTop: '10%' }}>GENDER</Divider>
-
-      <Row style={{ width: '80%' }}>
-        <Col span={12}>
-          <ReactionsGender
-            data={getReactionsByGender(likeReaction)}
-            color={'#FF69B4'}
-            type='Likes'
-          />
-        </Col>
-        <Col span={12}>
-          <ReactionsGender
-            data={getReactionsByGender(dislikeReaction)}
-            color={'#87CEEB'}
-            type='Dislikes'
-          />
-        </Col>
-      </Row>
-      <Divider style={{ marginTop: '10%' }}>REACTIONS BY WEEKDAYS</Divider>
-      <Row>
-        <ReactionsDate reactions={likeReaction} type='Likes' color='#8884d8' />
-        <ReactionsDate
-          reactions={dislikeReaction}
-          type='Dislikes'
-          color='#FFA07A'
+      {!likes.length && !dislikes.length ? (
+        <NoContent
+          title="You don't have enough reactions to display the statistics"
+          description="Maybe you should like someone else's post at first?"
+          img={Statistics}
         />
-      </Row>
+      ) : (
+        <>
+          <Row gutter={16}>
+            <Col span={16}>
+              <Statistic
+                title='Likes all the time'
+                value={likes.length}
+                prefix={<LikeOutlined />}
+              />
+            </Col>
+
+            <Col span={8}>
+              <Statistic
+                title='Dislikes all the time'
+                value={dislikes.length}
+                prefix={<DislikeOutlined />}
+              />
+            </Col>
+          </Row>
+          {likes.length !== 0 && (
+            <ReactionTable
+              reaction={likeReaction}
+              data={getLikes(likeReaction)}
+              title={'Likes:'}
+              color={'#3CB371'}
+            />
+          )}
+
+          {dislikes.length !== 0 && (
+            <ReactionTable
+              reaction={dislikeReaction}
+              data={getLikes(dislikeReaction)}
+              title={'Dislikes:'}
+              color={'#6495ED'}
+            />
+          )}
+
+          <Divider style={{ marginTop: '10%' }}>GENDER</Divider>
+
+          <Row style={{ width: '80%' }}>
+            {likes.length !== 0 && (
+              <Col span={12}>
+                <ReactionsGender
+                  data={getReactionsByGender(likeReaction)}
+                  color={'#FF69B4'}
+                  type='Likes'
+                />
+              </Col>
+            )}
+
+            {dislikes.length !== 0 && (
+              <Col span={12}>
+                <ReactionsGender
+                  data={getReactionsByGender(dislikeReaction)}
+                  color={'#87CEEB'}
+                  type='Dislikes'
+                />
+              </Col>
+            )}
+          </Row>
+          <Divider style={{ marginTop: '10%' }}>REACTIONS BY WEEKDAYS</Divider>
+          <Row>
+            <ReactionsDate
+              reactions={likeReaction}
+              type='Likes'
+              color='#8884d8'
+            />
+
+            <ReactionsDate
+              reactions={dislikeReaction}
+              type='Dislikes'
+              color='#FFA07A'
+            />
+          </Row>
+        </>
+      )}
     </Card>
   );
 };
