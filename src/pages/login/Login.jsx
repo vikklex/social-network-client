@@ -21,6 +21,7 @@ import Center from '../../components/Center';
 
 import LoginIllustration from './.././../assets/img/login.jpg';
 import MainLogo from './.././../assets/img/logo.svg';
+import Layout from 'antd/lib/layout/layout';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -49,99 +50,101 @@ const Login = () => {
   });
 
   return (
-    <Center minHeight='70vh'>
-      <Row>
-        <Col span={12}>
-          <h3 className='login__title'>
-            <img src={MainLogo}></img>
-          </h3>
-          <span className='login__description'>
-            Cement friendship and family relations with "F_Network"
-          </span>
-        </Col>
-        <Col span={12}>
-          <Card
-            hoverable
-            className='register__card'
-            cover={<img alt='example' src={LoginIllustration} />}
-          >
-            {loginError && (
-              <>
-                <Alert message={loginError} type='error' />
-                <br />
-              </>
-            )}
-
-            <Form
-              name='basic'
-              labelCol={{
-                span: 8,
-              }}
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={onFinish}
-              autoComplete='off'
+    <Layout>
+      <Center minHeight='70vh'>
+        <Row>
+          <Col span={12}>
+            <h3 className='login__title'>
+              <img src={MainLogo}></img>
+            </h3>
+            <span className='login__description'>
+              Cement friendship and family relations with "F_Network"
+            </span>
+          </Col>
+          <Col span={12}>
+            <Card
+              hoverable
+              className='register__card'
+              cover={<img alt='example' src={LoginIllustration} />}
             >
-              <Form.Item
-                label='Email'
-                name='email'
-                rules={[
-                  {
-                    type: 'email',
-                    required: true,
-                    message: 'Please input your email!',
-                  },
-                ]}
-              >
-                <Input ref={ref} />
-              </Form.Item>
+              {loginError && (
+                <>
+                  <Alert message={loginError} type='error' />
+                  <br />
+                </>
+              )}
 
-              <Form.Item
-                label='Password'
-                name='password_hash'
-                rules={[
-                  {
-                    required: true,
-                    min: 6,
-                    max: 32,
-                    whitespace: false,
-                    message: 'Please input your password!',
-                  },
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-
-              <Form.Item
-                name='remember'
-                valuePropName='checked'
-                wrapperCol={{
-                  offset: 8,
+              <Form
+                name='basic'
+                labelCol={{
+                  span: 8,
                 }}
-              >
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-
-              <Form.Item
-                wrapperCol={{
-                  offset: 8,
+                initialValues={{
+                  remember: true,
                 }}
+                onFinish={onFinish}
+                autoComplete='off'
               >
-                <Button type='primary' htmlType='submit'>
-                  Submit
+                <Form.Item
+                  label='Email'
+                  name='email'
+                  rules={[
+                    {
+                      type: 'email',
+                      required: true,
+                      message: 'Please input your email!',
+                    },
+                  ]}
+                >
+                  <Input ref={ref} />
+                </Form.Item>
+
+                <Form.Item
+                  label='Password'
+                  name='password_hash'
+                  rules={[
+                    {
+                      required: true,
+                      min: 6,
+                      max: 32,
+                      whitespace: false,
+                      message: 'Please input your password!',
+                    },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
+
+                <Form.Item
+                  name='remember'
+                  valuePropName='checked'
+                  wrapperCol={{
+                    offset: 8,
+                  }}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+
+                <Form.Item
+                  wrapperCol={{
+                    offset: 8,
+                  }}
+                >
+                  <Button type='primary' htmlType='submit'>
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+              <div className='login__register_button'>
+                <Button type='primary'>
+                  <Link to='/register'>Create account</Link>
                 </Button>
-              </Form.Item>
-            </Form>
-            <div className='login__register_button'>
-              <Button type='primary'>
-                <Link to='/register'>Create account</Link>
-              </Button>
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </Center>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </Center>
+    </Layout>
   );
 };
 
