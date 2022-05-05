@@ -42,19 +42,19 @@ const Post = ({ post, isUserProfile }) => {
         const likes = data?.filter(
           (reaction) => reaction.reactionType === 'like',
         );
-        for (const like of likes) {
-          setIsLiked(like.userId === profile.id);
-          setIsDisliked(false);
-        }
 
         setLikes(likes?.length);
 
         const dislikes = data?.filter(
           (reaction) => reaction.reactionType === 'dislike',
         );
+
+        for (const like of likes) {
+          setIsLiked(like.userId === profile.id);
+        }
+
         for (const dislike of dislikes) {
           setIsDisliked(dislike.userId === profile.id);
-          setIsLiked(false);
         }
 
         setDislikes(dislikes?.length);
@@ -74,9 +74,13 @@ const Post = ({ post, isUserProfile }) => {
       const likes = data?.filter(
         (reaction) => reaction.reactionType === 'like',
       );
+
       const dislikes = data?.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
+
+      setIsLiked(true);
+      setIsDisliked(false);
 
       setLikes(likes?.length);
       setDislikes(dislikes?.length);
@@ -95,9 +99,13 @@ const Post = ({ post, isUserProfile }) => {
       const likes = data?.filter(
         (reaction) => reaction.reactionType === 'like',
       );
+
       const dislikes = data?.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
+
+      setIsDisliked(true);
+      setIsLiked(false);
 
       setDislikes(dislikes?.length);
       setLikes(likes?.length);
@@ -124,7 +132,7 @@ const Post = ({ post, isUserProfile }) => {
       <span onClick={setLike}>
         {isLiked && <LikeOutlined style={{ color: 'blue' }} />}
         {!isLiked && <LikeOutlined style={{ color: 'silver' }} />}
-        <span className='comment-action'>{likes}</span>
+        <span className='comment-action'>{`${likes} ${isLiked}`}</span>
       </span>
     </Tooltip>,
 
@@ -132,7 +140,7 @@ const Post = ({ post, isUserProfile }) => {
       <span onClick={dislike}>
         {isDisliked && <DislikeOutlined style={{ color: 'blue' }} />}
         {!isDisliked && <DislikeOutlined style={{ color: 'silver' }} />}
-        <span className='comment-action'>{dislikes}</span>
+        <span className='comment-action'>{`${dislikes} ${isDisliked}`}</span>
       </span>
     </Tooltip>,
 
