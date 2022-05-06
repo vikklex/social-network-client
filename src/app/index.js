@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
 import Profile from 'pages/Profile';
-import EditProfile from 'pages/Edit';
+import EditProfile from 'pages/EditProfile';
 import FriendsPosts from 'pages/FriendsPosts';
 import Friends from 'pages/Friends';
 import Settings from 'pages/Settings';
