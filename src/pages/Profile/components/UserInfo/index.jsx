@@ -6,7 +6,10 @@ function UserInfo({ user }) {
     : '';
 
   return (
-    <div className='site-card-border-less-wrapper profile'>
+    <div
+      className='site-card-border-less-wrapper profile'
+      style={{ marginTop: 15 }}
+    >
       {user.birthday && (
         <p>
           <span className='personal_primary_key'>Birthday:</span>

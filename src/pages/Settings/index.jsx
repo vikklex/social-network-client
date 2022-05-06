@@ -20,21 +20,6 @@ const Settings = () => {
   const onFinish = (values) => {
     const onSuccess = (status) => {
       if (status === Profile_Types.SUCCESS) {
-        message.success('You are successfully update password');
-      }
-    };
-
-    /*const data = {
-      id: user.id,
-      ...values,
-    };*/
-
-    //dispatch(updateUser(data)).then(onSuccess);
-  };
-
-  const handleVisibility = (values) => {
-    const onSuccess = (status) => {
-      if (status === Profile_Types.SUCCESS) {
         message.success('You are successfully update your profile settings');
         dispatch(getUserProfile({ id: user.id }));
         navigate('/');
@@ -53,7 +38,7 @@ const Settings = () => {
     <Tabs defaultActiveKey='1'>
       <TabPane tab='Privacy' key='1'>
         <Divider className='divider'>Privacy</Divider>
-        <Form onFinish={handleVisibility}>
+        <Form onFinish={onFinish}>
           <Form.Item name='posts_visibility'>
             <SettingCard
               title={'Show my posts '}

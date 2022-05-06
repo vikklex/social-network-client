@@ -12,7 +12,6 @@ import ReactionsGender from './ReactionsGender';
 import ReactionsDate from './ReactionsDate';
 
 import getReactionsData from 'utils/getReactionsData';
-import { getPercentValue } from 'utils/getPercentValue';
 
 import { LIKE } from 'utils/Constants';
 import { DISLIKE } from 'utils/Constants';
@@ -46,7 +45,7 @@ const Reactions = () => {
     for (const like of likes) {
       const data = {
         name: `${like.userName}`,
-        value: getPercentValue(like.sum, likes.length),
+        value: like.sum,
       };
 
       results.push(data);
@@ -87,6 +86,7 @@ const Reactions = () => {
       ) : (
         <>
           <Row gutter={16}>
+            <Divider>GENERAL STATISTICS</Divider>
             <Col span={16}>
               <Statistic
                 title='Likes all the time'
