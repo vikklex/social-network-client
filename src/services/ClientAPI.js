@@ -145,6 +145,26 @@ class ClientAPI {
   getAllReactionsForUser(likedUser) {
     return this.instance.get(`v1/reactions/likedUser/${likedUser}`);
   }
+
+  createMeeting({ data }) {
+    return this.instance.post('v1/meetings/', {
+      userId: data.userId,
+      participants: data.participants,
+      title: data.title,
+      description: data.description,
+      date: data.date,
+      startTime: data.startTime,
+      endTime: data.endTime,
+    });
+  }
+
+  getMeetings(id) {
+    return this.instance.get(`v1/meetings/${id}`);
+  }
+
+  deleteMeeting(id, userId) {
+    return this.instance.delete(`v1/meetings/${id}`, userId);
+  }
 }
 
 export default new ClientAPI();

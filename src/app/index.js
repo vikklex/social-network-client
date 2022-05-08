@@ -9,6 +9,7 @@ import Profile from 'pages/Profile';
 import EditProfile from 'pages/EditProfile';
 import FriendsPosts from 'pages/FriendsPosts';
 import Friends from 'pages/Friends';
+import Meetings from 'pages/Meetings';
 import Settings from 'pages/Settings';
 import Reactions from 'pages/Reactions';
 
@@ -88,6 +89,10 @@ function App() {
 
                   <Route exact path='/edit' element={<PrivateRoute />}>
                     <Route exact path='/edit' element={<EditProfile />} />
+                  </Route>
+
+                  <Route exact path='/meetings' element={<PrivateRoute />}>
+                    <Route exact path='/meetings' element={<Meetings />} />
                   </Route>
 
                   <Route exact path='/settings' element={<PrivateRoute />}>
