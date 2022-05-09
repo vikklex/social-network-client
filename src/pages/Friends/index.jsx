@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Tabs } from 'antd';
+
 import { getUserProfile } from 'redux/actions/authActions';
 
 import NoContent from 'components/NoContent';
@@ -29,8 +30,8 @@ const Friends = () => {
     <>
       {!profile.followings.length && !profile.followers.length ? (
         <NoContent
-          title="You don't have friends"
-          description='You should add some user to friends list '
+          title="You don't have friends or followers"
+          description='You should add some user to friends list or follow to at least one user'
           img={Friend}
         />
       ) : (

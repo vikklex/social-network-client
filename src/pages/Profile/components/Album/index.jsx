@@ -13,7 +13,13 @@ const Album = ({ images }) => {
       locale={{ emptyText: () => null }}
       renderItem={(image) => (
         <List.Item key={image}>
-          <Image width={120} padding={40} src={image} />
+          <Image
+            width={120}
+            height={150}
+            padding={40}
+            src={image}
+            style={{ objectFit: 'cover' }}
+          />
         </List.Item>
       )}
     />

@@ -5,6 +5,7 @@ export const Types = {
   CREATE_MEETING: 'MEETING_CREATE_MEETING',
   GET_MEETINGS: 'MEETING_GET_MEETINGS',
   LOADING_MEETING: 'MEETING_LOADING_MEETINGS',
+  DELETE_MEETING: 'MEETING_DELETE_MEETING',
   SUCCESS: 'MEETING_SUCCESS',
   ERROR: 'MEETING_ERROR',
 };
@@ -59,7 +60,7 @@ export const deleteMeeting = (meeting, userId) => async (dispatch) => {
     dispatch({
       type: Alert.ALERT,
       payload: {
-        error: error.response.data.msg,
+        error: error.response.data,
       },
     });
   }

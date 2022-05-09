@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Avatar, List, Card, Form } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -7,8 +7,21 @@ import moment from 'moment';
 
 import { TIME_PM_FORMAT } from 'utils/Constants';
 import { DATE_MOMENT_FORMAT } from 'utils/Constants';
+import { useDispatch } from 'react-redux';
+import { deleteMeeting } from 'redux/actions/meetingAction';
+import { getMeetings } from '../../../../redux/actions/meetingAction';
 
 const MeetingInfo = ({ content, user }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(deleteMeeting(content, user.id));
+  };
+
+  useEffect(() => {
+    dispatch(getMeetings(user.id));
+  }, [user.id, dispatch]);
+
   return (
     <Card>
       <div
@@ -63,7 +76,7 @@ const MeetingInfo = ({ content, user }) => {
       </div>
       <Form>
         <Form.Item>
-          <DeleteOutlined />
+          <DeleteOutlined onClick={handleClick} />
         </Form.Item>
       </Form>
     </Card>

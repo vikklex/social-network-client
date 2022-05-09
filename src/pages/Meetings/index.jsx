@@ -25,11 +25,14 @@ import { TIME_FORMAT } from 'utils/Constants';
 import './meetings.scss';
 
 const { TabPane } = Tabs;
+const { Option } = Select;
 
 const Meetings = () => {
   const dispatch = useDispatch();
 
+  const [visible, setVisible] = useState(false);
   const [currentDate, setCurrentDate] = useState(moment());
+  const [cellDate, setCellDate] = useState(moment());
 
   const profile = useSelector((state) => state.auth.profile);
   const meetings = useSelector((state) => state.meeting.meetings);
@@ -48,7 +51,7 @@ const Meetings = () => {
 
     return data.map((meeting) => {
       return {
-        type: 'success',
+        type: meeting.importance,
         content: meeting.title,
       };
     });
@@ -99,18 +102,35 @@ const Meetings = () => {
   );
 
   const onSelect = (cellDate) => {
-    const onFinish = (values) => {
-      const data = {
-        userId: profile.id,
-        date: cellDate,
-        ...values,
-      };
+    setVisible(true);
+    setCellDate(cellDate);
+  };
 
-      dispatch(createMeeting(data));
+  const onFinish = (values) => {
+    const data = {
+      userId: profile.id,
+      date: cellDate,
+      ...values,
     };
 
-    Modal.info({
-      content: (
+    dispatch(createMeeting(data));
+    setVisible(false);
+  };
+
+  return (
+    <>
+      <Calendar
+        dateCellRender={dateCellRender}
+        monthCellRender={monthCellRender}
+        onChange={onChange}
+      />
+      <Modal
+        centered
+        visible={visible}
+        footer={null}
+        onOk={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
+      >
         <Tabs defaultActiveKey='1'>
           <TabPane tab='New meeting' key='1'>
             <Form
@@ -128,8 +148,16 @@ const Meetings = () => {
                 <Input />
               </Form.Item>
 
+              <Form.Item name='importance' label='Importance'>
+                <Select placeholder='Select importance'>
+                  <Option value='success'>Low</Option>
+                  <Option value='warning'>Medium</Option>
+                  <Option value='error'>Hight</Option>
+                </Select>
+              </Form.Item>
+
               <Form.Item label='Participants' name='participants'>
-                <Select>
+                <Select mode='multiple'>
                   {friends.map((friend) => (
                     <Select.Option value={friend.id} key={friend.id}>
                       <Avatar src={friend.avatar} style={{ marginRight: 4 }} />
@@ -160,16 +188,8 @@ const Meetings = () => {
             ))}
           </TabPane>
         </Tabs>
-      ),
-    });
-  };
-
-  return (
-    <Calendar
-      dateCellRender={dateCellRender}
-      monthCellRender={monthCellRender}
-      onChange={onChange}
-    />
+      </Modal>
+    </>
   );
 };
 

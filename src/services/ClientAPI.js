@@ -33,8 +33,9 @@ class ClientAPI {
     return this.instance.post('/v1/auth/logout');
   }
 
-  searchUser(username, id) {
-    return this.instance.put(`/v1/users/search/search?username=${username}`, {
+  searchUser(value, id) {
+    console.log(value, id);
+    return this.instance.put(`/v1/users/search/search?username=${value}`, {
       userId: id,
     });
   }
@@ -152,6 +153,7 @@ class ClientAPI {
       participants: data.participants,
       title: data.title,
       description: data.description,
+      importance: data.importance,
       date: data.date,
       startTime: data.startTime,
       endTime: data.endTime,

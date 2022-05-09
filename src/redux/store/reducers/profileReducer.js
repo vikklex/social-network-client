@@ -3,6 +3,7 @@ import { Profile_Types } from 'redux/actions/profileActions';
 const defaultState = {
   loading: false,
   user: null,
+  searchUsers: [],
   posts: [],
 };
 
@@ -26,6 +27,12 @@ const profileReducer = (state = defaultState, action) => {
         user: action.payload.user,
       };
 
+    case Profile_Types.SEARCH_USER:
+      console.log(action.payload);
+      return {
+        ...state,
+        searchUsers: action.payload,
+      };
     case Profile_Types.ADD_FRIEND:
       return {
         ...state,

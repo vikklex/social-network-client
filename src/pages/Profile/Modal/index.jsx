@@ -1,13 +1,14 @@
 import { Image, List, Modal } from 'antd';
 import React from 'react';
 
-function ModalArea({ visibleModal, setVisibleModal, images, username }) {
+const ModalArea = ({ visibleModal, setVisibleModal, images, username }) => {
   return (
     <>
       <Modal
         title={`${username}'s Photo Album`}
         centered
         visible={visibleModal}
+        footer={null}
         onOk={() => setVisibleModal(false)}
         onCancel={() => setVisibleModal(false)}
         width={1000}
@@ -29,6 +30,6 @@ function ModalArea({ visibleModal, setVisibleModal, images, username }) {
       </Modal>
     </>
   );
-}
+};
 
 export default ModalArea;

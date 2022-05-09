@@ -4,12 +4,10 @@ import { Row } from 'antd';
 import FriendsPreviewList from './components/List';
 
 const FriendsPreview = ({ user, profile, id, style }) => {
-  const mutualFriends = [];
-
-  profile.followings.map((following) => {
-    let friend = user.followings.filter((person) => person.id === following.id);
-    mutualFriends.push(friend);
-  });
+  const userFollowingIds = user.followings.map((person) => person.id);
+  const mutualFriends = profile.followings.filter((following) =>
+    userFollowingIds.includes(following.id),
+  );
 
   return (
     <>

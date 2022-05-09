@@ -95,7 +95,8 @@ const Profile = () => {
       <Row justify='center' style={{ marginTop: '3%' }}>
         <Col span={6}>
           <Avatar id={id} user={user} />
-          {!id && (
+
+          {!id ? (
             <Button
               type='primary'
               onClick={() => setEdit(true)}
@@ -103,8 +104,10 @@ const Profile = () => {
             >
               Edit profile
             </Button>
+          ) : (
+            <AddFriend user={user} />
           )}
-          {id && <AddFriend user={user} />}
+
           {(user.friends_visibility || !id) && (
             <FriendsPreview
               user={user}
@@ -150,8 +153,8 @@ const Profile = () => {
                 {user.album.length !== 0 && (
                   <div className='site-card-border-less-wrapper profile'>
                     <Col className='personal_primary_key'>
-                      {`${user.first_name}'s photos`} ({user.album.length}
-                      photo)
+                      {`${user.first_name}'s photos (${user.album.length}
+                       photo)`}
                     </Col>
                     <Col>
                       <span

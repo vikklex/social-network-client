@@ -31,12 +31,11 @@ const AddFriend = ({ user }) => {
 
   return (
     <>
-      {!friend && (
+      {!friend ? (
         <Button type='primary' size='large' onClick={handleAddFriend}>
           Add to friends
         </Button>
-      )}
-      {friend && (
+      ) : (
         <Button type='primary' size='large' onClick={handleDeleteFriend}>
           Delete from friends
         </Button>

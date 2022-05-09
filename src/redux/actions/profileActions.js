@@ -6,6 +6,7 @@ export const Profile_Types = {
   LOADING: 'PROFILE_LOADING',
   GET_USER: 'PROFILE_GET_USER',
   SET_USER: 'PROFILE_SET_USER',
+  SEARCH_USER: 'PROFILE_SEARCH_USER',
   SUCCESS: 'PROFILE_SUCCESS',
   ADD_FRIEND: 'PROFILE_ADD_FRIEND',
   DELETE_FRIEND: 'PROFILE_DELETE_FRIEND',
@@ -55,6 +56,27 @@ export const setUserProfile = (id) => async (dispatch) => {
       type: Alert.ALERT,
       payload: {
         error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const searchUserProfile = (value, id) => async (dispatch) => {
+  try {
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+    const res = await ClientAPI.searchUser(value, id);
+
+    dispatch({
+      type: Profile_Types.SEARCH_USER,
+      payload: res.data,
+    });
+
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+  } catch (error) {
+    dispatch({
+      type: Alert.ALERT,
+      payload: {
+        error: error.response.data,
       },
     });
   }

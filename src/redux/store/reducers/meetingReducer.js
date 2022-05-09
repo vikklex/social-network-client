@@ -26,7 +26,7 @@ const meetingReducer = (state = defaultState, action) => {
         meetings: action.payload,
       };
 
-    case Types.DELETE_MEETINGS:
+    case Types.DELETE_MEETING:
       return {
         ...state,
         meetings: DeleteData(state.meetings, action.payload.id),

@@ -13,10 +13,12 @@ import {
 } from '@ant-design/icons';
 
 import { logout } from 'redux/actions/authActions';
-import ClientAPI from 'services/ClientAPI';
+import { searchUserProfile } from 'redux/actions/profileActions';
+
 import 'app/components/Header/header.scss';
 
 import NoAvatar from 'assets/img/noavatar.png';
+
 const { Option } = AutoComplete;
 
 export default function HeaderNav() {
@@ -27,28 +29,16 @@ export default function HeaderNav() {
   const profile = useSelector((state) => state.auth.profile);
 
   const [search, setSearch] = useState('');
-  const [users, setUsers] = useState([]);
+
+  const searchUsers = useSelector((state) => state.profile.searchUsers);
 
   const onChange = (value) => {
     setSearch(value);
   };
 
   const onSearch = (value) => {
-    const onSuccess = (res) => {
-      setUsers(res.data.msg.users);
-    };
-
-    try {
-      ClientAPI.searchUser(value).then(onSuccess);
-      setSearch(value);
-    } catch (error) {
-      dispatch({
-        type: 'ALERT',
-        payload: {
-          error: error.response.data.msg,
-        },
-      });
-    }
+    dispatch(searchUserProfile(value, profile.id));
+    setSearch(value);
   };
 
   const onSelect = (value, option) => {
@@ -58,22 +48,9 @@ export default function HeaderNav() {
 
   useEffect(() => {
     if (search && token) {
-      ClientAPI.searchUser(search, profile.id)
-        .then((res) => {
-          setUsers(res.data.msg);
-        })
-        .catch((err) => {
-          dispatch({
-            type: 'ALERT',
-            payload: {
-              error: err.response.data.msg,
-            },
-          });
-        });
-    } else {
-      setUsers([]);
+      dispatch(searchUserProfile(search, profile.id));
     }
-  }, [search, token, dispatch]);
+  }, [search, token, dispatch, profile]);
 
   if (!profile) {
     return null;
@@ -95,8 +72,8 @@ export default function HeaderNav() {
             onChange={onChange}
             onSelect={onSelect}
           >
-            {users &&
-              users.map((user) => (
+            {searchUsers &&
+              searchUsers.map((user) => (
                 <Option key={user.id} value={user.first_name}>
                   <Avatar src={user.avatar ? user.avatar : NoAvatar}></Avatar>
                   {user.first_name} {user.last_name}
