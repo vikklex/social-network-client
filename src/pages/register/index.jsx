@@ -13,6 +13,15 @@ import { updateAvatar } from 'redux/actions/profileActions';
 
 import Center from 'components/Center';
 
+import {
+  name_rules,
+  surname_rules,
+  email_rules,
+  password_confirm_rules,
+  password_rules,
+  validate_messages,
+} from 'pages/Register/rules';
+
 import RegisterIllustration from 'assets/img/registration.png';
 import MainLogo from 'assets/img/logo.svg';
 
@@ -20,18 +29,10 @@ import 'pages/Register/register.scss';
 
 const layout = {
   labelCol: {
-    span: 8,
+    span: 9,
   },
   wrapperCol: {
     span: 16,
-  },
-};
-
-const validateMessages = {
-  required: '${label} is required!',
-  types: {
-    email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
   },
 };
 
@@ -121,20 +122,12 @@ const Register = () => {
                 {...layout}
                 name='register'
                 onFinish={onFinish}
-                validateMessages={validateMessages}
+                validateMessages={validate_messages}
               >
                 <Form.Item
                   name={['user', 'first_name']}
                   label='Name'
-                  rules={[
-                    {
-                      min: 3,
-                      max: 12,
-                      whitespace: false,
-                      required: true,
-                      message: 'Name should be at least 3 characters',
-                    },
-                  ]}
+                  rules={name_rules}
                 >
                   <Input />
                 </Form.Item>
@@ -142,15 +135,7 @@ const Register = () => {
                 <Form.Item
                   name={['user', 'last_name']}
                   label='Surname'
-                  rules={[
-                    {
-                      min: 3,
-                      max: 18,
-                      whitespace: false,
-                      required: true,
-                      message: 'Surname should be at least 3 characters',
-                    },
-                  ]}
+                  rules={surname_rules}
                 >
                   <Input />
                 </Form.Item>
@@ -158,17 +143,7 @@ const Register = () => {
                 <Form.Item
                   name={['user', 'email']}
                   label='Email'
-                  rules={[
-                    {
-                      required: true,
-                      type: 'email',
-                      message: 'The input is not valid E-mail!',
-                    },
-                    {
-                      required: true,
-                      message: 'Please input your E-mail!',
-                    },
-                  ]}
+                  rules={email_rules}
                 >
                   <Input ref={ref} />
                 </Form.Item>
@@ -176,15 +151,7 @@ const Register = () => {
                 <Form.Item
                   label='Password'
                   name='password_hash'
-                  rules={[
-                    {
-                      required: true,
-                      min: 6,
-                      max: 32,
-                      whitespace: false,
-                      message: 'Please input your password!',
-                    },
-                  ]}
+                  rules={password_rules}
                 >
                   <Input.Password />
                 </Form.Item>
@@ -194,28 +161,7 @@ const Register = () => {
                   label='Confirm Password'
                   dependencies={['password_hash']}
                   hasFeedback
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please confirm your password!',
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (
-                          !value ||
-                          getFieldValue('password_hash') === value
-                        ) {
-                          return Promise.resolve();
-                        }
-
-                        return Promise.reject(
-                          new Error(
-                            'The two passwords that you entered do not match!',
-                          ),
-                        );
-                      },
-                    }),
-                  ]}
+                  rules={password_confirm_rules}
                 >
                   <Input.Password />
                 </Form.Item>

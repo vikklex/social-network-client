@@ -19,7 +19,14 @@ import moment from 'moment';
 import { Profile_Types, updateUser } from 'redux/actions/profileActions';
 import { getUserProfile } from 'redux/actions/authActions';
 
-import './editProfile.scss';
+import {
+  city_rules,
+  job_rules,
+  name_rules,
+  surname_rules,
+} from 'pages/EditProfile/rules';
+
+import 'pages/EditProfile/editProfile.scss';
 
 const { Option } = Select;
 
@@ -97,32 +104,11 @@ const EditProfile = () => {
               birthday: user?.birthday ? moment(user?.birthday) : moment(),
             }}
           >
-            <Form.Item
-              name='first_name'
-              label='Name'
-              rules={[
-                {
-                  min: 3,
-                  max: 12,
-                  whitespace: false,
-                  message: 'Name should be at least 3 characters',
-                },
-              ]}
-            >
+            <Form.Item name='first_name' label='Name' rules={name_rules}>
               <Input />
             </Form.Item>
-            <Form.Item
-              name='last_name'
-              label='Surname'
-              rules={[
-                {
-                  min: 3,
-                  max: 12,
-                  whitespace: false,
-                  message: 'Surname should be at least 3 characters',
-                },
-              ]}
-            >
+
+            <Form.Item name='last_name' label='Surname' rules={surname_rules}>
               <Input />
             </Form.Item>
 
@@ -150,46 +136,15 @@ const EditProfile = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item
-              name='city'
-              label='City'
-              rules={[
-                {
-                  min: 3,
-                  max: 12,
-                  whitespace: false,
-                  message: 'City name should be at least 3 characters',
-                },
-              ]}
-            >
+            <Form.Item name='city' label='City' rules={city_rules}>
               <Input />
             </Form.Item>
-            <Form.Item
-              name='from'
-              label='From'
-              rules={[
-                {
-                  min: 3,
-                  max: 12,
-                  whitespace: false,
-                  message: 'City from  should be at least 3 characters',
-                },
-              ]}
-            >
+
+            <Form.Item name='from' label='From' rules={city_rules}>
               <Input />
             </Form.Item>
-            <Form.Item
-              name='job'
-              label='Job'
-              rules={[
-                {
-                  min: 3,
-                  max: 12,
-                  whitespace: false,
-                  message: 'Job description should be at least 3 characters',
-                },
-              ]}
-            >
+
+            <Form.Item name='job' label='Job' rules={job_rules}>
               <Input />
             </Form.Item>
 

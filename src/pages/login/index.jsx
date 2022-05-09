@@ -22,6 +22,7 @@ import Center from 'components/Center';
 
 import LoginIllustration from 'assets/img/login.jpg';
 import MainLogo from 'assets/img/logo.svg';
+import { email_rules, password_rules } from 'pages/Login/rules';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -89,32 +90,14 @@ const Login = () => {
                 onFinish={onFinish}
                 autoComplete='off'
               >
-                <Form.Item
-                  label='Email'
-                  name='email'
-                  rules={[
-                    {
-                      type: 'email',
-                      required: true,
-                      message: 'Please input your email!',
-                    },
-                  ]}
-                >
+                <Form.Item label='Email' name='email' rules={email_rules}>
                   <Input ref={ref} />
                 </Form.Item>
 
                 <Form.Item
                   label='Password'
                   name='password_hash'
-                  rules={[
-                    {
-                      required: true,
-                      min: 6,
-                      max: 32,
-                      whitespace: false,
-                      message: 'Please input your password!',
-                    },
-                  ]}
+                  rules={password_rules}
                 >
                   <Input.Password />
                 </Form.Item>

@@ -22,6 +22,12 @@ import MeetingInfo from 'pages/Meetings/components/MeetingInfo';
 
 import { DATE_FULL_FORMAT } from 'utils/Constants';
 import { TIME_FORMAT } from 'utils/Constants';
+
+import {
+  title_rules,
+  description_rules,
+  choice_rules,
+} from 'pages/Meetings/rules';
 import './meetings.scss';
 
 const { TabPane } = Tabs;
@@ -140,15 +146,23 @@ const Meetings = () => {
                 span: 7,
               }}
             >
-              <Form.Item label='Title' name='title'>
+              <Form.Item label='Title' name='title' rules={title_rules}>
                 <Input />
               </Form.Item>
 
-              <Form.Item label='Description' name='description'>
+              <Form.Item
+                label='Description'
+                name='description'
+                rules={description_rules}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item name='importance' label='Importance'>
+              <Form.Item
+                name='importance'
+                label='Importance'
+                rules={choice_rules}
+              >
                 <Select placeholder='Select importance'>
                   <Option value='success'>Low</Option>
                   <Option value='warning'>Medium</Option>
@@ -156,7 +170,11 @@ const Meetings = () => {
                 </Select>
               </Form.Item>
 
-              <Form.Item label='Participants' name='participants'>
+              <Form.Item
+                label='Participants'
+                name='participants'
+                rules={choice_rules}
+              >
                 <Select mode='multiple'>
                   {friends.map((friend) => (
                     <Select.Option value={friend.id} key={friend.id}>
@@ -167,11 +185,15 @@ const Meetings = () => {
                 </Select>
               </Form.Item>
 
-              <Form.Item label='Start time:' name='startTime'>
+              <Form.Item
+                label='Start time:'
+                name='startTime'
+                rules={choice_rules}
+              >
                 <TimePicker format={TIME_FORMAT} />
               </Form.Item>
 
-              <Form.Item label='End time:' name='endTime'>
+              <Form.Item label='End time:' name='endTime' rules={choice_rules}>
                 <TimePicker format={TIME_FORMAT} />
               </Form.Item>
 
