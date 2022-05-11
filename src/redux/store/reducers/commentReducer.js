@@ -1,4 +1,5 @@
-import { Comment_Types } from 'redux/actions/commentActions';
+import { Types } from 'redux/actions/commentActions';
+import { DeleteData } from 'redux/actions/alertActions';
 
 const defaultState = {
   comment: [],
@@ -7,22 +8,28 @@ const defaultState = {
 
 const commentReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case Comment_Types.CREATE_COMMENT:
+    case Types.CREATE_COMMENT:
       return {
         ...state,
         comment: [...state.comment, action.payload],
       };
 
-    case Comment_Types.LOADING_COMMENTS:
+    case Types.LOADING_COMMENTS:
       return {
         ...state,
         loading: action.payload,
       };
 
-    case Comment_Types.GET_COMMENTS:
+    case Types.GET_COMMENTS:
       return {
         ...state,
         comment: action.payload,
+      };
+
+    case Types.DELETE_MEETING:
+      return {
+        ...state,
+        comment: DeleteData(state.comment, action.payload.id),
       };
 
     default:

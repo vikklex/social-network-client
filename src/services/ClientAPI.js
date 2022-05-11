@@ -34,7 +34,6 @@ class ClientAPI {
   }
 
   searchUser(value, id) {
-    console.log(value, id);
     return this.instance.put(`/v1/users/search/search?username=${value}`, {
       userId: id,
     });
@@ -53,8 +52,25 @@ class ClientAPI {
     return this.instance.get(`v1/posts/friendsPosts/${id}`);
   }
 
-  getOneComment(id) {
-    return this.instance.get(`v1/comments/${id}`);
+  createComment({ data }) {
+    return this.instance.post('v1/comments/', {
+      userId: data.userId,
+      postAuthor: data.postAuthor,
+      postId: data.postId,
+      desc: data.desc,
+    });
+  }
+
+  getComments(id) {
+    return this.instance.get(`v1/comments/timeline/${id}`);
+  }
+
+  updateComment(id, userId, desc) {
+    return this.instance.put(`v1/comments/${id}`, userId, desc);
+  }
+
+  deleteComment(id, userId) {
+    return this.instance.delete(`v1/comments/${id}`, { userId });
   }
 
   updateUser(
@@ -162,6 +178,19 @@ class ClientAPI {
 
   getMeetings(id) {
     return this.instance.get(`v1/meetings/${id}`);
+  }
+
+  updateMeeting(id, data) {
+    return this.instance.put(`v1/meetings/${id}`, {
+      userId: data.userId,
+      participants: data.participants,
+      title: data.title,
+      description: data.description,
+      importance: data.importance,
+      date: data.date,
+      startTime: data.startTime,
+      endTime: data.endTime,
+    });
   }
 
   deleteMeeting(id, userId) {

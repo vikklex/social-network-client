@@ -9,10 +9,14 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import { deletePost, updatePost } from 'redux/actions/postActions';
+import { createComment, getComments } from 'redux/actions/commentActions';
 import {
   createReaction,
   getPostReactions,
 } from 'redux/actions/reactionActions';
+
+import Editor from '../NewPost/components/Editor';
+import PostComments from '../Posts/components/CommentList';
 
 import { DATE_FORMAT } from 'utils/Constants';
 import NoAvatar from 'assets/img/noavatar.png';
@@ -29,12 +33,16 @@ const Post = ({ post, isUserProfile }) => {
 
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
+  const [comment, setComment] = useState([]);
 
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [text, setText] = useState(post.desc);
+
+  const [reply, setReply] = useState(false);
+  const [content, setContent] = useState('');
 
   useEffect(() => {
     if (post) {
@@ -62,13 +70,21 @@ const Post = ({ post, isUserProfile }) => {
     }
   }, [post, dispatch, likes, dislikes, profile.id]);
 
+  const currentComment = comment.filter(
+    (comment) => comment.postId === post.id,
+  );
+
+  useEffect(() => {
+    dispatch(getComments(post.id)).then((data) => setComment(data.data));
+  }, [dispatch, post.id]);
+
   const setLike = () => {
     dispatch(
       createReaction({
         reactionType: 'like',
         userId: profile.id,
         postId: post.id,
-        likedUser: user.id || post.userId,
+        likedUser: user?.id || post?.userId,
       }),
     ).then((data) => {
       const likes = data?.filter(
@@ -93,7 +109,7 @@ const Post = ({ post, isUserProfile }) => {
         reactionType: 'dislike',
         userId: profile.id,
         postId: post.id,
-        likedUser: user.id || post.userId,
+        likedUser: user?.id || post?.userId,
       }),
     ).then((data) => {
       const likes = data?.filter(
@@ -121,6 +137,27 @@ const Post = ({ post, isUserProfile }) => {
     dispatch(deletePost(post, user.id));
   };
 
+  const handleReply = () => {
+    setReply(true);
+  };
+
+  const handleChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    dispatch(
+      createComment({
+        userId: profile.id,
+        desc: content,
+        postId: post.id,
+        postAuthor: post.userId,
+      }),
+    );
+
+    setContent('');
+  };
+
   const targetData = isUserProfile ? user : post;
   const userId = isUserProfile ? user.id : post.userId;
 
@@ -144,7 +181,9 @@ const Post = ({ post, isUserProfile }) => {
       </span>
     </Tooltip>,
 
-    <span key='comment-basic-reply-to'>Reply to</span>,
+    <span key='comment-basic-reply-to' onClick={handleReply}>
+      Reply to
+    </span>,
 
     <>
       {!isEditMode && !id && isUserProfile && (
@@ -221,6 +260,27 @@ const Post = ({ post, isUserProfile }) => {
           </Tooltip>
         }
       />
+
+      <PostComments comment={currentComment} />
+      {reply && (
+        <Comment
+          avatar={
+            <Avatar
+              src={profile.avatar ? profile.avatar : NoAvatar}
+              alt='Avatar'
+            />
+          }
+          content={
+            <Editor
+              value={[content]}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+              user={user}
+              comment={true}
+            />
+          }
+        />
+      )}
     </Card>
   );
 };

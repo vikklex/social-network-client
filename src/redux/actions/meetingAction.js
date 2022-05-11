@@ -4,6 +4,7 @@ import { Types as Alert } from './alertActions';
 export const Types = {
   CREATE_MEETING: 'MEETING_CREATE_MEETING',
   GET_MEETINGS: 'MEETING_GET_MEETINGS',
+  SET_MEETING: 'MEETING_SET_MEETINGS',
   LOADING_MEETING: 'MEETING_LOADING_MEETINGS',
   DELETE_MEETING: 'MEETING_DELETE_MEETING',
   SUCCESS: 'MEETING_SUCCESS',
@@ -42,6 +43,53 @@ export const getMeetings = (data) => async (dispatch) => {
     });
 
     return res.data;
+  } catch (error) {
+    dispatch({
+      type: Alert.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const setMeetings = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: Types.LOADING, payload: { loading: true } });
+    const res = await ClientAPI.getMeetings(id);
+
+    dispatch({
+      type: Types.GET_MEETINGS,
+      payload: res.data,
+    });
+
+    dispatch({ type: Types.LOADING, payload: { loading: false } });
+  } catch (error) {
+    dispatch({
+      type: Alert.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const updateMeeting = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: Types.LOADING_MEETING, payload: { loading: true } });
+    ClientAPI.updateMeeting(data.id, data).then((res) => {
+      dispatch({
+        type: Types.SET_MEETING,
+        payload: res.data,
+      });
+    });
+
+    dispatch({
+      type: Types.LOADING_MEETING,
+      payload: {
+        loading: false,
+      },
+    });
   } catch (error) {
     dispatch({
       type: Alert.ALERT,

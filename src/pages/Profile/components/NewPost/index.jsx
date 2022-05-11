@@ -65,6 +65,7 @@ const NewPost = () => {
           props={props}
           fileList={fileList}
           setFileList={setFileList}
+          comment={false}
         />
       }
     />

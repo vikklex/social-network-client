@@ -3,35 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import moment from 'moment';
 
-import {
-  Calendar,
-  Input,
-  Form,
-  Badge,
-  Modal,
-  Button,
-  Select,
-  TimePicker,
-  Avatar,
-  Tabs,
-} from 'antd';
+import { Calendar, Badge, Modal, Tabs } from 'antd';
 
 import { getMeetings, createMeeting } from 'redux/actions/meetingAction';
 
 import MeetingInfo from 'pages/Meetings/components/MeetingInfo';
+import ModalForm from 'pages/Meetings/components/ModalForm';
 
 import { DATE_FULL_FORMAT } from 'utils/Constants';
-import { TIME_FORMAT } from 'utils/Constants';
 
-import {
-  title_rules,
-  description_rules,
-  choice_rules,
-} from 'pages/Meetings/rules';
 import './meetings.scss';
 
 const { TabPane } = Tabs;
-const { Option } = Select;
 
 const Meetings = () => {
   const dispatch = useDispatch();
@@ -42,14 +25,13 @@ const Meetings = () => {
 
   const profile = useSelector((state) => state.auth.profile);
   const meetings = useSelector((state) => state.meeting.meetings);
-  const friends = useSelector((state) => state.auth.profile.followings);
 
   useEffect(() => {
     dispatch(getMeetings(profile.id));
   }, [profile.id, dispatch]);
 
   const getListData = (date) => {
-    const data = meetings.filter(
+    const data = meetings?.filter(
       (meeting) =>
         date.format(DATE_FULL_FORMAT) ===
         moment(meeting.date).format(DATE_FULL_FORMAT),
@@ -139,70 +121,7 @@ const Meetings = () => {
       >
         <Tabs defaultActiveKey='1'>
           <TabPane tab='New meeting' key='1'>
-            <Form
-              onFinish={onFinish}
-              name='basic'
-              labelCol={{
-                span: 7,
-              }}
-            >
-              <Form.Item label='Title' name='title' rules={title_rules}>
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label='Description'
-                name='description'
-                rules={description_rules}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                name='importance'
-                label='Importance'
-                rules={choice_rules}
-              >
-                <Select placeholder='Select importance'>
-                  <Option value='success'>Low</Option>
-                  <Option value='warning'>Medium</Option>
-                  <Option value='error'>Hight</Option>
-                </Select>
-              </Form.Item>
-
-              <Form.Item
-                label='Participants'
-                name='participants'
-                rules={choice_rules}
-              >
-                <Select mode='multiple'>
-                  {friends.map((friend) => (
-                    <Select.Option value={friend.id} key={friend.id}>
-                      <Avatar src={friend.avatar} style={{ marginRight: 4 }} />
-                      {`${friend.first_name} ${friend.last_name}`}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-
-              <Form.Item
-                label='Start time:'
-                name='startTime'
-                rules={choice_rules}
-              >
-                <TimePicker format={TIME_FORMAT} />
-              </Form.Item>
-
-              <Form.Item label='End time:' name='endTime' rules={choice_rules}>
-                <TimePicker format={TIME_FORMAT} />
-              </Form.Item>
-
-              <Form.Item>
-                <Button type='primary' htmlType='submit'>
-                  Set meeting
-                </Button>
-              </Form.Item>
-            </Form>
+            <ModalForm onFinish={onFinish} isMainComponent={true} />
           </TabPane>
           <TabPane tab='Show meetings' key='2'>
             {dateContent?.map((content) => (

@@ -4,7 +4,15 @@ import { PaperClipOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
-const Editor = ({ onChange, onSubmit, submitting, value, user, props }) => {
+const Editor = ({
+  onChange,
+  onSubmit,
+  submitting,
+  value,
+  user,
+  props,
+  comment,
+}) => {
   return (
     <>
       <Form.Item>
@@ -13,20 +21,22 @@ const Editor = ({ onChange, onSubmit, submitting, value, user, props }) => {
           rows={4}
           onChange={onChange}
           value={value}
-          placeholder={`What's new, ${user.first_name}?`}
-          style={{ marginBottom: 15 }}
+          placeholder={!comment && `What's new, ${user.first_name}?`}
+          style={!comment && { marginBottom: 15 }}
         />
 
-        <Row>
-          <Col span={6}>
-            <Upload {...props}>
-              <PaperClipOutlined
-                className='post__icon'
-                style={{ cursor: 'pointer' }}
-              />
-            </Upload>
-          </Col>
-        </Row>
+        {!comment && (
+          <Row>
+            <Col span={6}>
+              <Upload {...props}>
+                <PaperClipOutlined
+                  className='post__icon'
+                  style={{ cursor: 'pointer' }}
+                />
+              </Upload>
+            </Col>
+          </Row>
+        )}
       </Form.Item>
 
       <Form.Item>
@@ -35,10 +45,16 @@ const Editor = ({ onChange, onSubmit, submitting, value, user, props }) => {
           loading={submitting}
           onClick={onSubmit}
           type='primary'
-          style={{
-            backgroundColor: 'rgb(206, 206, 206)',
-            border: 'none',
-          }}
+          style={
+            !comment
+              ? {
+                  backgroundColor: 'rgb(206, 206, 206)',
+                  border: 'none',
+                }
+              : {
+                  width: '10%',
+                }
+          }
         >
           Share
         </Button>

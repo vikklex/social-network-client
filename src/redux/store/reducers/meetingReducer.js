@@ -14,7 +14,7 @@ const meetingReducer = (state = defaultState, action) => {
         meetings: [...state.meetings, action.payload],
       };
 
-    case Types.LOADING_MEETINGS:
+    case Types.LOADING_MEETING:
       return {
         ...state,
         loading: action.payload,
@@ -24,6 +24,12 @@ const meetingReducer = (state = defaultState, action) => {
       return {
         ...state,
         meetings: action.payload,
+      };
+
+    case Types.SET_MEETING:
+      return {
+        ...state,
+        meetings: [...state.meetings, action.payload],
       };
 
     case Types.DELETE_MEETING:

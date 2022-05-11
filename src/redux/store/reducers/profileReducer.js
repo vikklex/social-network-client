@@ -28,7 +28,6 @@ const profileReducer = (state = defaultState, action) => {
       };
 
     case Profile_Types.SEARCH_USER:
-      console.log(action.payload);
       return {
         ...state,
         searchUsers: action.payload,

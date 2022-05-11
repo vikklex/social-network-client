@@ -39,7 +39,7 @@ export const FullMenu = () => {
         text='Posts of my friends'
       />
 
-      <MenuItem link='/reactions' icon={<HeartOutlined />} text='Reaction' />
+      <MenuItem link='/reactions' icon={<HeartOutlined />} text='Reactions' />
 
       <MenuItem link='/meetings' icon={<CalendarFilled />} text='Meetings' />
 

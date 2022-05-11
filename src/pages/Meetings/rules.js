@@ -1,7 +1,7 @@
 export const title_rules = [
   {
-    min: 3,
-    max: 15,
+    min: 2,
+    max: 25,
     whitespace: false,
     required: true,
     message: 'Title should be at least 3 characters',
@@ -10,8 +10,8 @@ export const title_rules = [
 
 export const description_rules = [
   {
-    min: 7,
-    max: 30,
+    min: 2,
+    max: 50,
     whitespace: false,
     required: true,
     message: 'Description should be at least 7 characters',
