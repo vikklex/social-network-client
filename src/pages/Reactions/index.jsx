@@ -10,6 +10,7 @@ import NoContent from 'components/NoContent';
 import ReactionTable from './ReactionTable';
 import ReactionsGender from './ReactionsGender';
 import ReactionsDate from './ReactionsDate';
+import ReactionsLine from './ReactionsLine';
 
 import getReactionsData from 'utils/getReactionsData';
 
@@ -103,6 +104,7 @@ const Reactions = () => {
               />
             </Col>
           </Row>
+
           {likes.length !== 0 && (
             <ReactionTable
               reaction={likeReaction}
@@ -144,7 +146,16 @@ const Reactions = () => {
               </Col>
             )}
           </Row>
-          <Divider style={{ marginTop: '10%' }}>REACTIONS BY WEEKDAYS</Divider>
+
+          <Divider style={{ marginTop: '10%', marginBottom: '5%' }}>
+            REACTIONS OVER A PERIOD OF TIME
+          </Divider>
+
+          <Row>
+            <ReactionsLine />
+          </Row>
+          <Divider style={{ marginTop: '15%' }}>REACTIONS BY WEEKDAYS</Divider>
+
           <Row>
             <ReactionsDate
               reactions={likeReaction}

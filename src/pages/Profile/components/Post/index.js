@@ -169,7 +169,7 @@ const Post = ({ post, isUserProfile }) => {
   const actions = [
     <Tooltip key='comment-basic-like' title='Like'>
       <span onClick={setLike}>
-        {isLiked && <LikeOutlined style={{ color: 'blue' }} />}
+        {isLiked && <LikeOutlined style={{ color: '#191970' }} />}
         {!isLiked && <LikeOutlined style={{ color: 'silver' }} />}
         <span className='comment-action'>{`${likes} ${isLiked}`}</span>
       </span>
@@ -177,7 +177,7 @@ const Post = ({ post, isUserProfile }) => {
 
     <Tooltip key='comment-basic-dislike' title='Dislike'>
       <span onClick={dislike}>
-        {isDisliked && <DislikeOutlined style={{ color: 'blue' }} />}
+        {isDisliked && <DislikeOutlined style={{ color: '#191970' }} />}
         {!isDisliked && <DislikeOutlined style={{ color: 'silver' }} />}
         <span className='comment-action'>{`${dislikes} ${isDisliked}`}</span>
       </span>

@@ -34,7 +34,7 @@ const ReactionsDate = ({ reactions, type, color }) => {
   };
 
   return (
-    <Row style={{ width: '45%' }}>
+    <Row style={{ width: '45%', marginTop: '5%' }}>
       <h4 style={{ marginBottom: '10%' }}>{type}</h4>
       <ResponsiveContainer width='100%' height='100%'>
         <BarChart

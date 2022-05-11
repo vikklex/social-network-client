@@ -10,7 +10,7 @@ import { getMeetings, createMeeting } from 'redux/actions/meetingAction';
 import MeetingInfo from 'pages/Meetings/components/MeetingInfo';
 import ModalForm from 'pages/Meetings/components/ModalForm';
 
-import { DATE_FULL_FORMAT } from 'utils/Constants';
+import { DATE_FULL_FORMAT, MONTH_MOMENT_FORMAT } from 'utils/Constants';
 
 import './meetings.scss';
 
@@ -64,19 +64,31 @@ const Meetings = () => {
   };
 
   const getMonthData = (value) => {
-    if (value.month() === 8) {
-      return 1394;
-    }
+    const data = meetings?.filter(
+      (meeting) =>
+        value.format('M') === moment(meeting.date).format(MONTH_MOMENT_FORMAT),
+    );
+
+    return data.map((meeting) => {
+      return {
+        type: meeting.importance,
+        content: `${meeting.title} (${moment(meeting.date).format('LL')})`,
+      };
+    });
   };
 
   const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className='notes-month'>
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
+    const listData = getMonthData(value);
+
+    return (
+      <ul className='events' style={{ height: '100%' }}>
+        {listData.map((item, index) => (
+          <li key={index}>
+            <Badge status={item.type} text={item.content} />
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   const onChange = (date) => {
