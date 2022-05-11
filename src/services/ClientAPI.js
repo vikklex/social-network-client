@@ -52,27 +52,6 @@ class ClientAPI {
     return this.instance.get(`v1/posts/friendsPosts/${id}`);
   }
 
-  createComment({ data }) {
-    return this.instance.post('v1/comments/', {
-      userId: data.userId,
-      postAuthor: data.postAuthor,
-      postId: data.postId,
-      desc: data.desc,
-    });
-  }
-
-  getComments(id) {
-    return this.instance.get(`v1/comments/timeline/${id}`);
-  }
-
-  updateComment(id, userId, desc) {
-    return this.instance.put(`v1/comments/${id}`, userId, desc);
-  }
-
-  deleteComment(id, userId) {
-    return this.instance.delete(`v1/comments/${id}`, { userId });
-  }
-
   updateUser(
     id,
     first_name,
@@ -146,9 +125,32 @@ class ClientAPI {
     return this.instance.delete(`v1/posts/${id}`, userId);
   }
 
-  createReaction({ reactionType, userId, likedUser, postId }) {
+  createComment({ data }) {
+    return this.instance.post('v1/comments/', {
+      userId: data.userId,
+      postAuthor: data.postAuthor,
+      postId: data.postId,
+      desc: data.desc,
+    });
+  }
+
+  getComments(id) {
+    return this.instance.get(`v1/comments/timeline/${id}`);
+  }
+
+  updateComment(id, userId, desc) {
+    return this.instance.put(`v1/comments/${id}`, userId, desc);
+  }
+
+  deleteComment(id, userId) {
+    return this.instance.delete(`v1/comments/${id}`, { userId });
+  }
+
+  createReaction({ reactionType, contentType, userId, likedUser, postId }) {
+    console.log({ reactionType, contentType, userId, likedUser, postId });
     return this.instance.post('v1/reactions/', {
       reactionType: reactionType,
+      contentType: contentType,
       userId: userId,
       likedUser: likedUser,
       postId: postId,

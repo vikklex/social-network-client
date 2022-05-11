@@ -1,5 +1,5 @@
 import { Avatar, Comment, Tooltip } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteComment } from 'redux/actions/commentActions';
@@ -9,6 +9,12 @@ import moment from 'moment';
 import { DATE_FORMAT } from 'utils/Constants';
 import TextArea from 'antd/lib/input/TextArea';
 import { updateComment } from 'redux/actions/commentActions';
+import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
+
+import {
+  createReaction,
+  getPostReactions,
+} from 'redux/actions/reactionActions';
 
 const CommentList = ({ comment }) => {
   const navigate = useNavigate();
@@ -18,6 +24,90 @@ const CommentList = ({ comment }) => {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [text, setText] = useState(comment.desc);
+
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+
+  useEffect(() => {
+    if (comment) {
+      dispatch(getPostReactions(comment.id)).then((data) => {
+        const likes = data?.filter(
+          (reaction) => reaction.reactionType === 'like',
+        );
+
+        setLikes(likes?.length);
+
+        const dislikes = data?.filter(
+          (reaction) => reaction.reactionType === 'dislike',
+        );
+
+        for (const like of likes) {
+          setIsLiked(like.userId === profile.id);
+        }
+
+        for (const dislike of dislikes) {
+          setIsDisliked(dislike.userId === profile.id);
+        }
+
+        setDislikes(dislikes?.length);
+      });
+    }
+  }, [comment, dispatch, likes, dislikes, profile.id]);
+
+  const setLike = () => {
+    dispatch(
+      createReaction({
+        reactionType: 'like',
+        contentType: 'comment',
+        userId: profile.id,
+        postId: comment.id,
+        likedUser: comment?.userId,
+      }),
+    ).then((data) => {
+      const likes = data?.filter(
+        (reaction) => reaction.reactionType === 'like',
+      );
+
+      const dislikes = data?.filter(
+        (reaction) => reaction.reactionType === 'dislike',
+      );
+
+      setIsLiked(true);
+      setIsDisliked(false);
+
+      setLikes(likes?.length);
+      setDislikes(dislikes?.length);
+    });
+  };
+
+  const dislike = () => {
+    dispatch(
+      createReaction({
+        reactionType: 'dislike',
+        contentType: 'comment',
+        userId: profile.id,
+        postId: comment.id,
+        likedUser: comment?.userId,
+      }),
+    ).then((data) => {
+      const likes = data?.filter(
+        (reaction) => reaction.reactionType === 'like',
+      );
+
+      const dislikes = data?.filter(
+        (reaction) => reaction.reactionType === 'dislike',
+      );
+
+      setIsDisliked(true);
+      setIsLiked(false);
+
+      setDislikes(dislikes?.length);
+      setLikes(likes?.length);
+    });
+  };
 
   const handleDelete = () => {
     dispatch(deleteComment(comment, comment.postAuthor));
@@ -31,6 +121,22 @@ const CommentList = ({ comment }) => {
   const isAuthor = comment.userId === profile.id;
   const actions = [
     <>
+      <Tooltip key='comment-basic-like' title='Like'>
+        <span onClick={setLike}>
+          {isLiked && <LikeOutlined style={{ color: 'blue' }} />}
+          {!isLiked && <LikeOutlined style={{ color: 'silver' }} />}
+          <span className='comment-action'>{`${likes} ${isLiked}`}</span>
+        </span>
+      </Tooltip>
+
+      <Tooltip key='comment-basic-dislike' title='Dislike'>
+        <span onClick={dislike}>
+          {isDisliked && <DislikeOutlined style={{ color: 'blue' }} />}
+          {!isDisliked && <DislikeOutlined style={{ color: 'silver' }} />}
+          <span className='comment-action'>{`${dislikes} ${isDisliked}`}</span>
+        </span>
+      </Tooltip>
+
       {!isEditMode && isAuthor && (
         <span key='comment-basic-edit' onClick={() => setIsEditMode(true)}>
           Edit

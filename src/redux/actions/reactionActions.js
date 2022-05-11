@@ -14,6 +14,7 @@ export const createReaction = (data) => async (dispatch) => {
   try {
     const res = await ClientAPI.createReaction({
       reactionType: data.reactionType,
+      contentType: data.contentType,
       userId: data.userId,
       postId: data.postId,
       likedUser: data.likedUser,

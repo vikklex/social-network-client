@@ -107,6 +107,7 @@ const Post = ({ post, isUserProfile }) => {
     dispatch(
       createReaction({
         reactionType: 'dislike',
+        contentType: 'post',
         userId: profile.id,
         postId: post.id,
         likedUser: user?.id || post?.userId,
