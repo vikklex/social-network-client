@@ -1,20 +1,21 @@
-import { Avatar, Comment, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteComment } from 'redux/actions/commentActions';
+
+import { Avatar, Comment, Tooltip } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
+import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
-import { DATE_FORMAT } from 'utils/Constants';
-import TextArea from 'antd/lib/input/TextArea';
 import { updateComment } from 'redux/actions/commentActions';
-import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
-
+import { deleteComment } from 'redux/actions/commentActions';
 import {
   createReaction,
   getPostReactions,
 } from 'redux/actions/reactionActions';
+
+import { DATE_FORMAT } from 'utils/Constants';
 
 const CommentList = ({ comment }) => {
   const navigate = useNavigate();

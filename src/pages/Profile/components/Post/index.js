@@ -15,10 +15,11 @@ import {
   getPostReactions,
 } from 'redux/actions/reactionActions';
 
-import Editor from '../NewPost/components/Editor';
-import PostComments from '../Posts/components/CommentList';
+import Editor from 'pages/Profile/components/NewPost/components/Editor';
+import PostComments from 'pages/Profile/components/Posts/components/CommentList';
 
 import { DATE_FORMAT } from 'utils/Constants';
+
 import NoAvatar from 'assets/img/noavatar.png';
 
 const { TextArea } = Input;
