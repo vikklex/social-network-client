@@ -27,6 +27,7 @@ const reactionReducer = (state = defaultState, action) => {
     case Reaction_Types.GET_REACTIONS_FOR_USER:
       return {
         ...state,
+        reactions: [action.payload],
       };
 
     default:

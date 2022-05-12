@@ -147,7 +147,6 @@ class ClientAPI {
   }
 
   createReaction({ reactionType, contentType, userId, likedUser, postId }) {
-    console.log({ reactionType, contentType, userId, likedUser, postId });
     return this.instance.post('v1/reactions/', {
       reactionType: reactionType,
       contentType: contentType,
@@ -163,6 +162,13 @@ class ClientAPI {
 
   getAllReactionsForUser(likedUser) {
     return this.instance.get(`v1/reactions/likedUser/${likedUser}`);
+  }
+
+  getReactionsFromDate({ data }) {
+    return this.instance.put(`v1/reactions/date/${data.id}`, {
+      startDate: data.startDate,
+      endDate: data.endDate,
+    });
   }
 
   createMeeting({ data }) {

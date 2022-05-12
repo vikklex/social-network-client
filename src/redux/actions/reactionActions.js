@@ -87,3 +87,32 @@ export const getAllReactionsForUser = (data) => async (dispatch) => {
     });
   }
 };
+
+export const getReactionsFromDate = (data) => async (dispatch) => {
+  try {
+    dispatch({
+      type: Reaction_Types.LOADING_REACTIONS,
+      payload: true,
+    });
+
+    const res = await ClientAPI.getReactionsFromDate({ data });
+
+    dispatch({
+      type: Reaction_Types.GET_REACTIONS_FOR_USER,
+      payload: res.data,
+    });
+    dispatch({
+      type: Reaction_Types.LOADING_REACTIONS,
+      payload: false,
+    });
+
+    return res.data;
+  } catch (error) {
+    dispatch({
+      type: Alert.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};

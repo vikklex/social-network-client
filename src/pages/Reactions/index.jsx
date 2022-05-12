@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Statistic, Row, Col, Card, Divider } from 'antd';
+import { Statistic, Row, Col, Card, Divider, Space, DatePicker } from 'antd';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
-import { getAllReactionsForUser } from 'redux/actions/reactionActions';
+import {
+  getAllReactionsForUser,
+  getReactionsFromDate,
+} from 'redux/actions/reactionActions';
 
 import NoContent from 'components/NoContent';
 import ReactionTable from './ReactionTable';
@@ -18,6 +21,7 @@ import { LIKE } from 'utils/Constants';
 import { DISLIKE } from 'utils/Constants';
 
 import Statistics from 'assets/img/statistics.jpg';
+import moment from 'moment';
 
 const Reactions = () => {
   const dispatch = useDispatch();
@@ -25,6 +29,9 @@ const Reactions = () => {
 
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
+
+  const [dateRange, setDateRange] = useState([moment(), moment()]);
+  const [dateReactions, setDateReactions] = useState(null);
 
   useEffect(() => {
     const getReactionsByType = (reactions, type) => {
@@ -36,6 +43,16 @@ const Reactions = () => {
       setDislikes(getReactionsByType(data, DISLIKE));
     });
   }, [profile.id, dispatch]);
+
+  useEffect(() => {
+    const data = {
+      id: profile.id,
+      startDate: dateRange[0],
+      endDate: dateRange[1],
+    };
+
+    dispatch(getReactionsFromDate(data)).then((data) => setDateReactions(data));
+  }, [dispatch, profile, dateRange]);
 
   const likeReaction = getReactionsData(likes, LIKE);
   const dislikeReaction = getReactionsData(dislikes, DISLIKE);
@@ -152,8 +169,20 @@ const Reactions = () => {
           </Divider>
 
           <Row>
-            <ReactionsLine />
+            <Space direction='vertical' size={12}>
+              <DatePicker.RangePicker
+                value={dateRange}
+                onChange={(value) => setDateRange(value)}
+              />
+            </Space>
+
+            <ReactionsLine
+              startDate={dateRange[0]}
+              endDate={dateRange[1]}
+              reactions={dateReactions}
+            />
           </Row>
+
           <Divider style={{ marginTop: '15%' }}>REACTIONS BY WEEKDAYS</Divider>
 
           <Row>

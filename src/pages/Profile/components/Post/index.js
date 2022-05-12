@@ -136,7 +136,9 @@ const Post = ({ post, isUserProfile }) => {
   };
 
   const handleDelete = () => {
-    dispatch(deletePost(post, user.id));
+    dispatch(deletePost(post, user.id)).then(() =>
+      dispatch(getComments(post.id)).then((data) => setComment(data.data)),
+    );
   };
 
   const handleReply = () => {
@@ -155,6 +157,8 @@ const Post = ({ post, isUserProfile }) => {
         postId: post.id,
         postAuthor: post.userId,
       }),
+    ).then(() =>
+      dispatch(getComments(post.id)).then((data) => setComment(data.data)),
     );
 
     setContent('');
