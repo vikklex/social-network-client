@@ -51,7 +51,9 @@ const Reactions = () => {
       endDate: dateRange[1],
     };
 
-    dispatch(getReactionsFromDate(data)).then((data) => setDateReactions(data));
+    dispatch(getReactionsFromDate(data)).then((data) => {
+      setDateReactions(data);
+    });
   }, [dispatch, profile, dateRange]);
 
   const likeReaction = getReactionsData(likes, LIKE);

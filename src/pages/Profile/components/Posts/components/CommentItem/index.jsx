@@ -8,8 +8,8 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
-import { updateComment } from 'redux/actions/commentActions';
-import { deleteComment } from 'redux/actions/commentActions';
+import { updateComment, deleteComment } from 'redux/actions/commentActions';
+
 import {
   createReaction,
   getPostReactions,
@@ -17,7 +17,7 @@ import {
 
 import { DATE_FORMAT } from 'utils/Constants';
 
-const CommentList = ({ comment }) => {
+const CommentList = ({ comment, onDelete }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -110,10 +110,6 @@ const CommentList = ({ comment }) => {
     });
   };
 
-  const handleDelete = () => {
-    dispatch(deleteComment(comment, comment.postAuthor));
-  };
-
   const saveComment = () => {
     dispatch(updateComment(comment.id, profile.id, text));
     setIsEditMode(false);
@@ -144,7 +140,7 @@ const CommentList = ({ comment }) => {
         </span>
       )}
       {isAuthor && (
-        <span key='comment-basic-delete' onClick={handleDelete}>
+        <span key='comment-basic-delete' onClick={() => onDelete(comment.id)}>
           Delete
         </span>
       )}

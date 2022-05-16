@@ -116,7 +116,7 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-export const getUserProfile =
+export const getAuthUserProfile =
   ({ id }) =>
   async (dispatch) => {
     try {

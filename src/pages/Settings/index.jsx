@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Card, Divider, Form, Input, message, Tabs } from 'antd';
 
 import { Profile_Types, updateUser } from 'redux/actions/profileActions';
-import { getUserProfile } from 'redux/actions/authActions';
+import { getAuthUserProfile } from 'redux/actions/authActions';
 
 import SettingCard from 'pages/Settings/SettingCard';
 
@@ -21,7 +21,7 @@ const Settings = () => {
     const onSuccess = (status) => {
       if (status === Profile_Types.SUCCESS) {
         message.success('You are successfully update your profile settings');
-        dispatch(getUserProfile({ id: user.id }));
+        dispatch(getAuthUserProfile({ id: user.id }));
         navigate('/');
       }
     };

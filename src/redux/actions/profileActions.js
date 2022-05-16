@@ -273,3 +273,56 @@ export const deleteFriend = (data) => async (dispatch) => {
     });
   }
 };
+
+export const deleteAvatar = (data) => async (dispatch) => {
+  const newUser = {
+    ...data,
+    avatar: '',
+  };
+
+  dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+
+  dispatch({
+    type: Types.SET_USER,
+    payload: {
+      user: newUser,
+    },
+  });
+  try {
+    await ClientAPI.deleteAvatar(data);
+  } catch (error) {
+    dispatch({
+      type: Alert.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const deleteImageFromAlbum = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+
+    ClientAPI.deleteImageFromAlbum(data.profile.id, data.src).then((res) => {
+      dispatch({
+        type: Profile_Types.SET_USER,
+        payload: {
+          user: {
+            ...data,
+            ...res.data,
+          },
+        },
+      });
+    });
+
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+  } catch (error) {
+    dispatch({
+      type: Alert.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};

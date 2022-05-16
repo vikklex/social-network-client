@@ -26,7 +26,7 @@ const commentReducer = (state = defaultState, action) => {
         comment: action.payload,
       };
 
-    case Types.DELETE_MEETING:
+    case Types.DELETE_COMMENT:
       return {
         ...state,
         comment: DeleteData(state.comment, action.payload.id),

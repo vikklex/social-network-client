@@ -106,7 +106,7 @@ export const updatePostImage = (id, data, config) => async (dispatch) => {
 export const deletePost = (post, userId) => async (dispatch) => {
   try {
     dispatch({ type: Post_Types.DELETE_POST, payload: post });
-    ClientAPI.deletePost(post.id, { userId }).then((res) => {});
+    ClientAPI.deletePost(post.id, { userId });
   } catch (error) {
     dispatch({
       type: Alert.ALERT,

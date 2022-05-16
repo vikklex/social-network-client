@@ -106,6 +106,16 @@ class ClientAPI {
     return this.instance.put(`v1/users/${id}/user-album`, data, config);
   }
 
+  deleteAvatar(user) {
+    return this.instance.delete(`v1/users/${user.id}/user-avatar`, user);
+  }
+
+  deleteImageFromAlbum(id, path) {
+    return this.instance.delete(`v1/users/${id}/album-image`, {
+      data: { path },
+    });
+  }
+
   createPost({ userId, content }) {
     return this.instance.post('v1/posts/', {
       userId: userId,
@@ -165,7 +175,7 @@ class ClientAPI {
   }
 
   getReactionsFromDate({ data }) {
-    return this.instance.put(`v1/reactions/date/${data.id}`, {
+    return this.instance.post(`v1/reactions/date/${data.id}`, {
       startDate: data.startDate,
       endDate: data.endDate,
     });

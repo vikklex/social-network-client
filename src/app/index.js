@@ -17,7 +17,7 @@ import HeaderNav from 'app/components/Header/Header';
 import { FullMenu } from 'app/components/Menu/FullMenu';
 import PrivateRoute from 'components/PrivateRoute';
 
-import { getUserProfile } from 'redux/actions/authActions';
+import { getAuthUserProfile } from 'redux/actions/authActions';
 
 import jwt_decode from 'jwt-decode';
 
@@ -36,7 +36,7 @@ function App() {
         setIsReady(true);
       };
 
-      dispatch(getUserProfile({ id: jwt_decode(token).id })).then(onSuccess);
+      dispatch(getAuthUserProfile({ id: jwt_decode(token).id })).then(onSuccess);
     } else {
       setIsReady(true);
     }

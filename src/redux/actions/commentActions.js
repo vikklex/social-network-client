@@ -74,6 +74,8 @@ export const updateComment = (id, userId, desc) => async (dispatch) => {
   }
 };
 
+//Why comment
+
 export const deleteComment = (comment, userId) => async (dispatch) => {
   try {
     dispatch({ type: Types.DELETE_COMMENT, payload: comment });

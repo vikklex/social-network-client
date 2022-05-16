@@ -18,6 +18,8 @@ import {
 import Editor from 'pages/Profile/components/NewPost/components/Editor';
 import PostComments from 'pages/Profile/components/Posts/components/CommentList';
 
+import ClientAPI from 'services/ClientAPI';
+
 import { DATE_FORMAT } from 'utils/Constants';
 
 import NoAvatar from 'assets/img/noavatar.png';
@@ -34,7 +36,7 @@ const Post = ({ post, isUserProfile }) => {
 
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
-  const [comment, setComment] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
@@ -71,12 +73,8 @@ const Post = ({ post, isUserProfile }) => {
     }
   }, [post, dispatch, likes, dislikes, profile.id]);
 
-  const currentComment = comment.filter(
-    (comment) => comment.postId === post.id,
-  );
-
   useEffect(() => {
-    dispatch(getComments(post.id)).then((data) => setComment(data.data));
+    dispatch(getComments(post.id)).then((data) => setComments(data.data));
   }, [dispatch, post.id]);
 
   const setLike = () => {
@@ -136,20 +134,24 @@ const Post = ({ post, isUserProfile }) => {
   };
 
   const handleDelete = () => {
-    dispatch(deletePost(post, user.id)).then(() =>
-      dispatch(getComments(post.id)).then((data) => setComment(data.data)),
-    );
+    dispatch(deletePost(post, user.id));
   };
 
   const handleReply = () => {
     setReply(true);
   };
 
-  const handleChange = (e) => {
+  const changeComment = (e) => {
     setContent(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const onDelete = (id) => {
+    ClientAPI.deleteComment(id, profile.id).then(() =>
+      dispatch(getComments(post.id)).then((data) => setComments(data.data)),
+    );
+  };
+
+  const createNewComment = () => {
     dispatch(
       createComment({
         userId: profile.id,
@@ -158,7 +160,7 @@ const Post = ({ post, isUserProfile }) => {
         postAuthor: post.userId,
       }),
     ).then(() =>
-      dispatch(getComments(post.id)).then((data) => setComment(data.data)),
+      dispatch(getComments(post.id)).then((data) => setComments(data.data)),
     );
 
     setContent('');
@@ -212,6 +214,8 @@ const Post = ({ post, isUserProfile }) => {
       )}
     </>,
   ];
+
+  const data = comments.filter((comment) => comment.postId === post.id);
 
   return (
     <Card bordered={false} style={{ width: '100%' }}>
@@ -267,7 +271,8 @@ const Post = ({ post, isUserProfile }) => {
         }
       />
 
-      <PostComments comment={currentComment} />
+      <PostComments comment={data} onDelete={onDelete} />
+
       {reply && (
         <Comment
           avatar={
@@ -279,9 +284,10 @@ const Post = ({ post, isUserProfile }) => {
           content={
             <Editor
               value={[content]}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
+              onChange={changeComment}
+              onSubmit={createNewComment}
               user={user}
+              post={post}
               comment={true}
             />
           }

@@ -45,6 +45,7 @@ const NewPost = () => {
   const handleChange = (e) => {
     setContent(e.target.value);
   };
+
   const handleSubmit = () => {
     dispatch(createPost({ userId, content })).then((res) => {
       handleUpload(res.data.id);

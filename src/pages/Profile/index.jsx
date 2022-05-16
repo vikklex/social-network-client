@@ -27,6 +27,7 @@ import UserNumbers from 'pages/Profile/components/UserNumbers';
 import FriendsPreview from 'pages/Profile/components/FriendsPreview';
 
 import 'pages/Profile/profile.scss';
+import { getAuthUserProfile } from '../../redux/actions/authActions';
 
 const Profile = () => {
   const { id } = useParams();

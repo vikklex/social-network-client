@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, message, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 
-import { getUserProfile } from 'redux/actions/authActions';
-import { Profile_Types, updateAvatar } from 'redux/actions/profileActions';
+import { getAuthUserProfile } from 'redux/actions/authActions';
+import {
+  Profile_Types,
+  updateAvatar,
+  getUserProfile,
+} from 'redux/actions/profileActions';
+import { deleteAvatar } from 'redux/actions/profileActions';
 
 const UploadFile = () => {
   const dispatch = useDispatch();
 
-  const auth = useSelector((state) => state.auth);
+  const profile = useSelector((state) => state.auth.profile);
   const user = useSelector((state) => state.profile.user);
 
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
+
+  useEffect(() => {
+    dispatch(getAuthUserProfile({ id: user.id }));
+  }, [dispatch, user.id, user.avatar]);
 
   const handleUpload = () => {
     const onSuccess = (status) => {
@@ -38,10 +47,17 @@ const UploadFile = () => {
       },
     };
 
-    dispatch(updateAvatar(auth, user, formData, config)).then(onSuccess);
+    dispatch(updateAvatar(profile, user, formData, config)).then(onSuccess);
 
     setUploading(false);
     setFileList([]);
+  };
+
+  const onDeleteAvatar = () => {
+    dispatch(deleteAvatar(user)).then(() => {
+      dispatch(getUserProfile({ id: user.id }));
+      dispatch(getAuthUserProfile({ id: user.id }));
+    });
   };
 
   const props = {
@@ -57,6 +73,13 @@ const UploadFile = () => {
       <Upload {...props}>
         <Button icon={<UploadOutlined />}>Select File</Button>
       </Upload>
+      <Button
+        icon={<DeleteOutlined />}
+        style={{ width: '58%', marginTop: 10 }}
+        onClick={onDeleteAvatar}
+      >
+        Delete
+      </Button>
       <Button
         type='primary'
         onClick={handleUpload}
