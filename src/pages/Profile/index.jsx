@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
-import { Col, Row, Divider, Button, Upload } from 'antd';
-import { CheckOutlined, PaperClipOutlined } from '@ant-design/icons';
+import { Col, Row, Divider } from 'antd';
 
 import jwt_decode from 'jwt-decode';
 
 import { getPosts } from 'redux/actions/postActions';
-import { updateAlbum } from 'redux/actions/profileActions';
 import { getUserProfile } from 'redux/actions/profileActions';
 
 import Spinner from 'components/Spinner';
@@ -25,13 +22,12 @@ import Status from 'pages/Profile/components/Status';
 import UserInfo from 'pages/Profile/components/UserInfo';
 import UserNumbers from 'pages/Profile/components/UserNumbers';
 import FriendsPreview from 'pages/Profile/components/FriendsPreview';
+import EditButton from 'pages/Profile/components/EditButton';
+import UploadImages from 'pages/Profile/components/UploadImages';
 
 import 'pages/Profile/profile.scss';
-import { getAuthUserProfile } from '../../redux/actions/authActions';
 
-const Profile = () => {
-  const { id } = useParams();
-
+const BaseProfile = ({ id, UserButton, UploadImages }) => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token);
@@ -41,10 +37,8 @@ const Profile = () => {
   const posts = useSelector((state) => state.post.post);
 
   const [statusText, setStatusText] = useState(user?.status);
-  const [edit, setEdit] = useState(false);
 
   const [visibleModal, setVisibleModal] = useState(false);
-  const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -67,48 +61,12 @@ const Profile = () => {
     return null;
   }
 
-  const props = {
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-      return false;
-    },
-    fileList,
-  };
-
-  const handleUpload = () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append('album', file);
-    });
-
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
-
-    dispatch(updateAlbum(user, formData, config));
-    setFileList([]);
-  };
-
   return (
     <Spinner spinning={isLoading}>
       <Row justify='center' style={{ marginTop: '3%' }}>
         <Col span={6}>
           <Avatar id={id} user={user} />
-
-          {!id ? (
-            <Button
-              type='primary'
-              onClick={() => setEdit(true)}
-              className='edit__button'
-            >
-              Edit profile
-            </Button>
-          ) : (
-            <AddFriend user={user} />
-          )}
-
+          <UserButton id={id} user={user} />
           {(user.friends_visibility || !id) && (
             <FriendsPreview
               user={user}
@@ -140,7 +98,7 @@ const Profile = () => {
               setStatusText={setStatusText}
             />
           </Row>
-          {edit && <Navigate to='/edit' />}
+
           <Row>
             <UserInfo user={user} />
           </Row>
@@ -188,24 +146,7 @@ const Profile = () => {
               )}
               <Row>
                 <Col>
-                  {!id && (
-                    <Upload {...props}>
-                      <span className='personal__photos_upload'>
-                        <PaperClipOutlined />
-                        Add photos to album
-                      </span>
-                    </Upload>
-                  )}
-                  {fileList.length !== 0 && (
-                    <span
-                      className='personal__photos_upload'
-                      onClick={handleUpload}
-                      disabled={fileList.length === 0}
-                    >
-                      <CheckOutlined />
-                      Press to start upload
-                    </span>
-                  )}
+                  <UploadImages id={id} user={user} />
                 </Col>
               </Row>
             </>
@@ -222,6 +163,18 @@ const Profile = () => {
         </Row>
       )}
     </Spinner>
+  );
+};
+
+const Profile = () => {
+  const { id } = useParams();
+
+  return (
+    <BaseProfile
+      id={id}
+      UserButton={id ? AddFriend : EditButton}
+      UploadImages={UploadImages}
+    />
   );
 };
 
