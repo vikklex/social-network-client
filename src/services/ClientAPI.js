@@ -174,10 +174,7 @@ class ClientAPI {
   }
 
   getReactionsFromDate({ data }) {
-    return this.instance.post(`v1/reactions/date/${data.id}`, {
-      startDate: data.startDate,
-      endDate: data.endDate,
-    });
+    return this.instance.post(`v1/reactions/date/${data.id}`, data);
   }
 
   createMeeting({ data }) {

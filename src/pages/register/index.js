@@ -43,7 +43,6 @@ const Register = () => {
 
   const [fileList, setFileList] = useState([]);
 
-  const auth = useSelector((state) => state.auth);
   const error = useSelector((state) => state.alert.error);
 
   const handleUpload = (data) => {
@@ -58,7 +57,7 @@ const Register = () => {
       },
     };
 
-    dispatch(updateAvatar(auth, data.user, formData, config));
+    dispatch(updateAvatar(data.user, formData, config));
     setFileList([]);
 
     return 'success';
@@ -69,6 +68,7 @@ const Register = () => {
       if (status.status === Types.LOGIN_SUCCESS) {
         message.success('You are successfully registered');
       }
+
       navigate('/');
     };
     const data = {

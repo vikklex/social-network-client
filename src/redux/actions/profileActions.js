@@ -157,7 +157,7 @@ export const updateAvatar = (user, data, config) => async (dispatch) => {
   try {
     dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
 
-    ClientAPI.updateAvatar(user.id, data, config).then((res) =>
+    ClientAPI.updateAvatar(user.id, data, config).then((res) => {
       dispatch({
         type: Profile_Types.SET_USER,
         payload: {
@@ -166,8 +166,8 @@ export const updateAvatar = (user, data, config) => async (dispatch) => {
             ...res.data,
           },
         },
-      }),
-    );
+      });
+    });
 
     dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
 

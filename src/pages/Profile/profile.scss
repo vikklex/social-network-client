@@ -23,7 +23,13 @@ $text-secondary: #818c99;
 
 .username {
   @include text-value();
-  height: 5vh;
+  height: 3vh;
+}
+
+@media screen and (max-width: 1500px) {
+  .username {
+    height: 6vh;
+  }
 }
 .status-desc {
   color: $text-secondary;

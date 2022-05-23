@@ -4,8 +4,7 @@ function createStorage(key) {
       localStorage.setItem(key, value);
     },
     Get: () => {
-      const value = localStorage.getItem(key);
-      return value;
+      return localStorage.getItem(key);
     },
     Remove: () => {
       localStorage.removeItem(key);

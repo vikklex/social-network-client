@@ -86,7 +86,6 @@ const Reactions = () => {
   };
 
   const getReactionsByGender = (reactions) => {
-    console.log(reactions, 'reactions');
     return [
       {
         name: 'Male',
@@ -98,8 +97,6 @@ const Reactions = () => {
       },
     ];
   };
-
-  console.log(getReactionsByGender(likeReaction), 'get...');
 
   return (
     <Card>

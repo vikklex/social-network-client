@@ -47,6 +47,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
       const onSuccess = () => {
         setStatusText('');
       };
+
       dispatch(getUserProfile({ id: id })).then(onSuccess);
     } else {
       dispatch(getUserProfile({ id: jwt_decode(token).id }));
@@ -76,7 +77,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
               id={id}
               style={{
                 minHeight: '5%',
-                maxHeight: '17%',
+                maxHeight: '19%',
                 overflow: 'scroll',
               }}
             />
