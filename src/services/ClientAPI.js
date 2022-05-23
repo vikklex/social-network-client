@@ -15,17 +15,17 @@ class ClientAPI {
 
   login({ email, password_hash }) {
     return this.instance.post('/v1/auth/login', {
-      email: email,
-      password_hash: password_hash,
+      email,
+      password_hash,
     });
   }
 
   register({ first_name, last_name, email, password_hash }) {
     return this.instance.post('/v1/auth/registration', {
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      password_hash: password_hash,
+      first_name,
+      last_name,
+      email,
+      password_hash,
     });
   }
 
@@ -40,8 +40,7 @@ class ClientAPI {
   }
 
   getUser(id) {
-    let d = this.instance.get(`/v1/users/${id}`);
-    return d;
+    return this.instance.get(`/v1/users/${id}`);
   }
 
   getUserPosts(id) {
@@ -72,21 +71,21 @@ class ClientAPI {
   ) {
     return this.instance.put(`v1/users/${id}`, {
       userId: id,
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      password_hash: password_hash,
-      job: job,
-      birthday: birthday,
-      desc: desc,
-      gender: gender,
-      relationships: relationships,
-      city: city,
-      from: from,
-      status: status,
-      posts_visibility: posts_visibility,
-      friends_visibility: friends_visibility,
-      album_visibility: album_visibility,
+      first_name,
+      last_name,
+      email,
+      password_hash,
+      job,
+      birthday,
+      desc,
+      gender,
+      relationships,
+      city,
+      from,
+      status,
+      posts_visibility,
+      friends_visibility,
+      album_visibility,
     });
   }
 
@@ -158,11 +157,11 @@ class ClientAPI {
 
   createReaction({ reactionType, contentType, userId, likedUser, postId }) {
     return this.instance.post('v1/reactions/', {
-      reactionType: reactionType,
-      contentType: contentType,
-      userId: userId,
-      likedUser: likedUser,
-      postId: postId,
+      reactionType,
+      contentType,
+      userId,
+      likedUser,
+      postId,
     });
   }
 

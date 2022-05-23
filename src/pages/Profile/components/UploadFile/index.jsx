@@ -23,13 +23,14 @@ const UploadFile = () => {
 
   useEffect(() => {
     dispatch(getAuthUserProfile({ id: user.id }));
-  }, [dispatch, user.id, user.avatar]);
+  }, [dispatch, user.id, user.avatar, profile.avatar]);
 
   const handleUpload = () => {
     const onSuccess = (status) => {
       if (status === Profile_Types.SUCCESS) {
         message.success('You are successfully update avatar');
-        dispatch(getUserProfile({ id: user.id }));
+
+        dispatch(getAuthUserProfile({ id: user.id }));
       }
     };
 
@@ -47,7 +48,7 @@ const UploadFile = () => {
       },
     };
 
-    dispatch(updateAvatar(profile, user, formData, config)).then(onSuccess);
+    dispatch(updateAvatar(user, formData, config)).then(onSuccess);
 
     setUploading(false);
     setFileList([]);

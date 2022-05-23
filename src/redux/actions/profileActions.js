@@ -153,7 +153,7 @@ export const updateUser =
     }
   };
 
-export const updateAvatar = (auth, user, data, config) => async (dispatch) => {
+export const updateAvatar = (user, data, config) => async (dispatch) => {
   try {
     dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
 
@@ -161,7 +161,6 @@ export const updateAvatar = (auth, user, data, config) => async (dispatch) => {
       dispatch({
         type: Profile_Types.SET_USER,
         payload: {
-          ...auth,
           user: {
             ...user,
             ...res.data,
@@ -171,6 +170,7 @@ export const updateAvatar = (auth, user, data, config) => async (dispatch) => {
     );
 
     dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+
     return Profile_Types.SUCCESS;
   } catch (error) {
     dispatch({

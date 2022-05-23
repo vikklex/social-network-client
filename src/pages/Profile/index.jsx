@@ -36,7 +36,9 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
   const profile = useSelector((state) => state.auth.profile);
   const posts = useSelector((state) => state.post.post);
 
-  const [statusText, setStatusText] = useState(user?.status);
+  const person = id ? user : profile;
+
+  const [statusText, setStatusText] = useState(person?.status);
 
   const [visibleModal, setVisibleModal] = useState(false);
 

@@ -30,7 +30,10 @@ const Reactions = () => {
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
 
-  const [dateRange, setDateRange] = useState([moment(), moment()]);
+  const [dateRange, setDateRange] = useState([
+    moment().subtract(20, 'days'),
+    moment(),
+  ]);
   const [dateReactions, setDateReactions] = useState(null);
 
   useEffect(() => {

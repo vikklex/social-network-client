@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
 
-function ReactionsGender({ data, color, type }) {
+const ReactionsGender = ({ data, color, type }) => {
   return (
     <>
       <h4>{type}</h4>
@@ -25,6 +25,6 @@ function ReactionsGender({ data, color, type }) {
       </ResponsiveContainer>
     </>
   );
-}
+};
 
 export default ReactionsGender;
