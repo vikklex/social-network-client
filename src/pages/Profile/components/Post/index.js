@@ -177,7 +177,7 @@ const Post = ({ post, isUserProfile }) => {
       <span onClick={setLike}>
         {isLiked && <LikeOutlined style={{ color: '#191970' }} />}
         {!isLiked && <LikeOutlined style={{ color: 'silver' }} />}
-        <span className='comment-action'>{`${likes} ${isLiked}`}</span>
+        <span className='comment-action'>{`${likes}`}</span>
       </span>
     </Tooltip>,
 
@@ -185,7 +185,7 @@ const Post = ({ post, isUserProfile }) => {
       <span onClick={dislike}>
         {isDisliked && <DislikeOutlined style={{ color: '#191970' }} />}
         {!isDisliked && <DislikeOutlined style={{ color: 'silver' }} />}
-        <span className='comment-action'>{`${dislikes} ${isDisliked}`}</span>
+        <span className='comment-action'>{`${dislikes}`}</span>
       </span>
     </Tooltip>,
 

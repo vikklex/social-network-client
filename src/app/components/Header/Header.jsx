@@ -60,7 +60,7 @@ export default function HeaderNav() {
     <div>
       <Row justify='space-between' align='middle'>
         <Col span={5}></Col>
-        <Col span={7}>
+        <Col span={13}>
           <AutoComplete
             style={{
               width: 300,
@@ -80,27 +80,6 @@ export default function HeaderNav() {
                 </Option>
               ))}
           </AutoComplete>
-        </Col>
-        <Col span={6}>
-          <Row justify='center'>
-            <Col span={4}>
-              <Badge count={1}>
-                <UserOutlined className='right_icon_antd' />
-              </Badge>
-            </Col>
-
-            <Col span={4}>
-              <Badge count={2}>
-                <MessageOutlined className='right_icon_antd' />
-              </Badge>
-            </Col>
-
-            <Col span={4}>
-              <Badge count={1}>
-                <NotificationOutlined className='right_icon_antd' />
-              </Badge>
-            </Col>
-          </Row>
         </Col>
 
         <Col span={2}>

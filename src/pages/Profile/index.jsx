@@ -76,7 +76,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
               id={id}
               style={{
                 minHeight: '5%',
-                maxHeight: '14%',
+                maxHeight: '17%',
                 overflow: 'scroll',
               }}
             />

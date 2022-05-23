@@ -3,6 +3,7 @@ import React from 'react';
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
 
 const ReactionsGender = ({ data, color, type }) => {
+  console.log(data);
   return (
     <>
       <h4>{type}</h4>

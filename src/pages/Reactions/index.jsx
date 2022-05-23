@@ -32,7 +32,7 @@ const Reactions = () => {
 
   const [dateRange, setDateRange] = useState([
     moment().subtract(20, 'days'),
-    moment(),
+    moment().add(1, 'day').endOf('day'),
   ]);
   const [dateReactions, setDateReactions] = useState(null);
 
@@ -86,17 +86,20 @@ const Reactions = () => {
   };
 
   const getReactionsByGender = (reactions) => {
+    console.log(reactions, 'reactions');
     return [
       {
         name: 'Male',
-        value: getLikesByGender(reactions, 'male'),
+        value: getLikesByGender(reactions, 'Male'),
       },
       {
         name: 'Female',
-        value: getLikesByGender(reactions, 'female'),
+        value: getLikesByGender(reactions, 'Female'),
       },
     ];
   };
+
+  console.log(getReactionsByGender(likeReaction), 'get...');
 
   return (
     <Card>
