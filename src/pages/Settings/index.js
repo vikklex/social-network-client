@@ -2,12 +2,23 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Card, Divider, Form, Input, message, Tabs } from 'antd';
+import {
+  Button,
+  Card,
+  Divider,
+  Form,
+  Input,
+  message,
+  Popconfirm,
+  Tabs,
+} from 'antd';
 
 import { Profile_Types, updateUser } from 'redux/actions/profileActions';
 import { getAuthUserProfile } from 'redux/actions/authActions';
 
 import SettingCard from 'pages/Settings/SettingCard';
+import { logout } from '../../redux/actions/authActions';
+import { deleteUser } from '../../redux/actions/profileActions';
 
 const { TabPane } = Tabs;
 
@@ -32,6 +43,13 @@ const Settings = () => {
     };
 
     dispatch(updateUser(data)).then(onSuccess);
+  };
+
+  const text = 'Are you sure to delete your account?';
+
+  const confirm = () => {
+    message.info('You have deleted your account');
+    dispatch(deleteUser(user));
   };
 
   return (
@@ -136,6 +154,22 @@ const Settings = () => {
             </Form.Item>
           </Form>
         </Card>
+      </TabPane>
+
+      <TabPane tab='Delete profile' key='3'>
+        <Divider className='divider'>Delete your profile</Divider>
+
+        <Popconfirm
+          title={text}
+          okText='Yes'
+          cancelText='No'
+          onConfirm={confirm}
+          placement='bottom'
+        >
+          <Button type='link' danger>
+            Delete profile
+          </Button>
+        </Popconfirm>
       </TabPane>
     </Tabs>
   );

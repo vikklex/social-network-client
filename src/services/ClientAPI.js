@@ -115,6 +115,10 @@ class ClientAPI {
     });
   }
 
+  deleteUser(user) {
+    return this.instance.delete(`v1/users/${user.id}`, user);
+  }
+
   createPost({ userId, content }) {
     return this.instance.post('v1/posts/', {
       userId: userId,

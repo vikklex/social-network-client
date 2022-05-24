@@ -1,4 +1,5 @@
 import ClientAPI from 'services/ClientAPI';
+import { storage } from '../../storage';
 import { Types as Alert } from './alertActions';
 import { Types } from './authActions';
 
@@ -312,6 +313,35 @@ export const deleteImageFromAlbum = (data) => async (dispatch) => {
             ...data,
             ...res.data,
           },
+        },
+      });
+    });
+
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+  } catch (error) {
+    dispatch({
+      type: Alert.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const deleteUser = (user) => async (dispatch) => {
+  try {
+    await ClientAPI.deleteUser(user);
+
+    window.location.href = '/register';
+
+    storage.accessToken.Remove();
+    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+
+    ClientAPI.deleteUser(user).then((res) => {
+      dispatch({
+        type: Types.DELETE_USER,
+        payload: {
+          user: null,
         },
       });
     });

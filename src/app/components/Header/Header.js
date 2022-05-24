@@ -2,15 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { Avatar, Badge, Col, Row } from 'antd';
+import { Avatar, Col, Row } from 'antd';
 import { AutoComplete } from 'antd';
 
-import {
-  MessageOutlined,
-  UserOutlined,
-  NotificationOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 
 import { logout } from 'redux/actions/authActions';
 import { searchUserProfile } from 'redux/actions/profileActions';

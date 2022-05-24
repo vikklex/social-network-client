@@ -30,6 +30,12 @@ const authReducer = (state = defaultState, action) => {
         user: action.payload.user,
       };
 
+    case Types.DELETE_USER:
+      return {
+        ...state,
+        user: null,
+      };
+
     default:
       return state;
   }

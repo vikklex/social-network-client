@@ -229,6 +229,18 @@ describe('Client API', () => {
     expect(resp).toEqual(OUTPUT_MOCK);
   });
 
+  it('Delete user', async () => {
+    const data = {
+      id: '1',
+    };
+
+    ClientAPI.instance.delete.mockResolvedValue(OUTPUT_MOCK);
+
+    const resp = await ClientAPI.deleteUser(data);
+
+    expect(resp).toEqual(OUTPUT_MOCK);
+  });
+
   it('Create post', async () => {
     const data = {
       userId: '1',

@@ -6,41 +6,19 @@ import { Row } from 'antd';
 
 import { LineChart, Line, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
+import getStatistics from 'utils/getStatistics';
+
 const ReactionsLine = ({ startDate, endDate, reactions }) => {
-  const getReactionsByDate = (date) => {
-    return reactions.filter((reaction) => {
-      return (
-        moment(reaction.createdAt).format('YYYY-MM-DD') ===
-        date.format('YYYY-MM-DD')
-      );
-    });
-  };
-
-  const getStatistics = () => {
-    let result = [];
-
-    for (
-      let date = moment(startDate);
-      date.isBefore(endDate);
-      date.add(1, 'days')
-    ) {
-      const stat = getReactionsByDate(date);
-
-      result.push({
-        name: date.format('YYYY-MM-DD'),
-        value: stat.length,
-      });
-    }
-
-    return result;
-  };
-
   return (
     <Row style={{ width: '100%', marginBottom: '5%' }}>
       <Row style={{ marginBottom: '5%' }}></Row>
 
       <ResponsiveContainer width='100%' height='100%'>
-        <LineChart width={300} height={100} data={getStatistics()}>
+        <LineChart
+          width={300}
+          height={100}
+          data={getStatistics(reactions, startDate, endDate)}
+        >
           <Line
             type='monotone'
             dataKey='value'

@@ -6,6 +6,7 @@ export const Types = {
   AUTH: 'AUTH_AUTH',
   GET_USER: 'AUTH_GET_USER',
   SET_USER: 'AUTH_SET_USER',
+  DELETE_USER: 'AUTH_DELETE_USER',
   LOADING: 'AUTH_LOADING',
   LOGIN_SUCCESS: 'AUTH_LOGIN_SUCCESS',
   LOGIN_FAILED: 'AUTH_LOGIN_FAILED',
@@ -115,6 +116,8 @@ export const logout = () => async (dispatch) => {
     });
   }
 };
+
+
 
 export const getAuthUserProfile =
   ({ id }) =>

@@ -6,7 +6,6 @@ const LIKE_TYPE = 'like';
 const DISLIKE_TYPE = 'dislike';
 
 const MALE_GENDER_TYPE = 'Male';
-const FEMALE_GENDER_TYPE = 'Female';
 
 describe('Reactions', () => {
   it('Get reactions data (like)', () => {
@@ -22,14 +21,6 @@ describe('Reactions', () => {
         createdAt: date,
       },
 
-      {
-        userId: '1',
-        type: LIKE_TYPE,
-        first_name: 'Slava',
-        last_name: 'Bobik',
-        gender: MALE_GENDER_TYPE,
-        createdAt: date,
-      },
       {
         userId: '2',
         type: LIKE_TYPE,
@@ -75,14 +66,6 @@ describe('Reactions', () => {
         createdAt: date,
       },
 
-      {
-        userId: '1',
-        type: DISLIKE_TYPE,
-        first_name: 'Slava',
-        last_name: 'Bobik',
-        gender: MALE_GENDER_TYPE,
-        createdAt: date,
-      },
       {
         userId: '2',
         type: DISLIKE_TYPE,
