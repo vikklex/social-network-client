@@ -1,14 +1,15 @@
 import moment from 'moment';
 
-import getReactionsByDate from 'utils/getReactionsByDay';
-import { DATE_FULL_FORMAT } from 'utils/Constants';
+import getReactionsByDate from './getReactionsByDay';
+
+import { DATE_FULL_FORMAT } from './Constants';
 
 const getStatistics = (reactions, startDate, endDate) => {
   let result = [];
 
   for (
     let date = moment(startDate);
-    date.isBefore(endDate);
+    date.isSameOrBefore(endDate);
     date.add(1, 'days')
   ) {
     const stat = getReactionsByDate(date, reactions);
@@ -19,7 +20,6 @@ const getStatistics = (reactions, startDate, endDate) => {
     });
   }
 
-  console.log(result);
   return result;
 };
 

@@ -20,7 +20,6 @@ describe('Reactions', () => {
         gender: MALE_GENDER_TYPE,
         createdAt: date,
       },
-
       {
         userId: '2',
         type: LIKE_TYPE,
@@ -34,7 +33,7 @@ describe('Reactions', () => {
     const output = [
       {
         userId: '1',
-        sum: 2,
+        sum: 1,
         type: LIKE_TYPE,
         userName: 'Slava Bobik',
         gender: 'Male',
@@ -79,7 +78,7 @@ describe('Reactions', () => {
     const output = [
       {
         userId: '1',
-        sum: 2,
+        sum: 1,
         type: DISLIKE_TYPE,
         userName: 'Slava Bobik',
         gender: 'Male',
