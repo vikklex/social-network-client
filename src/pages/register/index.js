@@ -75,7 +75,7 @@ const Register = () => {
       first_name: values.user.first_name,
       last_name: values.user.last_name,
       email: values.user.email,
-      password_hash: values.password_hash,
+      password: values.password_hash,
     };
 
     dispatch(register(data)).then((res) => {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { storage } from 'storage';
+import { storage } from '../storage';
 
 class ClientAPI {
   constructor() {
@@ -13,19 +13,19 @@ class ClientAPI {
     });
   }
 
-  login({ email, password_hash }) {
+  login({ email, password }) {
     return this.instance.post('/v1/auth/login', {
       email,
-      password_hash,
+      password_hash: password,
     });
   }
 
-  register({ first_name, last_name, email, password_hash }) {
+  register({ first_name, last_name, email, password }) {
     return this.instance.post('/v1/auth/registration', {
       first_name,
       last_name,
       email,
-      password_hash,
+      password_hash: password,
     });
   }
 
@@ -134,13 +134,8 @@ class ClientAPI {
     return this.instance.delete(`v1/posts/${id}`, userId);
   }
 
-  createComment({ data }) {
-    return this.instance.post('v1/comments/', {
-      userId: data.userId,
-      postAuthor: data.postAuthor,
-      postId: data.postId,
-      desc: data.desc,
-    });
+  createComment(userId, desc, postId, postAuthor) {
+    return this.instance.post('v1/comments/', userId, postAuthor, postId, desc);
   }
 
   getComments(id) {
@@ -173,37 +168,62 @@ class ClientAPI {
     return this.instance.get(`v1/reactions/likedUser/${likedUser}`);
   }
 
-  getReactionsFromDate({ data }) {
-    return this.instance.post(`v1/reactions/date/${data.id}`, data);
+  getReactionsFromDate(id, startDate, endDate) {
+    return this.instance.post(`v1/reactions/date/${id}`, {
+      id,
+      startDate,
+      endDate,
+    });
   }
 
-  createMeeting({ data }) {
-    return this.instance.post('v1/meetings/', {
-      userId: data.userId,
-      participants: data.participants,
-      title: data.title,
-      description: data.description,
-      importance: data.importance,
-      date: data.date,
-      startTime: data.startTime,
-      endTime: data.endTime,
-    });
+  createMeeting(
+    userId,
+    participants,
+    title,
+    description,
+    importance,
+    date,
+    startTime,
+    endTime,
+  ) {
+    return this.instance.post(
+      'v1/meetings/',
+      userId,
+      participants,
+      title,
+      description,
+      importance,
+      date,
+      startTime,
+      endTime,
+    );
   }
 
   getMeetings(id) {
     return this.instance.get(`v1/meetings/${id}`);
   }
 
-  updateMeeting(id, data) {
+  updateMeeting(
+    id,
+    userId,
+    participants,
+    title,
+    description,
+    importance,
+    date,
+    startTime,
+    endTime,
+  ) {
     return this.instance.put(`v1/meetings/${id}`, {
-      userId: data.userId,
-      participants: data.participants,
-      title: data.title,
-      description: data.description,
-      importance: data.importance,
-      date: data.date,
-      startTime: data.startTime,
-      endTime: data.endTime,
+      id,
+      userId,
+      participants,
+      title,
+      description,
+      importance,
+      date,
+      startTime,
+      endTime,
     });
   }
 

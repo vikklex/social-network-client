@@ -8,20 +8,26 @@ export const Types = {
   DELETE_COMMENT: 'COMMENT_DELETE_COMMENT',
 };
 
-export const createComment = (data) => async (dispatch) => {
-  try {
-    const res = await ClientAPI.createComment({ data });
-    dispatch({ type: Types.CREATE_COMMENT, payload: res.data });
-    return res;
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
+export const createComment =
+  (userId, desc, postId, postAuthor) => async (dispatch) => {
+    try {
+      const res = await ClientAPI.createComment({
+        userId,
+        desc,
+        postId,
+        postAuthor,
+      });
+      dispatch({ type: Types.CREATE_COMMENT, payload: res.data });
+      return res;
+    } catch (error) {
+      dispatch({
+        type: Alert.ALERT,
+        payload: {
+          error: error.response.data.msg,
+        },
+      });
+    }
+  };
 
 export const getComments = (id) => async (dispatch) => {
   try {

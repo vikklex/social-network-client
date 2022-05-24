@@ -5,6 +5,7 @@
   "proxy": "http://localhost:8080",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@babel/runtime": "^7.18.0",
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -64,11 +65,12 @@
     ],
     "coverageThreshold": {
       "global": {
-        "lines": 90
+        "lines": 80
       }
     }
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.18.0",
     "jest": "^28.1.0"
   }
 }

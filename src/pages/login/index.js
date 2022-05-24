@@ -41,7 +41,7 @@ const Login = () => {
 
     const data = {
       email: values.email,
-      password_hash: values.password_hash,
+      password: values.password_hash,
     };
 
     dispatch(login(data)).then(onSuccess);

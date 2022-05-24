@@ -48,15 +48,11 @@ const Reactions = () => {
   }, [profile.id, dispatch]);
 
   useEffect(() => {
-    const data = {
-      id: profile.id,
-      startDate: dateRange[0],
-      endDate: dateRange[1],
-    };
-
-    dispatch(getReactionsFromDate(data)).then((data) => {
-      setDateReactions(data);
-    });
+    dispatch(getReactionsFromDate(profile.id, dateRange[0], dateRange[1])).then(
+      (data) => {
+        setDateReactions(data);
+      },
+    );
   }, [dispatch, profile, dateRange]);
 
   const likeReaction = getReactionsData(likes, LIKE);

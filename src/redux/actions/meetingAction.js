@@ -11,21 +11,41 @@ export const Types = {
   ERROR: 'MEETING_ERROR',
 };
 
-export const createMeeting = (data) => async (dispatch) => {
-  try {
-    const res = await ClientAPI.createMeeting({ data });
+export const createMeeting =
+  (
+    userId,
+    participants,
+    title,
+    description,
+    importance,
+    date,
+    startTime,
+    endTime,
+  ) =>
+  async (dispatch) => {
+    try {
+      const res = await ClientAPI.createMeeting(
+        userId,
+        participants,
+        title,
+        description,
+        importance,
+        date,
+        startTime,
+        endTime,
+      );
 
-    dispatch({ type: Types.CREATE_MEETING, payload: res.data });
-    return res.data;
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
+      dispatch({ type: Types.CREATE_MEETING, payload: res.data });
+      return res.data;
+    } catch (error) {
+      dispatch({
+        type: Alert.ALERT,
+        payload: {
+          error: error.response.data.msg,
+        },
+      });
+    }
+  };
 
 export const getMeetings = (data) => async (dispatch) => {
   try {
@@ -77,7 +97,17 @@ export const setMeetings = (id) => async (dispatch) => {
 export const updateMeeting = (data) => async (dispatch) => {
   try {
     dispatch({ type: Types.LOADING_MEETING, payload: { loading: true } });
-    ClientAPI.updateMeeting(data.id, data).then((res) => {
+    ClientAPI.updateMeeting(
+      data.id,
+      data.userId,
+      data.participants,
+      data.title,
+      data.description,
+      data.importance,
+      data.date,
+      data.startTime,
+      data.endTime,
+    ).then((res) => {
       dispatch({
         type: Types.SET_MEETING,
         payload: res.data,

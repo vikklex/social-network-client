@@ -152,15 +152,9 @@ const Post = ({ post, isUserProfile }) => {
   };
 
   const createNewComment = () => {
-    dispatch(
-      createComment({
-        userId: profile.id,
-        desc: content,
-        postId: post.id,
-        postAuthor: post.userId,
-      }),
-    ).then(() =>
-      dispatch(getComments(post.id)).then((data) => setComments(data.data)),
+    dispatch(createComment(profile.id, content, post.id, post.userId)).then(
+      () =>
+        dispatch(getComments(post.id)).then((data) => setComments(data.data)),
     );
 
     setContent('');
