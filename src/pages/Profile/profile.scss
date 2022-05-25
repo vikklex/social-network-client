@@ -110,9 +110,10 @@ $text-secondary: #818c99;
 }
 
 .personal__photos_upload {
-  font-size: 14px;
-  color: $text-secondary;
+  font-size: 12px;
+  color: rgba(22, 22, 133, 0.543);
   cursor: pointer;
+  text-decoration: underline;
 }
 
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {

@@ -1,4 +1,4 @@
-import ClientAPI from 'services/ClientAPI';
+import ClientAPI from '../../services/ClientAPI';
 import { Types as Alert } from './alertActions';
 
 export const Reaction_Types = {

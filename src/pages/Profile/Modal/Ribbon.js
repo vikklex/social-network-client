@@ -6,16 +6,12 @@ import { DeleteOutlined } from '@ant-design/icons';
 
 import { deleteImageFromAlbum } from 'redux/actions/profileActions';
 
-// TODO: -> Image
 const Ribbon = ({ src }) => {
   const dispatch = useDispatch();
 
   const profile = useSelector((state) => state.auth.profile);
 
   const handleDelete = () => {
-    // dispatch(deleteUserImage(    path))
-    // 1) Server delete -> delete by path -> new profile
-    // 2) Redux -> profile -> delete by path
     dispatch(deleteImageFromAlbum({ profile, src }));
   };
 

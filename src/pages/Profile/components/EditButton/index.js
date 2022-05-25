@@ -1,19 +1,15 @@
-import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import EditBtn from './components/Button';
 
 const EditButton = ({ id }) => {
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    navigate('/edit');
+  };
+
   if (!id) {
-    return (
-      <Button
-        type='primary'
-        onClick={() => navigate('/edit')}
-        className='edit__button'
-      >
-        Edit profile
-      </Button>
-    );
+    return <EditBtn handleClick={handleClick} />;
   }
 };
 

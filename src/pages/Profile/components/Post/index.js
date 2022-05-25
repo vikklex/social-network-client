@@ -212,7 +212,7 @@ const Post = ({ post, isUserProfile }) => {
   const data = comments.filter((comment) => comment.postId === post.id);
 
   return (
-    <Card bordered={false} style={{ width: '100%' }}>
+    <Card bordered={false} style={{ width: '100%' }} className='post'>
       <Comment
         actions={actions}
         author={<p>{postAuthor}</p>}

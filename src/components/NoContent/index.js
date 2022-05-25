@@ -13,6 +13,7 @@ function NoContent({ title, description, img }) {
           bordered={false}
           cover={<img alt='example' src={img} className='nodata__img' />}
         >
+          <h1>Oops...</h1>
           <Meta title={title} description={description} />
         </Card>
       </Col>

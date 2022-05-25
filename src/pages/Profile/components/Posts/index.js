@@ -2,7 +2,7 @@ import React from 'react';
 
 import { List } from 'antd';
 
-import Post from 'pages/Profile/components/Post';
+import Post from '../Post';
 import './posts.scss';
 
 export default function Posts({ posts, isUserProfile }) {
@@ -10,10 +10,12 @@ export default function Posts({ posts, isUserProfile }) {
     <List
       itemLayout='horizontal'
       dataSource={posts}
-      locale={{ emptyText: () => null }}
+      locale={{
+        emptyText: () => null,
+      }}
       renderItem={(post) => (
         <List.Item key={post.id}>
-          <Post post={post} isUserProfile={isUserProfile} />
+          <Post post={post} isUserProfile={isUserProfile} className='posts' />
         </List.Item>
       )}
     />

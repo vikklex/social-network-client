@@ -7,20 +7,21 @@
     "@ant-design/icons": "^4.7.0",
     "@babel/runtime": "^7.18.0",
     "@material-ui/icons": "^4.11.2",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.19.3",
     "antd-img-crop": "^4.2.1",
     "antd-password-input-strength": "^2.0.1",
     "axios": "^0.26.1",
     "chart.js": "^3.7.1",
+    "cheerio": "^1.0.0-rc.3",
     "jwt-decode": "^3.1.2",
     "less": "^4.1.2",
     "moment": "^2.29.1",
-    "react": "^17.0.2",
+    "react": "^16.14.0",
     "react-chartjs-2": "^4.1.0",
-    "react-dom": "^17.0.2",
+    "react-dom": "^16.14.0",
     "react-minimal-pie-chart": "^8.3.0",
     "react-photo-album": "^1.12.0",
     "react-redux": "^7.2.8",
@@ -30,6 +31,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "sass": "^1.52.1",
     "victory-pie": "^36.3.2",
     "web-vitals": "^2.1.4"
   },
@@ -59,6 +61,14 @@
     ]
   },
   "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+    },
+    "testEnvironment": "jsdom",
     "collectCoverage": false,
     "collectCoverageFrom": [
       "./src/**"
@@ -71,6 +81,12 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.18.0",
-    "jest": "^28.1.0"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-preact-pure": "^4.0.1",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "jest-jasmine2": "^28.1.0"
   }
 }

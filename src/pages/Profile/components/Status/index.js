@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Input } from 'antd';
 import { updateUser } from 'redux/actions/profileActions';
+
+import StatusInput from './components/StatusInput';
 
 const Status = ({ id, user, statusText, setStatusText }) => {
   const dispatch = useDispatch();
@@ -27,8 +28,7 @@ const Status = ({ id, user, statusText, setStatusText }) => {
     ? { display: 'none' }
     : { display: 'block' };
 
-  const inputDisplay =
-    user.status && visibleInput ? { display: 'none' } : { display: 'block' };
+  const inputDisplay = user.status && visibleInput ? 'none' : 'block';
 
   return (
     <>
@@ -38,13 +38,12 @@ const Status = ({ id, user, statusText, setStatusText }) => {
         </span>
       )}
       {!id && (
-        <Input
-          placeholder={user.status || 'Set status...'}
-          bordered={false}
+        <StatusInput
+          user={user}
           onPressEnter={onPressEnter}
-          value={statusText}
-          onChange={(event) => setStatusText(event.target.value)}
-          style={inputDisplay}
+          statusText={statusText}
+          setStatusText={setStatusText}
+          inputDisplay={inputDisplay}
         />
       )}
     </>
