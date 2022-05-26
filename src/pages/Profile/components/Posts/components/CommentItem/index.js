@@ -8,7 +8,7 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
-import { updateComment, deleteComment } from 'redux/actions/commentActions';
+import { updateComment } from 'redux/actions/commentActions';
 
 import {
   createReaction,

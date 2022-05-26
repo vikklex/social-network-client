@@ -15,7 +15,7 @@ const PostComments = ({ comment, onDelete }) => {
       dataSource={comment}
       locale={{ emptyText: () => null }}
       renderItem={(data) => (
-        <List.Item key={data.id} style={{ width: 1000, marginLeft: 40 }}>
+        <List.Item key={data.id} style={{ width: '100%', marginLeft: 40 }}>
           <CommentList comment={data} onDelete={onDelete} />
         </List.Item>
       )}

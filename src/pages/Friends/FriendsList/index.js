@@ -1,8 +1,9 @@
-import { Avatar, List, Card } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import NoAvatar from 'assets/img/noavatar.png';
+import { List, Card } from 'antd';
+
+import FriendItem from '../FriendItem';
 
 const FriendsList = ({ persons }) => {
   const navigate = useNavigate();
@@ -16,21 +17,21 @@ const FriendsList = ({ persons }) => {
         <List.Item key={person.id}>
           <Card
             bordered={false}
-            onClick={() => navigate(`/user/${person.id}`)}
+            size='small'
+            onClick={() => navigate(`/user/${person}`)}
             style={{ cursor: 'pointer', width: '100%' }}
           >
-            <List.Item.Meta
-              className=''
-              avatar={<Avatar src={person.avatar ? person.avatar : NoAvatar} />}
-              title={`${person.first_name} ${person.last_name}`}
-              description={
-                <div>
-                  <div> {person.status ?? ''}</div>
-                  <div> {person.city ?? ''}</div>
-                  <div> {person.relations ?? ''}</div>
-                </div>
-              }
-            />
+            <List.Item
+              key={person}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'unset',
+                flexWrap: 'nowrap',
+              }}
+            >
+              <FriendItem id={person} />
+            </List.Item>
           </Card>
         </List.Item>
       )}

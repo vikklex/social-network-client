@@ -14,11 +14,9 @@ const Album = ({ images }) => {
       renderItem={(image) => (
         <List.Item key={image}>
           <Image
-            width={120}
-            height={150}
-            padding={40}
             src={image}
-            style={{ objectFit: 'cover' }}
+            height={120}
+            style={{ borderRadius: 10, objectFit: 'cover' }}
           />
         </List.Item>
       )}

@@ -14,8 +14,12 @@ export const Profile_Types = {
 };
 
 const deleteData = (data, id) => {
-  const newData = data.filter((value) => value.id !== id);
+  const newData = data.filter((value) => value !== id);
   return newData;
+};
+
+const filterData = (data, id) => {
+  return data.includes(id) ? data : [...data, id];
 };
 
 export const getUserProfile =
@@ -213,7 +217,7 @@ export const updateAlbum = (user, data, config) => async (dispatch) => {
 export const addFriend = (data) => async (dispatch) => {
   const newUser = {
     ...data.user,
-    followers: [...data.user.followers, data.profile],
+    followers: filterData(data.user.followers, data.profile.id),
   };
 
   dispatch({
@@ -226,7 +230,7 @@ export const addFriend = (data) => async (dispatch) => {
     payload: {
       user: {
         ...data.profile,
-        followings: [...data.profile.followings, newUser],
+        followings: [...data.profile.followings, newUser.id],
       },
     },
   });
@@ -315,6 +319,13 @@ export const deleteImageFromAlbum = (data) => async (dispatch) => {
           },
         },
       });
+    });
+
+    const res = await ClientAPI.getUser(data.profile.id);
+
+    dispatch({
+      type: Profile_Types.GET_USER,
+      payload: res.data,
     });
 
     dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });

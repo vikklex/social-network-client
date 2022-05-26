@@ -19,12 +19,7 @@ export const FullMenu = () => {
   const { pathname } = useLocation();
 
   return (
-    <Menu
-      style={{ width: 256 }}
-      mode='vertical'
-      className='navbar__list'
-      selectedKeys={pathname}
-    >
+    <Menu mode='vertical' className='navbar__list' selectedKeys={pathname}>
       <MenuItem link='/' icon={<HomeOutlined />} text='My page' />
 
       <MenuItem

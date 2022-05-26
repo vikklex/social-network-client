@@ -15,7 +15,7 @@ const ModalArea = ({ visibleModal, setVisibleModal, images, username }) => {
       footer={null}
       onOk={() => setVisibleModal(false)}
       onCancel={() => setVisibleModal(false)}
-      width={1000}
+      width={'80vw'}
     >
       <List
         grid={{

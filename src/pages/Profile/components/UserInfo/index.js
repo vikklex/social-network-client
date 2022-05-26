@@ -68,6 +68,13 @@ function UserInfo({ user }) {
         </p>
       )}
 
+      {user.job && (
+        <p style={{ marginTop: 10 }}>
+          <span className='personal_primary_key'>Job:</span>
+          <span className='personal_primary_value'>{user.job}</span>
+        </p>
+      )}
+
       {user.desc && (
         <p style={{ marginTop: 10 }}>
           <span className='personal_primary_key'>About:</span>

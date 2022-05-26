@@ -2,19 +2,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { Avatar, Col, Row } from 'antd';
-import { AutoComplete } from 'antd';
+import { Avatar, Col, Row, Typography } from 'antd';
 
 import { LogoutOutlined } from '@ant-design/icons';
 
 import { logout } from 'redux/actions/authActions';
 import { searchUserProfile } from 'redux/actions/profileActions';
 
+import AutoCompleteHeader from './components/AutoComplete';
 import 'app/components/Header/header.scss';
 
 import NoAvatar from 'assets/img/noavatar.png';
-
-const { Option } = AutoComplete;
 
 export default function HeaderNav() {
   const dispatch = useDispatch();
@@ -54,44 +52,40 @@ export default function HeaderNav() {
   return (
     <div>
       <Row justify='space-between' align='middle'>
-        <Col span={5}></Col>
+        <Col span={6}>
+          <Row justify='space-between' align='middle'>
+            <Col span={6}>
+              <Link to='/'>
+                <Avatar
+                  src={profile.avatar ? profile.avatar : NoAvatar}
+                  size={64}
+                  className='avatar__mini'
+                />
+              </Link>
+            </Col>
+
+            <Col span={18}>
+              <Typography.Title level={5}>
+                {profile.first_name}
+              </Typography.Title>
+            </Col>
+          </Row>
+        </Col>
+
         <Col span={13}>
-          <AutoComplete
-            style={{
-              width: 300,
-            }}
-            placeholder='Let search your friend'
-            allowClear
-            value={search}
+          <AutoCompleteHeader
+            search={search}
             onSearch={onSearch}
             onChange={onChange}
             onSelect={onSelect}
-          >
-            {searchUsers &&
-              searchUsers.map((user) => (
-                <Option key={user.id} value={user.first_name}>
-                  <Avatar src={user.avatar ? user.avatar : NoAvatar}></Avatar>
-                  {user.first_name} {user.last_name}
-                </Option>
-              ))}
-          </AutoComplete>
+            searchUsers={searchUsers}
+            style={{
+              width: '80%',
+            }}
+          ></AutoCompleteHeader>
         </Col>
 
-        <Col span={2}>
-          <Link to='/'>
-            <Avatar
-              src={profile.avatar ? profile.avatar : NoAvatar}
-              size={64}
-              className='avatar__mini'
-            />
-          </Link>
-        </Col>
-
-        <Col span={2}>
-          <h4>{profile.first_name}</h4>
-        </Col>
-
-        <Col span={2}>
+        <Col span={1}>
           <LogoutOutlined
             className='right_icon_antd'
             onClick={() => {

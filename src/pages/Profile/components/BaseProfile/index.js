@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Col, Row, Divider } from 'antd';
+import { Col, Row, Divider, Tag } from 'antd';
 
 import jwt_decode from 'jwt-decode';
 
@@ -69,8 +69,6 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
           <UserButton id={id} user={user} />
           {(user.friends_visibility || !id) && (
             <FriendsPreview
-              user={user}
-              profile={profile}
               id={id}
               style={{
                 minHeight: '5%',
@@ -87,9 +85,10 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
               {`${user.first_name} ${user.last_name}`}
             </Col>
             <Col span={2} className='status'>
-              online
+              <Tag color='green'>online</Tag>
             </Col>
           </Row>
+
           <Row className='status-desc'>
             <Status
               id={id}
@@ -102,10 +101,13 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
           <Row>
             <UserInfo user={user} />
           </Row>
+
           <Divider />
+
           <Row justify='space-around' className='personal__numbers'>
             <UserNumbers user={user} posts={posts} />
           </Row>
+
           {(user.album_visibility || !id) && (
             <>
               <Row justify='space-between' style={{ marginBottom: 30 }}>
@@ -115,6 +117,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
                       {`${user.first_name}'s photos (${user.album.length}
                        photo)`}
                     </Col>
+
                     <Col>
                       <span
                         onClick={() => setVisibleModal(true)}
@@ -133,17 +136,13 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
                 images={user.album}
                 username={user.first_name}
               />
+
               {user.album.length !== 0 && (
-                <Row
-                  justify='space-around'
-                  className='personal__album'
-                  style={{ marginBottom: 50 }}
-                >
-                  <span style={{ marginLeft: 25 }}>
-                    <Album images={user.album} />
-                  </span>
-                </Row>
+                <span style={{ marginLeft: 25 }}>
+                  <Album images={user.album} />
+                </span>
               )}
+
               <Row>
                 <Col>
                   <UploadImages id={id} user={user} />
@@ -155,6 +154,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
           {!id && <NewPost />}
         </Col>
       </Row>
+
       {(user.posts_visibility || !id) && (
         <Row style={{ backgroundColor: 'white' }}>
           <Col span={24}>

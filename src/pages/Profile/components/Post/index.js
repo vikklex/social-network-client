@@ -77,13 +77,15 @@ const Post = ({ post, isUserProfile }) => {
     dispatch(getComments(post.id)).then((data) => setComments(data.data));
   }, [dispatch, post.id]);
 
+  const likedUser = id ? user?.id : post?.userId;
+
   const setLike = () => {
     dispatch(
       createReaction({
         reactionType: 'like',
         userId: profile.id,
         postId: post.id,
-        likedUser: user?.id || post?.userId,
+        likedUser: likedUser,
       }),
     ).then((data) => {
       const likes = data?.filter(
@@ -212,7 +214,12 @@ const Post = ({ post, isUserProfile }) => {
   const data = comments.filter((comment) => comment.postId === post.id);
 
   return (
-    <Card bordered={false} style={{ width: '100%' }} className='post'>
+    <Card
+      bordered={false}
+      size='small'
+      style={{ margin: 26, backgroundColor: 'whitesmoke', borderRadius: 14 }}
+      className='post'
+    >
       <Comment
         actions={actions}
         author={<p>{postAuthor}</p>}
@@ -230,7 +237,8 @@ const Post = ({ post, isUserProfile }) => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               bordered={isEditMode}
-              autoSize={false}
+              autoSize={true}
+              rows={1}
               style={{
                 resize: 'none',
                 pointerEvents: isEditMode ? 'all' : 'none',

@@ -36,7 +36,9 @@ function App() {
         setIsReady(true);
       };
 
-      dispatch(getAuthUserProfile({ id: jwt_decode(token).id })).then(onSuccess);
+      dispatch(getAuthUserProfile({ id: jwt_decode(token).id })).then(
+        onSuccess,
+      );
     } else {
       setIsReady(true);
     }
