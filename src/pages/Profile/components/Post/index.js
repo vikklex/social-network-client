@@ -108,7 +108,6 @@ const Post = ({ post, isUserProfile }) => {
     dispatch(
       createReaction({
         reactionType: 'dislike',
-        contentType: 'post',
         userId: profile.id,
         postId: post.id,
         likedUser: user?.id || post?.userId,
@@ -217,7 +216,11 @@ const Post = ({ post, isUserProfile }) => {
     <Card
       bordered={false}
       size='small'
-      style={{ margin: 26, backgroundColor: 'whitesmoke', borderRadius: 14 }}
+      style={{
+        margin: 26,
+        backgroundColor: 'whitesmoke',
+        borderRadius: 14,
+      }}
       className='post'
     >
       <Comment
@@ -291,6 +294,7 @@ const Post = ({ post, isUserProfile }) => {
               user={user}
               post={post}
               comment={true}
+              style={{ display: 'flex', flexDirection: 'column' }}
             />
           }
         />

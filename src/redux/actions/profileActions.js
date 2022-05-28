@@ -1,5 +1,5 @@
 import ClientAPI from 'services/ClientAPI';
-import { storage } from '../../storage';
+import { storage } from 'storage';
 import { Types as Alert } from './alertActions';
 import { Types } from './authActions';
 
@@ -339,16 +339,11 @@ export const deleteImageFromAlbum = (data) => async (dispatch) => {
   }
 };
 
-export const deleteUser = (user) => async (dispatch) => {
+export const deleteUser = (id) => async (dispatch) => {
   try {
-    await ClientAPI.deleteUser(user);
-
-    window.location.href = '/register';
-
-    storage.accessToken.Remove();
     dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
 
-    ClientAPI.deleteUser(user).then((res) => {
+    ClientAPI.deleteUser(id).then(() => {
       dispatch({
         type: Types.DELETE_USER,
         payload: {
@@ -358,6 +353,10 @@ export const deleteUser = (user) => async (dispatch) => {
     });
 
     dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+
+    //storage.accessToken.Remove();
+
+    // window.location.href = '/register';
   } catch (error) {
     dispatch({
       type: Alert.ALERT,

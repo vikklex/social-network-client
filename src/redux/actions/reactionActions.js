@@ -11,7 +11,6 @@ export const Reaction_Types = {
 };
 
 export const createReaction = (data) => async (dispatch) => {
-  console.log(data.likedUser, 'likedUser');
   try {
     const res = await ClientAPI.createReaction({
       reactionType: data.reactionType,
@@ -68,8 +67,6 @@ export const getAllReactionsForUser = (data) => async (dispatch) => {
     });
 
     const res = await ClientAPI.getAllReactionsForUser(data);
-
-    console.log(res);
 
     dispatch({
       type: Reaction_Types.GET_REACTIONS_FOR_USER,

@@ -102,9 +102,9 @@ export const register = (data) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    storage.accessToken.Remove();
-
     await ClientAPI.logout();
+
+    storage.accessToken.Remove();
 
     window.location.href = '/login';
   } catch (error) {
@@ -116,8 +116,6 @@ export const logout = () => async (dispatch) => {
     });
   }
 };
-
-
 
 export const getAuthUserProfile =
   ({ id }) =>

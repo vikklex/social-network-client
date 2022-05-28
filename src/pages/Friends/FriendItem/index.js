@@ -9,7 +9,7 @@ import ClientAPI from 'services/ClientAPI';
 
 import NoAvatar from 'assets/img/noavatar.png';
 
-const FriendItem = ({ id }) => {
+const FriendItem = ({ id, content }) => {
   const [isReady, setIsReady] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -42,14 +42,15 @@ const FriendItem = ({ id }) => {
           </span>
         </Col>
       </Row>
-
-      <Row>
-        <Col style={{ marginTop: '10px', color: '#818c99' }}>
-          <div> {user.status ?? ''}</div>
-          <div> {user.city ?? ''}</div>
-          <div> {user.relations ?? ''}</div>
-        </Col>
-      </Row>
+      {!content && (
+        <Row>
+          <Col style={{ marginTop: '10px', color: '#818c99' }}>
+            <div> {user.status ?? ''}</div>
+            <div> {user.city ?? ''}</div>
+            <div> {user.relations ?? ''}</div>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };

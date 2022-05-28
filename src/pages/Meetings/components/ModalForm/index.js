@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Button, Form, Input, Select, TimePicker } from 'antd';
+import { Button, Form, Input, Select, TimePicker } from 'antd';
 
 import {
   title_rules,
@@ -10,6 +10,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import { TIME_FORMAT } from 'utils/Constants';
+import FriendItem from '../../../Friends/FriendItem';
 
 const { Option } = Select;
 
@@ -48,9 +49,8 @@ function ModalForm({ onFinish, initialValue, isMainComponent }) {
       <Form.Item label='Participants' name='participants' rules={choice_rules}>
         <Select mode='multiple'>
           {friends.map((friend) => (
-            <Select.Option value={friend.id} key={friend.id}>
-              <Avatar src={friend.avatar} style={{ marginRight: 4 }} />
-              {`${friend.first_name} ${friend.last_name}`}
+            <Select.Option value={friend} key={friend}>
+              <FriendItem id={friend} content='meeting' />
             </Select.Option>
           ))}
         </Select>

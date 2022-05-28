@@ -8,9 +8,8 @@ const FriendsPreview = ({ id, style }) => {
   const profile = useSelector((state) => state.auth.profile);
   const user = useSelector((state) => state.profile.user);
 
-  const userFollowingIds = user.followings.map((person) => person.id);
   const mutualFriends = profile.followings.filter((following) =>
-    userFollowingIds.includes(following.id),
+    user.followings.includes(following),
   );
 
   return (

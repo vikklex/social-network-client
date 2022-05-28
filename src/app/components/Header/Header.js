@@ -39,6 +39,10 @@ export default function HeaderNav() {
     setSearch('');
   };
 
+  const onLogout = () => {
+    dispatch(logout());
+  };
+
   useEffect(() => {
     if (search && token) {
       dispatch(searchUserProfile(search, profile.id));
@@ -86,12 +90,7 @@ export default function HeaderNav() {
         </Col>
 
         <Col span={1}>
-          <LogoutOutlined
-            className='right_icon_antd'
-            onClick={() => {
-              dispatch(logout());
-            }}
-          />
+          <LogoutOutlined className='right_icon_antd' onClick={onLogout} />
         </Col>
       </Row>
     </div>

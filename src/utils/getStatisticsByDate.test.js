@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { DATE_FULL_FORMAT } from './Constants';
 
-import getStatistics from './getStatistics';
+import getStatisticsByDate from './getStatisticsByDate';
 
 const LIKE_TYPE = 'like';
 
@@ -38,6 +38,6 @@ describe('Statistics', () => {
       },
     ];
 
-    expect(getStatistics(input, date, date)).toEqual(output);
+    expect(getStatisticsByDate(input, date, date)).toEqual(output);
   });
 });

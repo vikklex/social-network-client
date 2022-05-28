@@ -11,7 +11,8 @@ const getReactionsData = (data, type) => {
   const result = Object.keys(counter).map((userId) => {
     let value = null;
 
-    data.map((user) => {
+    //map?
+    data.forEach((user) => {
       if (userId === user.userId) {
         value = {
           userId: userId,

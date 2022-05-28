@@ -13,12 +13,12 @@ import {
   Tabs,
 } from 'antd';
 
+import { storage } from 'storage';
 import { Profile_Types, updateUser } from 'redux/actions/profileActions';
 import { getAuthUserProfile } from 'redux/actions/authActions';
+import { deleteUser } from 'redux/actions/profileActions';
 
 import SettingCard from 'pages/Settings/SettingCard';
-import { logout } from '../../redux/actions/authActions';
-import { deleteUser } from '../../redux/actions/profileActions';
 
 const { TabPane } = Tabs;
 
@@ -49,7 +49,10 @@ const Settings = () => {
 
   const confirm = () => {
     message.info('You have deleted your account');
-    dispatch(deleteUser(user));
+    dispatch(deleteUser(user)).then(() => {
+      storage.accessToken.Remove();
+      window.location.href = '/register';
+    });
   };
 
   return (

@@ -13,9 +13,16 @@ const PostComments = ({ comment, onDelete }) => {
       }}
       itemLayout='horizontal'
       dataSource={comment}
+      className='comment__list'
       locale={{ emptyText: () => null }}
       renderItem={(data) => (
-        <List.Item key={data.id} style={{ width: '100%', marginLeft: 40 }}>
+        <List.Item
+          key={data.id}
+          style={{
+            width: '55vw',
+            marginLeft: 40,
+          }}
+        >
           <CommentList comment={data} onDelete={onDelete} />
         </List.Item>
       )}

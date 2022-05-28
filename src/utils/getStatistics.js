@@ -1,26 +1,12 @@
 import moment from 'moment';
 
-import getReactionsByDate from './getReactionsByDay';
+import getStatisticsByWeekday from './getStatisticsByWeekday';
 
-import { DATE_FULL_FORMAT } from './Constants';
-
-const getStatistics = (reactions, startDate, endDate) => {
-  let result = [];
-
-  for (
-    let date = moment(startDate);
-    date.isSameOrBefore(endDate);
-    date.add(1, 'days')
-  ) {
-    const stat = getReactionsByDate(date, reactions);
-
-    result.push({
-      name: date.format(DATE_FULL_FORMAT),
-      value: stat.length,
-    });
-  }
-
-  return result;
+export const getStatistics = (reactions) => {
+  return moment.weekdays().map((weekday, index) => {
+    return {
+      name: weekday,
+      value: getStatisticsByWeekday(weekday, reactions),
+    };
+  });
 };
-
-export default getStatistics;

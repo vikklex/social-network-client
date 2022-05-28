@@ -5,6 +5,8 @@ import { Avatar, Row } from 'antd';
 
 import ClientAPI from 'services/ClientAPI';
 
+import NoAvatar from 'assets/img/noavatar.png';
+
 const LikeList = ({ userId, likeNumber, type }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -21,7 +23,7 @@ const LikeList = ({ userId, likeNumber, type }) => {
   return (
     <Row style={{ display: 'flex', marginBottom: '2%' }}>
       <Avatar
-        src={user.avatar}
+        src={user.avatar || NoAvatar}
         style={{ marginRight: '4%', cursor: 'pointer' }}
         onClick={() => navigate(`/user/${user.id}`)}
       />

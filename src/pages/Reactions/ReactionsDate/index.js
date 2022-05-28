@@ -1,8 +1,6 @@
 import { Row } from 'antd';
 import React from 'react';
 
-import moment from 'moment';
-
 import {
   BarChart,
   Bar,
@@ -12,27 +10,9 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import { getStatistics } from 'utils/getStatistics';
 
 const ReactionsDate = ({ reactions, type, color }) => {
-  const getStatisticsByWeekday = (weekday) => {
-    return reactions.reduce((result, reaction) => {
-      if (moment(reaction.createdAt).format('dddd') === weekday) {
-        return result + reaction.sum;
-      }
-
-      return result;
-    }, 0);
-  };
-
-  const getStatistics = () => {
-    return moment.weekdays().map((weekday, index) => {
-      return {
-        name: weekday,
-        value: getStatisticsByWeekday(weekday),
-      };
-    });
-  };
-
   return (
     <Row style={{ width: '45%', marginTop: '5%' }}>
       <h4 style={{ marginBottom: '10%' }}>{type}</h4>
@@ -40,7 +20,7 @@ const ReactionsDate = ({ reactions, type, color }) => {
         <BarChart
           width={700}
           height={300}
-          data={getStatistics()}
+          data={getStatistics(reactions)}
           margin={{
             top: 5,
             right: 30,

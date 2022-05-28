@@ -1,12 +1,10 @@
 import React from 'react';
 
-import moment from 'moment';
-
 import { Row } from 'antd';
 
 import { LineChart, Line, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
-import getStatistics from 'utils/getStatistics';
+import getStatisticsByDate from 'utils/getStatisticsByDate';
 
 const ReactionsLine = ({ startDate, endDate, reactions }) => {
   return (
@@ -17,7 +15,7 @@ const ReactionsLine = ({ startDate, endDate, reactions }) => {
         <LineChart
           width={300}
           height={100}
-          data={getStatistics(reactions, startDate, endDate)}
+          data={getStatisticsByDate(reactions, startDate, endDate)}
         >
           <Line
             type='monotone'
