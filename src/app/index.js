@@ -14,6 +14,7 @@ import Friends from 'pages/Friends';
 import Meetings from 'pages/Meetings';
 import Settings from 'pages/Settings';
 import Reactions from 'pages/Reactions';
+import Statistics from 'pages/Statistics';
 
 import HeaderNav from 'app/components/Header/Header';
 import { FullMenu } from 'app/components/Menu/FullMenu';
@@ -22,7 +23,7 @@ import PrivateRoute from 'components/PrivateRoute';
 import { getProfile } from 'redux/actions/authActions';
 
 import jwt_decode from 'jwt-decode';
-import SocketClient from '../utils/Socket';
+import SocketClient from 'utils/Socket';
 
 const { Header, Sider, Content } = Layout;
 
@@ -94,6 +95,10 @@ function App() {
 
                   <Route exact path='/reactions' element={<PrivateRoute />}>
                     <Route exact path='/reactions' element={<Reactions />} />
+                  </Route>
+
+                  <Route exact path='/statistics' element={<PrivateRoute />}>
+                    <Route exact path='/statistics' element={<Statistics />} />
                   </Route>
 
                   <Route exact path='/edit' element={<PrivateRoute />}>

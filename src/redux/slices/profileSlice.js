@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   getUserProfile,
+  getAllUsers,
   searchUser,
   updateUser,
   updateAvatar,
@@ -11,6 +12,7 @@ import {
   addFriend,
   deleteFriend,
   deleteUser,
+  getUsersFromRegisterDate,
 } from 'redux/actions/profileActions';
 
 const profileSlice = createSlice({
@@ -43,6 +45,20 @@ const profileSlice = createSlice({
         state.user = payload;
       })
       .addCase(getUserProfile.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.errorCode = payload;
+      });
+
+    builder
+      .addCase(getAllUsers.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllUsers.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isLoggedIn = true;
+        state.errorCode = null;
+      })
+      .addCase(getAllUsers.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.errorCode = payload;
       });
@@ -163,6 +179,21 @@ const profileSlice = createSlice({
         state.user = payload;
       })
       .addCase(deleteFriend.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.errorCode = payload;
+      });
+
+    builder
+      .addCase(getUsersFromRegisterDate.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUsersFromRegisterDate.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isLoggedIn = true;
+        state.errorCode = null;
+        //state.user = payload;
+      })
+      .addCase(getUsersFromRegisterDate.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.errorCode = payload;
       });

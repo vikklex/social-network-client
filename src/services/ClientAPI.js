@@ -44,6 +44,12 @@ class ClientAPI {
     return this.instance.get(`/v1/users/${id}`);
   }
 
+  getAllUsers(data) {
+    return this.instance.post(`/v1/users/${data.id}/all`, {
+      user: data,
+    });
+  }
+
   getUserPosts(id) {
     return this.instance.get(`v1/posts/timeline/${id}`);
   }
@@ -138,7 +144,6 @@ class ClientAPI {
   }
 
   deletePost(data) {
-    console.log(data);
     return this.instance.delete(`v1/posts/${data.post.id}`, {
       data: { user: data.profile },
     });
@@ -189,6 +194,13 @@ class ClientAPI {
   getReactionsFromDate(data) {
     return this.instance.post(`v1/reactions/date/${data.id}`, {
       id: data.id,
+      startDate: data.startDate,
+      endDate: data.endDate,
+    });
+  }
+
+  getUsersFromRegisterDate(data) {
+    return this.instance.post(`v1/users/date-statistics/`, {
       startDate: data.startDate,
       endDate: data.endDate,
     });

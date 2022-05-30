@@ -10,13 +10,17 @@ import {
   HeartOutlined,
   SettingOutlined,
   CalendarFilled,
+  StockOutlined,
 } from '@ant-design/icons';
 
 import 'app/components/Menu/menu.scss';
 import MenuItem from 'app/components/Menu/MenuItem/MenuItem';
+import { useSelector } from 'react-redux';
 
 export const FullMenu = () => {
   const { pathname } = useLocation();
+
+  const profile = useSelector((state) => state.auth.profile);
 
   return (
     <Menu mode='vertical' className='navbar__list' selectedKeys={pathname}>
@@ -35,6 +39,14 @@ export const FullMenu = () => {
       />
 
       <MenuItem link='/reactions' icon={<HeartOutlined />} text='Reactions' />
+
+      {profile?.is_admin && (
+        <MenuItem
+          link='/statistics'
+          icon={<StockOutlined />}
+          text='Statistics'
+        />
+      )}
 
       <MenuItem link='/meetings' icon={<CalendarFilled />} text='Meetings' />
 

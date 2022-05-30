@@ -3,7 +3,7 @@ import { Col, Row } from 'antd';
 
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
 
-import LikeList from 'pages/Reactions/LikeList';
+import LikeList from 'pages/Reactions/components/general/LikeList';
 
 function ReactionTable({ reaction, data, title, color }) {
   return (

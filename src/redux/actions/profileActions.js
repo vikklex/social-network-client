@@ -18,8 +18,19 @@ export const getUserProfile = createAsyncThunk(
     try {
       const res = await ClientAPI.getUser(data);
 
-      //return res.data.msg.access_token;
       return res.data.user;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
+
+export const getAllUsers = createAsyncThunk(
+  'profile/getAllUsers',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.getAllUsers(data);
+      return res.data;
     } catch (err) {
       return rejectWithValue(extractError(err));
     }
@@ -134,6 +145,19 @@ export const deleteFriend = createAsyncThunk(
       await ClientAPI.deleteFriend(data);
 
       return newUser;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
+
+export const getUsersFromRegisterDate = createAsyncThunk(
+  'profile/getUsersFromDate',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.getUsersFromRegisterDate(data);
+
+      return res.data;
     } catch (err) {
       return rejectWithValue(extractError(err));
     }

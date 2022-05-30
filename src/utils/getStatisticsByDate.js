@@ -16,7 +16,7 @@ const getStatisticsByDate = (reactions, startDate, endDate) => {
 
     result.push({
       name: date.format(DATE_FULL_FORMAT),
-      value: stat.length,
+      value: stat?.length,
     });
   }
 
