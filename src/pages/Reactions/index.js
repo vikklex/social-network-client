@@ -1,27 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import moment from 'moment';
+
 import { Statistic, Row, Col, Card, Divider, Space, DatePicker } from 'antd';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import {
   getAllReactionsForUser,
   getReactionsFromDate,
-} from 'redux/actions/reactionActions';
+} from 'redux/actions/reactionAction';
 
 import NoContent from 'components/NoContent';
+
 import ReactionTable from './ReactionTable';
 import ReactionsGender from './ReactionsGender';
 import ReactionsDate from './ReactionsDate';
 import ReactionsLine from './ReactionsLine';
 
 import getReactionsData from 'utils/getReactionsData';
-
 import { LIKE } from 'utils/Constants';
 import { DISLIKE } from 'utils/Constants';
 
 import Statistics from 'assets/img/statistics.jpg';
-import moment from 'moment';
 
 const Reactions = () => {
   const dispatch = useDispatch();
@@ -42,17 +43,21 @@ const Reactions = () => {
     };
 
     dispatch(getAllReactionsForUser(profile.id)).then((data) => {
-      setLikes(getReactionsByType(data, LIKE));
-      setDislikes(getReactionsByType(data, DISLIKE));
+      setLikes(getReactionsByType(data.payload, LIKE));
+      setDislikes(getReactionsByType(data.payload, DISLIKE));
     });
   }, [profile.id, dispatch]);
 
   useEffect(() => {
-    dispatch(getReactionsFromDate(profile.id, dateRange[0], dateRange[1])).then(
-      (data) => {
-        setDateReactions(data);
-      },
-    );
+    dispatch(
+      getReactionsFromDate({
+        id: profile.id,
+        startDate: dateRange[0],
+        endDate: dateRange[1],
+      }),
+    ).then((data) => {
+      setDateReactions(data.payload);
+    });
   }, [dispatch, profile, dateRange]);
 
   const likeReaction = getReactionsData(likes, LIKE);
@@ -106,6 +111,7 @@ const Reactions = () => {
         <>
           <Row gutter={16}>
             <Divider>GENERAL STATISTICS</Divider>
+
             <Col span={16}>
               <Statistic
                 title='Likes all the time'

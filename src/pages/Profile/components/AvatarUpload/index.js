@@ -4,7 +4,6 @@ import UploadFile from 'pages/Profile/components/UploadFile';
 
 import NoAvatar from 'assets/img/noavatar.png';
 
-// TODO: Rename to Avatar
 const Avatar = ({ id, user }) => {
   const image = (
     <img

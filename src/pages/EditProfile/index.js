@@ -16,8 +16,8 @@ import {
 
 import moment from 'moment';
 
-import { Profile_Types, updateUser } from 'redux/actions/profileActions';
-import { getAuthUserProfile } from 'redux/actions/authActions';
+import { updateUser } from 'redux/actions/profileActions';
+import { getProfile } from 'redux/actions/authActions';
 
 import {
   city_rules,
@@ -72,12 +72,10 @@ const EditProfile = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    const onSuccess = (status) => {
-      if (status === Profile_Types.SUCCESS) {
-        message.success('You are successfully update profile');
-        dispatch(getAuthUserProfile({ id: user.id }));
-        navigate('/');
-      }
+    const onSuccess = () => {
+      message.success('You are successfully update profile');
+      dispatch(getProfile(user.id));
+      navigate('/');
     };
 
     const data = {

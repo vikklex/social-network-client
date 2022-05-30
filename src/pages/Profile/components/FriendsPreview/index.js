@@ -24,6 +24,7 @@ const FriendsPreview = ({ id, style }) => {
           </Row>
         </>
       )}
+
       {mutualFriends.length !== 0 && id && (
         <>
           <Row style={{ marginTop: '15%' }}>

@@ -1,17 +1,7 @@
-import ClientAPI from 'services/ClientAPI';
-import { storage } from 'storage';
-import { Types as Alert } from './alertActions';
-import { Types } from './authActions';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const Profile_Types = {
-  LOADING: 'PROFILE_LOADING',
-  GET_USER: 'PROFILE_GET_USER',
-  SET_USER: 'PROFILE_SET_USER',
-  SEARCH_USER: 'PROFILE_SEARCH_USER',
-  SUCCESS: 'PROFILE_SUCCESS',
-  ADD_FRIEND: 'PROFILE_ADD_FRIEND',
-  DELETE_FRIEND: 'PROFILE_DELETE_FRIEND',
-};
+import extractError from 'utils/extractError';
+import ClientAPI from 'services/ClientAPI';
 
 const deleteData = (data, id) => {
   const newData = data.filter((value) => value !== id);
@@ -22,347 +12,143 @@ const filterData = (data, id) => {
   return data.includes(id) ? data : [...data, id];
 };
 
-export const getUserProfile =
-  ({ id }) =>
-  async (dispatch) => {
+export const getUserProfile = createAsyncThunk(
+  'profile/getUser',
+  async (data, { rejectWithValue }) => {
     try {
-      dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
-      const res = await ClientAPI.getUser(id);
+      const res = await ClientAPI.getUser(data);
 
-      dispatch({
-        type: Profile_Types.GET_USER,
-        payload: res.data,
-      });
-
-      dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
-    } catch (error) {
-      dispatch({
-        type: Alert.ALERT,
-        payload: {
-          error: error.response.data.msg,
-        },
-      });
+      //return res.data.msg.access_token;
+      return res.data.user;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
     }
-  };
+  },
+);
 
-export const setUserProfile = (id) => async (dispatch) => {
-  try {
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
-    const res = await ClientAPI.getUser(id);
+export const searchUser = createAsyncThunk(
+  'profile/searchUser',
 
-    dispatch({
-      type: Profile_Types.GET_USER,
-      payload: res.data,
-    });
-
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
-
-export const searchUserProfile = (value, id) => async (dispatch) => {
-  try {
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
-    const res = await ClientAPI.searchUser(value, id);
-
-    dispatch({
-      type: Profile_Types.SEARCH_USER,
-      payload: res.data,
-    });
-
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data,
-      },
-    });
-  }
-};
-
-export const updateUser =
-  ({
-    id,
-    first_name,
-    last_name,
-    email,
-    password_hash,
-    job,
-    birthday,
-    desc,
-    gender,
-    relationships,
-    city,
-    from,
-    status,
-    posts_visibility,
-    friends_visibility,
-    album_visibility,
-  }) =>
-  async (dispatch) => {
+  async (data, { rejectWithValue }) => {
     try {
-      dispatch({
-        type: Alert.ALERT,
-        payload: {
-          loading: true,
-        },
-      });
+      const res = await ClientAPI.searchUser(data.value, data.id);
 
-      ClientAPI.updateUser(
-        id,
-        first_name,
-        last_name,
-        email,
-        password_hash,
-        job,
-        birthday,
-        desc,
-        gender,
-        relationships,
-        city,
-        from,
-        status,
-        posts_visibility,
-        friends_visibility,
-        album_visibility,
-      ).then((resp) => {
-        dispatch({
-          type: Types.SET_USER,
-          payload: {
-            user: resp.data.msg,
-          },
-        });
-      });
-
-      dispatch({
-        type: Alert.ALERT,
-        payload: {
-          loading: false,
-        },
-      });
-      return Profile_Types.SUCCESS;
-    } catch (error) {
-      dispatch({
-        type: Alert.ALERT,
-        payload: {
-          error: error.response.data.msg,
-        },
-      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
     }
-  };
+  },
+);
 
-export const updateAvatar = (user, data, config) => async (dispatch) => {
-  try {
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+export const updateUser = createAsyncThunk(
+  'profile/updateUser',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.updateUser(data);
 
-    ClientAPI.updateAvatar(user.id, data, config).then((res) => {
-      dispatch({
-        type: Profile_Types.SET_USER,
-        payload: {
-          user: {
-            ...user,
-            ...res.data,
-          },
-        },
-      });
-    });
+      return res.data.msg;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
 
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
+export const updateAvatar = createAsyncThunk(
+  'profile/updateAvatar',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.updateAvatar(data);
 
-    return Profile_Types.SUCCESS;
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
 
-export const updateAlbum = (user, data, config) => async (dispatch) => {
-  try {
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+export const deleteAvatar = createAsyncThunk(
+  'profile/deleteAvatar',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.deleteAvatar(data);
 
-    ClientAPI.updateAlbum(user.id, data, config).then((res) => {
-      dispatch({
-        type: Profile_Types.SET_USER,
-        payload: {
-          user: {
-            ...user,
-            ...res.data,
-          },
-        },
-      });
-    });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
 
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
+export const updateAlbum = createAsyncThunk(
+  'profile/updateAlbum',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.updateAlbum(data);
 
-export const addFriend = (data) => async (dispatch) => {
-  const newUser = {
-    ...data.user,
-    followers: filterData(data.user.followers, data.profile.id),
-  };
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
 
-  dispatch({
-    type: Profile_Types.ADD_FRIEND,
-    payload: { user: newUser },
-  });
+export const deleteImageFromAlbum = createAsyncThunk(
+  'profile/deleteImageFromAlbum',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.deleteImageFromAlbum(data);
 
-  dispatch({
-    type: Types.SET_USER,
-    payload: {
-      user: {
-        ...data.profile,
-        followings: [...data.profile.followings, newUser.id],
-      },
-    },
-  });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
 
-  try {
-    await ClientAPI.addFriend(data.profile.id, data.user.id);
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
+export const addFriend = createAsyncThunk(
+  'profile/addFriend',
+  async (data, { rejectWithValue }) => {
+    try {
+      const newUser = {
+        ...data.user,
+        followers: filterData(data.user.followers, data.profile.id),
+      };
+      await ClientAPI.addFriend(data);
 
-export const deleteFriend = (data) => async (dispatch) => {
-  const newUser = {
-    ...data.user,
-    followers: deleteData(data.user.followers, data.profile.id),
-  };
+      return newUser;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
 
-  dispatch({
-    type: Profile_Types.DELETE_FRIEND,
-    payload: { user: newUser },
-  });
+export const deleteFriend = createAsyncThunk(
+  'profile/delete',
+  async (data, { rejectWithValue }) => {
+    try {
+      const newUser = {
+        ...data.user,
+        followers: deleteData(data.user.followers, data.profile.id),
+      };
 
-  dispatch({
-    type: Types.SET_USER,
-    payload: {
-      user: {
-        ...data.profile,
-        followings: deleteData(data.profile.followings, newUser.id),
-      },
-    },
-  });
-  try {
-    await ClientAPI.deleteFriend(data.profile.id, data.user.id);
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
+      await ClientAPI.deleteFriend(data);
 
-export const deleteAvatar = (data) => async (dispatch) => {
-  const newUser = {
-    ...data,
-    avatar: '',
-  };
+      return newUser;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
 
-  dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
+export const deleteUser = createAsyncThunk(
+  'profile/deleteUser',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.deleteUser(data);
 
-  dispatch({
-    type: Types.SET_USER,
-    payload: {
-      user: newUser,
-    },
-  });
-  try {
-    await ClientAPI.deleteAvatar(data);
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
-
-export const deleteImageFromAlbum = (data) => async (dispatch) => {
-  try {
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
-
-    ClientAPI.deleteImageFromAlbum(data.profile.id, data.src).then((res) => {
-      dispatch({
-        type: Profile_Types.SET_USER,
-        payload: {
-          user: {
-            ...data,
-            ...res.data,
-          },
-        },
-      });
-    });
-
-    const res = await ClientAPI.getUser(data.profile.id);
-
-    dispatch({
-      type: Profile_Types.GET_USER,
-      payload: res.data,
-    });
-
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
-
-export const deleteUser = (id) => async (dispatch) => {
-  try {
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: true } });
-
-    ClientAPI.deleteUser(id).then(() => {
-      dispatch({
-        type: Types.DELETE_USER,
-        payload: {
-          user: null,
-        },
-      });
-    });
-
-    dispatch({ type: Profile_Types.LOADING, payload: { loading: false } });
-
-    //storage.accessToken.Remove();
-
-    // window.location.href = '/register';
-  } catch (error) {
-    dispatch({
-      type: Alert.ALERT,
-      payload: {
-        error: error.response.data.msg,
-      },
-    });
-  }
-};
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);

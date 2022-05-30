@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 
 import { Avatar, Col, Row } from 'antd';
 
-import NoAvatar from 'assets/img/noavatar.png';
-
 import ClientAPI from 'services/ClientAPI';
+
+import NoAvatar from 'assets/img/noavatar.png';
 
 const FriendPreview = ({ id }) => {
   const [isReady, setIsReady] = useState(false);

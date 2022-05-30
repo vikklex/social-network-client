@@ -8,17 +8,18 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
-import { deletePost, updatePost } from 'redux/actions/postActions';
-import { createComment, getComments } from 'redux/actions/commentActions';
+import { updatePost, deletePost, getPosts } from 'redux/actions/postActions';
+
+import { getPostReactions, createReaction } from 'redux/actions/reactionAction';
+
 import {
-  createReaction,
-  getPostReactions,
-} from 'redux/actions/reactionActions';
+  createComment,
+  deleteComment,
+  getComments,
+} from 'redux/actions/commentAction';
 
 import Editor from 'pages/Profile/components/NewPost/components/Editor';
 import PostComments from 'pages/Profile/components/Posts/components/CommentList';
-
-import ClientAPI from 'services/ClientAPI';
 
 import { DATE_FORMAT } from 'utils/Constants';
 
@@ -33,6 +34,7 @@ const Post = ({ post, isUserProfile }) => {
 
   const user = useSelector((state) => state.profile.user);
   const profile = useSelector((state) => state.auth.profile);
+  const socket = useSelector((state) => state.socket);
 
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
@@ -50,13 +52,13 @@ const Post = ({ post, isUserProfile }) => {
   useEffect(() => {
     if (post) {
       dispatch(getPostReactions(post.id)).then((data) => {
-        const likes = data?.filter(
+        const likes = data?.payload.filter(
           (reaction) => reaction.reactionType === 'like',
         );
 
         setLikes(likes?.length);
 
-        const dislikes = data?.filter(
+        const dislikes = data?.payload.filter(
           (reaction) => reaction.reactionType === 'dislike',
         );
 
@@ -73,9 +75,13 @@ const Post = ({ post, isUserProfile }) => {
     }
   }, [post, dispatch, likes, dislikes, profile.id]);
 
-  useEffect(() => {
-    dispatch(getComments(post.id)).then((data) => setComments(data.data));
-  }, [dispatch, post.id]);
+  useEffect(
+    () => {
+      dispatch(getComments(post.id)).then((data) => setComments(data.payload));
+    },
+    [dispatch, post.id],
+    comments,
+  );
 
   const likedUser = id ? user?.id : post?.userId;
 
@@ -86,13 +92,16 @@ const Post = ({ post, isUserProfile }) => {
         userId: profile.id,
         postId: post.id,
         likedUser: likedUser,
+        socket: socket,
+        user: profile,
+        post: post,
       }),
     ).then((data) => {
-      const likes = data?.filter(
+      const likes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'like',
       );
 
-      const dislikes = data?.filter(
+      const dislikes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
 
@@ -111,13 +120,15 @@ const Post = ({ post, isUserProfile }) => {
         userId: profile.id,
         postId: post.id,
         likedUser: user?.id || post?.userId,
+        socket: socket,
+        user: profile,
       }),
     ).then((data) => {
-      const likes = data?.filter(
+      const likes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'like',
       );
 
-      const dislikes = data?.filter(
+      const dislikes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
 
@@ -130,12 +141,16 @@ const Post = ({ post, isUserProfile }) => {
   };
 
   const savePost = () => {
-    dispatch(updatePost(post.id, user.id, text));
+    dispatch(updatePost({ postId: post.id, userId: user.id, text }));
     setIsEditMode(false);
   };
 
+  const onSuccess = () => {
+    dispatch(getPosts(user.id));
+  };
+
   const handleDelete = () => {
-    dispatch(deletePost(post, user.id));
+    dispatch(deletePost({ post, profile })).then(onSuccess);
   };
 
   const handleReply = () => {
@@ -147,15 +162,21 @@ const Post = ({ post, isUserProfile }) => {
   };
 
   const onDelete = (id) => {
-    ClientAPI.deleteComment(id, profile.id).then(() =>
-      dispatch(getComments(post.id)).then((data) => setComments(data.data)),
+    dispatch(deleteComment(id)).then(() =>
+      dispatch(getComments(post.id)).then((data) => setComments(data.payload)),
     );
   };
 
   const createNewComment = () => {
-    dispatch(createComment(profile.id, content, post.id, post.userId)).then(
-      () =>
-        dispatch(getComments(post.id)).then((data) => setComments(data.data)),
+    dispatch(
+      createComment({
+        userId: profile.id,
+        content,
+        postId: post.id,
+        postUserId: post.userId,
+      }),
+    ).then(() =>
+      dispatch(getComments(post.id)).then((data) => setComments(data.payload)),
     );
 
     setContent('');
@@ -194,6 +215,7 @@ const Post = ({ post, isUserProfile }) => {
           Edit
         </span>
       )}
+
       {!id && isUserProfile && (
         <span key='comment-basic-delete' onClick={handleDelete}>
           Delete
@@ -210,7 +232,7 @@ const Post = ({ post, isUserProfile }) => {
     </>,
   ];
 
-  const data = comments.filter((comment) => comment.postId === post.id);
+  const data = comments?.filter((comment) => comment.postId === post.id);
 
   return (
     <Card

@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import { Col, Row, Divider, Tag } from 'antd';
 
 import jwt_decode from 'jwt-decode';
 
-import { getPosts } from 'redux/actions/postActions';
 import { getUserProfile } from 'redux/actions/profileActions';
+import { getPosts } from 'redux/actions/postActions';
 
 import Spinner from 'components/Spinner';
 
@@ -28,9 +27,9 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token);
-  const isLoading = useSelector((state) => state.auth.loading);
-  const user = useSelector((state) => state.profile.user);
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const profile = useSelector((state) => state.auth.profile);
+  const user = useSelector((state) => state.profile.user);
   const posts = useSelector((state) => state.post.post);
 
   const person = id ? user : profile;
@@ -45,9 +44,9 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
         setStatusText('');
       };
 
-      dispatch(getUserProfile({ id: id })).then(onSuccess);
+      dispatch(getUserProfile(id)).then(onSuccess);
     } else {
-      dispatch(getUserProfile({ id: jwt_decode(token).id }));
+      dispatch(getUserProfile(jwt_decode(token).id));
     }
   }, [dispatch, id, token, statusText]);
 
@@ -55,7 +54,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
     if (user) {
       dispatch(getPosts(user.id));
     }
-  }, [user, dispatch, posts.length]);
+  }, [user, dispatch]);
 
   if (!user) {
     return null;
@@ -81,11 +80,15 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
 
         <Col span={16} offset={1}>
           <Row>
-            <Col span={22} className='username'>
+            <Col span={20} className='username'>
               {`${user.first_name} ${user.last_name}`}
             </Col>
             <Col span={2} className='status'>
-              <Tag color='green'>online</Tag>
+              {user.is_admin ? (
+                <Tag color='blue'>admin</Tag>
+              ) : (
+                <Tag color='green'>online</Tag>
+              )}
             </Col>
           </Row>
 

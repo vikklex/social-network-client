@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { updateUser } from 'redux/actions/profileActions';
 
 import StatusInput from './components/StatusInput';
@@ -11,10 +12,13 @@ const Status = ({ id, user, statusText, setStatusText }) => {
   const [visibleStatus, setVisibleStatus] = useState(false);
 
   const onPressEnter = () => {
-    dispatch(updateUser({ status: statusText, id: user.id }));
-    setStatusText('');
-    setVisibleInput(true);
-    setVisibleStatus(false);
+    const onSuccess = () => {
+      setStatusText('');
+      setVisibleInput(true);
+      setVisibleStatus(false);
+    };
+
+    dispatch(updateUser({ status: statusText, id: user.id })).then(onSuccess);
   };
 
   const changeVisibility = () => {

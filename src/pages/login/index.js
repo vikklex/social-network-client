@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -12,16 +11,18 @@ import {
   Row,
   Col,
   message,
-  Alert,
   Layout,
 } from 'antd';
 
 import 'pages/Login/login.scss';
-import { Types, login } from 'redux/actions/authActions';
+
+import { login } from 'redux/actions/authActions';
+
 import Center from 'components/Center';
 
 import LoginIllustration from 'assets/img/login.jpg';
 import MainLogo from 'assets/img/logo.svg';
+
 import { email_rules, password_rules } from 'pages/Login/rules';
 
 const Login = () => {
@@ -29,13 +30,13 @@ const Login = () => {
   const navigate = useNavigate();
   const ref = useRef();
 
-  const error = useSelector((state) => state.alert.error);
-
   const onFinish = (values) => {
-    const onSuccess = (status) => {
-      if (status === Types.LOGIN_SUCCESS) {
+    const onSuccess = (data) => {
+      if (data.payload.token) {
         message.success('You are successfully login');
         navigate('/');
+      } else {
+        message.error(`Error: ${data.payload.response.data.msg}`);
       }
     };
 
@@ -72,13 +73,6 @@ const Login = () => {
               className='register__card'
               cover={<img alt='example' src={LoginIllustration} />}
             >
-              {error && (
-                <>
-                  <Alert message={error} type='error' />
-                  <br />
-                </>
-              )}
-
               <Form
                 name='basic'
                 labelCol={{

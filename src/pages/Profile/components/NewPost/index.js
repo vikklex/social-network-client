@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Comment, Avatar } from 'antd';
 
-import { createPost } from 'redux/actions/postActions';
-import { updatePostImage } from 'redux/actions/postActions';
+import {
+  createPost,
+  getPosts,
+  updatePostImage,
+} from 'redux/actions/postActions';
 
 import Editor from './components/Editor';
 
 import NoAvatar from 'assets/img/noavatar.png';
+
 import './newPost.scss';
 
 const NewPost = () => {
-  const user = useSelector((state) => state.profile.user);
-  const userId = user.id;
-  const [content, setContent] = useState('');
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.profile.user);
+
+  const [content, setContent] = useState('');
   const [fileList, setFileList] = useState([]);
 
   const props = {
@@ -28,6 +32,7 @@ const NewPost = () => {
 
   const handleUpload = (postId) => {
     const formData = new FormData();
+
     fileList.forEach((file) => {
       formData.append('img', file);
     });
@@ -38,7 +43,10 @@ const NewPost = () => {
       },
     };
 
-    dispatch(updatePostImage(postId, formData, config));
+    dispatch(updatePostImage({ postId, formData, config })).then(
+      dispatch(getPosts(user.id)),
+    );
+
     setFileList([]);
   };
 
@@ -46,10 +54,16 @@ const NewPost = () => {
     setContent(e.target.value);
   };
 
+  const onSuccess = (res) => {
+    handleUpload(res.payload.id);
+    dispatch(getPosts(user.id));
+  };
+
   const handleSubmit = () => {
-    dispatch(createPost({ userId, content })).then((res) => {
-      handleUpload(res.data.id);
-    });
+    dispatch(createPost({ userId: user.id, content })).then((res) =>
+      onSuccess(res),
+    );
+
     setContent('');
   };
 

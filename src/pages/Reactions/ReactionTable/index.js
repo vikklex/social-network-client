@@ -10,6 +10,7 @@ function ReactionTable({ reaction, data, title, color }) {
     <Row gutter={24} style={{ marginTop: '5%' }}>
       <Col span={10}>
         <h1>{title}</h1>
+
         {reaction.map((value) => (
           <LikeList
             userId={value.userId}
@@ -19,6 +20,7 @@ function ReactionTable({ reaction, data, title, color }) {
           />
         ))}
       </Col>
+
       <Col span={12}>
         <ResponsiveContainer width='100%' height='100%'>
           <PieChart width={800} height={800}>

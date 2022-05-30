@@ -14,6 +14,7 @@ const UserNumbers = ({ user, posts }) => {
           {user.followings?.length < 2 ? 'Friend' : 'Friends'}
         </div>
       </Col>
+
       <Col span={6}>
         <div className='personal__numbers_number'>
           {user.followers?.length ? user.followers.length : 0}
@@ -22,6 +23,7 @@ const UserNumbers = ({ user, posts }) => {
           {user.followers?.length < 2 ? 'Follower' : 'Followers'}
         </div>
       </Col>
+
       <Col span={6}>
         <div className='personal__numbers_number'>{posts?.length}</div>
         <div className='personal__numbers_posts'>Posts</div>

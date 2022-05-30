@@ -5,8 +5,6 @@ import { Badge, Button, Image } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
 import { deleteImageFromAlbum } from 'redux/actions/profileActions';
-import { getAuthUserProfile } from '../../../redux/actions/authActions';
-
 const Ribbon = ({ src }) => {
   const dispatch = useDispatch();
 
@@ -25,7 +23,7 @@ const Ribbon = ({ src }) => {
           size='small'
           icon={<DeleteOutlined />}
           onClick={() => handleDelete()}
-        ></Button>
+        />
       }
       color='white'
       style={{ position: 'absolute', top: '-19px', cursor: 'pointer' }}

@@ -9,6 +9,7 @@ class ClientAPI {
     });
     this.instance.interceptors.request.use((config) => {
       config.headers.Authorization = storage.accessToken.Get();
+
       return config;
     });
   }
@@ -51,67 +52,62 @@ class ClientAPI {
     return this.instance.get(`v1/posts/friendsPosts/${id}`);
   }
 
-  updateUser(
-    id,
-    first_name,
-    last_name,
-    email,
-    password_hash,
-    job,
-    birthday,
-    desc,
-    gender,
-    relationships,
-    city,
-    from,
-    status,
-    posts_visibility,
-    friends_visibility,
-    album_visibility,
-  ) {
-    return this.instance.put(`v1/users/${id}`, {
-      userId: id,
-      first_name,
-      last_name,
-      email,
-      password_hash,
-      job,
-      birthday,
-      desc,
-      gender,
-      relationships,
-      city,
-      from,
-      status,
-      posts_visibility,
-      friends_visibility,
-      album_visibility,
+  updateUser(data) {
+    return this.instance.put(`v1/users/${data.id}`, {
+      userId: data.id,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      password_hash: data.password_hash,
+      job: data.job,
+      birthday: data.birthday,
+      desc: data.desc,
+      gender: data.gender,
+      relationships: data.relationships,
+      city: data.city,
+      from: data.from,
+      status: data.status,
+      posts_visibility: data.posts_visibility,
+      friends_visibility: data.friends_visibility,
+      album_visibility: data.album_visibility,
     });
   }
 
-  addFriend(id, userId) {
-    return this.instance.put(`v1/users/${id}/follow`, { userId: userId });
+  addFriend(data) {
+    return this.instance.put(`v1/users/${data.profile.id}/follow`, {
+      userId: data.user.id,
+    });
   }
 
-  deleteFriend(id, userId) {
-    return this.instance.put(`v1/users/${id}/unfollow`, { userId: userId });
+  deleteFriend(data) {
+    return this.instance.put(`v1/users/${data.profile.id}/unfollow`, {
+      userId: data.user.id,
+    });
   }
 
-  updateAvatar(id, data, config) {
-    return this.instance.put(`v1/users/${id}/user-profile`, data, config);
+  updateAvatar(data) {
+    return this.instance.put(
+      `v1/users/${data.user.id}/user-profile`,
+      data.formData,
+      data.config,
+    );
   }
 
-  updateAlbum(id, data, config) {
-    return this.instance.put(`v1/users/${id}/user-album`, data, config);
+  updateAlbum(data) {
+    return this.instance.put(
+      `v1/users/${data.user.id}/user-album`,
+      data.formData,
+      data.config,
+    );
   }
 
   deleteAvatar(user) {
     return this.instance.delete(`v1/users/${user.id}/user-avatar`, user);
   }
 
-  deleteImageFromAlbum(id, path) {
-    return this.instance.delete(`v1/users/${id}/album-image`, {
-      data: { path },
+  deleteImageFromAlbum(data) {
+    return this.instance.delete(`v1/users/${data.profile.id}/album-image`, {
+      data: { data: data.src },
     });
   }
 
@@ -119,48 +115,66 @@ class ClientAPI {
     return this.instance.delete(`v1/users/${user.id}`, user);
   }
 
-  createPost({ userId, content }) {
+  createPost(data) {
     return this.instance.post('v1/posts/', {
-      userId: userId,
-      desc: content,
+      userId: data.userId,
+      desc: data.content,
     });
   }
 
-  updatePost(id, userId, desc) {
-    return this.instance.put(`v1/posts/${id}`, userId, desc);
+  updatePost(data) {
+    return this.instance.put(`v1/posts/${data.postId}`, {
+      userId: data.userId,
+      desc: data.text,
+    });
   }
 
-  updatePostImage(id, data, config) {
-    return this.instance.put(`v1/posts/${id}/post-image`, data, config);
+  updatePostImage(data) {
+    return this.instance.put(
+      `v1/posts/${data.postId}/post-image`,
+      data.formData,
+      data.config,
+    );
   }
 
-  deletePost(id, userId) {
-    return this.instance.delete(`v1/posts/${id}`, userId);
+  deletePost(data) {
+    console.log(data);
+    return this.instance.delete(`v1/posts/${data.post.id}`, {
+      data: { user: data.profile },
+    });
   }
 
-  createComment(userId, desc, postId, postAuthor) {
-    return this.instance.post('v1/comments/', userId, postAuthor, postId, desc);
+  createComment(data) {
+    return this.instance.post('v1/comments/', {
+      userId: data.userId,
+      postAuthor: data.postUserId,
+      postId: data.postId,
+      desc: data.content,
+    });
   }
 
   getComments(id) {
     return this.instance.get(`v1/comments/timeline/${id}`);
   }
 
-  updateComment(id, userId, desc) {
-    return this.instance.put(`v1/comments/${id}`, userId, desc);
+  updateComment(data) {
+    return this.instance.put(`v1/comments/${data.id}`, {
+      userId: data.userId,
+      desc: data.desc,
+    });
   }
 
   deleteComment(id, userId) {
     return this.instance.delete(`v1/comments/${id}`, { userId });
   }
 
-  createReaction({ reactionType, contentType, userId, likedUser, postId }) {
+  createReaction(data) {
     return this.instance.post('v1/reactions/', {
-      reactionType,
-      contentType,
-      userId,
-      likedUser,
-      postId,
+      reactionType: data.reactionType,
+      contentType: data.contentType,
+      userId: data.userId,
+      likedUser: data.likedUser,
+      postId: data.postId,
     });
   }
 
@@ -172,67 +186,47 @@ class ClientAPI {
     return this.instance.get(`v1/reactions/likedUser/${likedUser}`);
   }
 
-  getReactionsFromDate(id, startDate, endDate) {
-    return this.instance.post(`v1/reactions/date/${id}`, {
-      id,
-      startDate,
-      endDate,
+  getReactionsFromDate(data) {
+    return this.instance.post(`v1/reactions/date/${data.id}`, {
+      id: data.id,
+      startDate: data.startDate,
+      endDate: data.endDate,
     });
   }
 
-  createMeeting(
-    userId,
-    participants,
-    title,
-    description,
-    importance,
-    date,
-    startTime,
-    endTime,
-  ) {
-    return this.instance.post(
-      'v1/meetings/',
-      userId,
-      participants,
-      title,
-      description,
-      importance,
-      date,
-      startTime,
-      endTime,
-    );
+  createMeeting(data) {
+    return this.instance.post('v1/meetings/', {
+      userId: data.userId,
+      participants: [...data.participants, data.userId],
+      title: data.title,
+      description: data.description,
+      importance: data.importance,
+      date: data.date,
+      startTime: data.startTime,
+      endTime: data.endTime,
+    });
   }
 
   getMeetings(id) {
     return this.instance.get(`v1/meetings/${id}`);
   }
 
-  updateMeeting(
-    id,
-    userId,
-    participants,
-    title,
-    description,
-    importance,
-    date,
-    startTime,
-    endTime,
-  ) {
-    return this.instance.put(`v1/meetings/${id}`, {
-      id,
-      userId,
-      participants,
-      title,
-      description,
-      importance,
-      date,
-      startTime,
-      endTime,
+  updateMeeting(data) {
+    return this.instance.put(`v1/meetings/${data.id}`, {
+      id: data.id,
+      userId: data.userId,
+      participants: data.participants,
+      title: data.title,
+      description: data.description,
+      importance: data.importance,
+      date: data.date,
+      startTime: data.startTime,
+      endTime: data.endTime,
     });
   }
 
-  deleteMeeting(id, userId) {
-    return this.instance.delete(`v1/meetings/${id}`, userId);
+  deleteMeeting(data) {
+    return this.instance.delete(`v1/meetings/${data.id}`);
   }
 }
 

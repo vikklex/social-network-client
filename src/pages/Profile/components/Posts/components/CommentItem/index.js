@@ -8,12 +8,9 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
-import { updateComment } from 'redux/actions/commentActions';
+import { updateComment } from 'redux/actions/commentAction';
 
-import {
-  createReaction,
-  getPostReactions,
-} from 'redux/actions/reactionActions';
+import { createReaction, getPostReactions } from 'redux/actions/reactionAction';
 
 import { DATE_FORMAT } from 'utils/Constants';
 
@@ -35,13 +32,13 @@ const CommentList = ({ comment, onDelete }) => {
   useEffect(() => {
     if (comment) {
       dispatch(getPostReactions(comment.id)).then((data) => {
-        const likes = data?.filter(
+        const likes = data?.payload.filter(
           (reaction) => reaction.reactionType === 'like',
         );
 
         setLikes(likes?.length);
 
-        const dislikes = data?.filter(
+        const dislikes = data?.payload.filter(
           (reaction) => reaction.reactionType === 'dislike',
         );
 
@@ -68,11 +65,11 @@ const CommentList = ({ comment, onDelete }) => {
         likedUser: comment?.userId,
       }),
     ).then((data) => {
-      const likes = data?.filter(
+      const likes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'like',
       );
 
-      const dislikes = data?.filter(
+      const dislikes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
 
@@ -94,11 +91,11 @@ const CommentList = ({ comment, onDelete }) => {
         likedUser: comment?.userId,
       }),
     ).then((data) => {
-      const likes = data?.filter(
+      const likes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'like',
       );
 
-      const dislikes = data?.filter(
+      const dislikes = data?.payload.filter(
         (reaction) => reaction.reactionType === 'dislike',
       );
 
@@ -111,11 +108,12 @@ const CommentList = ({ comment, onDelete }) => {
   };
 
   const saveComment = () => {
-    dispatch(updateComment(comment.id, profile.id, text));
+    dispatch(updateComment({ id: comment.id, userId: profile.id, desc: text }));
     setIsEditMode(false);
   };
 
   const isAuthor = comment.userId === profile.id;
+
   const actions = [
     <>
       <Tooltip key='comment-basic-like' title='Like'>

@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, message, Upload } from 'antd';
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 
-import { getAuthUserProfile } from 'redux/actions/authActions';
 import {
-  Profile_Types,
+  deleteAvatar,
   updateAvatar,
   getUserProfile,
 } from 'redux/actions/profileActions';
-import { deleteAvatar } from 'redux/actions/profileActions';
+
+import { getProfile } from 'redux/actions/authActions';
 
 const UploadFile = () => {
   const dispatch = useDispatch();
@@ -22,16 +22,15 @@ const UploadFile = () => {
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    dispatch(getAuthUserProfile({ id: user.id }));
+    dispatch(getUserProfile(user.id));
   }, [dispatch, user.id, user.avatar, profile.avatar]);
 
   const handleUpload = () => {
-    const onSuccess = (status) => {
-      if (status === Profile_Types.SUCCESS) {
-        message.success('You are successfully update avatar');
+    const onSuccess = () => {
+      message.success('You are successfully update avatar');
 
-        dispatch(getAuthUserProfile({ id: user.id }));
-      }
+      dispatch(getUserProfile(user.id));
+      dispatch(getProfile(user.id));
     };
 
     const formData = new FormData();
@@ -48,7 +47,7 @@ const UploadFile = () => {
       },
     };
 
-    dispatch(updateAvatar(user, formData, config)).then(onSuccess);
+    dispatch(updateAvatar({ user, formData, config })).then(onSuccess);
 
     setUploading(false);
     setFileList([]);
@@ -56,8 +55,8 @@ const UploadFile = () => {
 
   const onDeleteAvatar = () => {
     dispatch(deleteAvatar(user)).then(() => {
-      dispatch(getUserProfile({ id: user.id }));
-      dispatch(getAuthUserProfile({ id: user.id }));
+      dispatch(getUserProfile(user.id));
+      dispatch(getProfile(user.id));
     });
   };
 
@@ -74,6 +73,7 @@ const UploadFile = () => {
       <Upload {...props}>
         <Button icon={<UploadOutlined />}>Select File</Button>
       </Upload>
+
       <Button
         icon={<DeleteOutlined />}
         style={{ width: '58%', marginTop: 10 }}
@@ -81,6 +81,7 @@ const UploadFile = () => {
       >
         Delete
       </Button>
+
       <Button
         type='primary'
         onClick={handleUpload}

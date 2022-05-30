@@ -1,15 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import Layout from 'antd/lib/layout/layout';
 import { UploadOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Row, Col, message, Alert, Upload } from 'antd';
+import { Form, Input, Button, Row, Col, message, Upload } from 'antd';
 import { Card } from 'antd';
 
-import { Types, register } from 'redux/actions/authActions';
-import { updateAvatar } from 'redux/actions/profileActions';
+import { getProfile, register } from 'redux/actions/authActions';
+import { getUserProfile, updateAvatar } from 'redux/actions/profileActions';
 
 import Center from 'components/Center';
 
@@ -38,15 +38,19 @@ const layout = {
 
 const Register = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate('/');
+  const navigate = useNavigate();
   const ref = useRef();
 
   const [fileList, setFileList] = useState([]);
 
-  const error = useSelector((state) => state.alert.error);
+  const handleUpload = (user) => {
+    const onSuccess = (data) => {
+      dispatch(getUserProfile(data.payload.id));
+      dispatch(getProfile(data.payload.id));
+    };
 
-  const handleUpload = (data) => {
     const formData = new FormData();
+
     fileList.forEach((file) => {
       formData.append('avatar', file);
     });
@@ -57,20 +61,23 @@ const Register = () => {
       },
     };
 
-    dispatch(updateAvatar(data.user, formData, config));
+    dispatch(updateAvatar({ user, formData, config })).then(onSuccess);
     setFileList([]);
 
     return 'success';
   };
 
   const onFinish = (values) => {
-    const onSuccess = (status) => {
-      if (status.status === Types.LOGIN_SUCCESS) {
+    const onSuccess = (data) => {
+      if (data.payload.token) {
         message.success('You are successfully registered');
+        handleUpload(data.payload.user);
+        navigate('/');
+      } else {
+        message.error(`Error: ${data.payload.response.data}`);
       }
-
-      navigate('/');
     };
+
     const data = {
       first_name: values.user.first_name,
       last_name: values.user.last_name,
@@ -78,10 +85,7 @@ const Register = () => {
       password: values.password_hash,
     };
 
-    dispatch(register(data)).then((res) => {
-      handleUpload(res);
-      onSuccess(res);
-    });
+    dispatch(register(data)).then(onSuccess);
   };
 
   useEffect(() => {
@@ -116,8 +120,6 @@ const Register = () => {
               bordered={false}
               cover={<img alt='example' src={RegisterIllustration} />}
             >
-              {error && <Alert message={error} type='error' />}
-
               <Form
                 {...layout}
                 name='register'

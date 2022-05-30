@@ -1,9 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { EditOutlined } from '@ant-design/icons';
 
 function UserInfo({ user }) {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const birthday = user.birthday
@@ -25,14 +26,16 @@ function UserInfo({ user }) {
       className='site-card-border-less-wrapper profile'
       style={{ marginTop: 15 }}
     >
-      <span
-        className='personal__photos_upload'
-        style={{ display: displayValue }}
-        onClick={() => navigate('/edit')}
-      >
-        <EditOutlined />
-        Add info:
-      </span>
+      {!id && (
+        <span
+          className='personal__photos_upload'
+          style={{ display: displayValue }}
+          onClick={() => navigate('/edit')}
+        >
+          <EditOutlined />
+          Add info:
+        </span>
+      )}
 
       {user.birthday && (
         <p style={{ marginTop: 10 }}>

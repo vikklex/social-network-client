@@ -3,11 +3,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import extractError from 'utils/extractError';
 import ClientAPI from 'services/ClientAPI';
 
-export const createPost = createAsyncThunk(
-  'post/createPost',
+export const createReaction = createAsyncThunk(
+  'reaction/createReaction',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.createPost(data);
+      const res = await ClientAPI.createReaction(data);
 
       return res.data;
     } catch (err) {
@@ -16,11 +16,11 @@ export const createPost = createAsyncThunk(
   },
 );
 
-export const getPosts = createAsyncThunk(
-  'post/getPosts',
+export const getPostReactions = createAsyncThunk(
+  'reaction/getPostReaction',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.getUserPosts(data);
+      const res = await ClientAPI.getAllPostReactions(data);
 
       return res.data;
     } catch (err) {
@@ -29,11 +29,11 @@ export const getPosts = createAsyncThunk(
   },
 );
 
-export const updatePost = createAsyncThunk(
-  'post/updatePost',
+export const getAllReactionsForUser = createAsyncThunk(
+  'reaction/getAllReaactionsForUser',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.updatePost(data);
+      const res = await ClientAPI.getAllReactionsForUser(data);
 
       return res.data;
     } catch (err) {
@@ -42,24 +42,11 @@ export const updatePost = createAsyncThunk(
   },
 );
 
-export const updatePostImage = createAsyncThunk(
-  'post/updatePostImage',
+export const getReactionsFromDate = createAsyncThunk(
+  'reaction/getReactionsFromDate',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.updatePostImage(data);
-
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(extractError(err));
-    }
-  },
-);
-
-export const deletePost = createAsyncThunk(
-  'post/deletePost',
-  async (data, { rejectWithValue }) => {
-    try {
-      const res = await ClientAPI.deletePost(data);
+      const res = await ClientAPI.getReactionsFromDate(data);
 
       return res.data;
     } catch (err) {

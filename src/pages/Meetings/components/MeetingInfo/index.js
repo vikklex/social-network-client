@@ -25,12 +25,13 @@ const MeetingInfo = ({ content, user }) => {
   const isAuthor = content.userId === user.id;
 
   const participantsIds = [];
+
   content.participants.forEach((participant) =>
     participantsIds.push(participant.id),
   );
 
   const handleDelete = () => {
-    dispatch(deleteMeeting(content, user.id));
+    dispatch(deleteMeeting(content));
   };
 
   const handleEdit = () => {
@@ -49,7 +50,9 @@ const MeetingInfo = ({ content, user }) => {
       ...values,
     };
 
-    dispatch(updateMeeting(data));
+    dispatch(updateMeeting(data)).then((data) =>
+      dispatch(getMeetings(data.payload.userId)),
+    );
     setIsModalVisible(false);
   };
 

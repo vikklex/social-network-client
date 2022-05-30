@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import moment from 'moment';
 
-import { Calendar, Badge, Modal, Tabs } from 'antd';
+import { Calendar, Modal, Tabs } from 'antd';
 
-import { getMeetings, createMeeting } from 'redux/actions/meetingAction';
+import { createMeeting, getMeetings } from 'redux/actions/meetingAction';
 
 import MeetingInfo from 'pages/Meetings/components/MeetingInfo';
 import ModalForm from 'pages/Meetings/components/ModalForm';
+import DateCell from 'pages/Meetings/components/DateCell';
+import MonthCell from 'pages/Meetings/components/MonthCell';
 
-import { DATE_FULL_FORMAT, MONTH_MOMENT_FORMAT } from 'utils/Constants';
+import { DATE_FULL_FORMAT } from 'utils/Constants';
 
 import './meetings.scss';
 
@@ -30,65 +32,12 @@ const Meetings = () => {
     dispatch(getMeetings(profile.id));
   }, [profile.id, dispatch]);
 
-  const getListData = (date) => {
-    const data = meetings?.filter(
-      (meeting) =>
-        date.format(DATE_FULL_FORMAT) ===
-        moment(meeting.date).format(DATE_FULL_FORMAT),
-    );
-
-    return data.map((meeting) => {
-      return {
-        type: meeting.importance,
-        content: meeting.title,
-      };
-    });
-  };
-
   const dateCellRender = (value) => {
-    const listData = getListData(value);
-
-    return (
-      <ul
-        className='events'
-        onClick={() => onSelect(value)}
-        style={{ height: '100%' }}
-      >
-        {listData.map((item, index) => (
-          <li key={index}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  const getMonthData = (value) => {
-    const data = meetings?.filter(
-      (meeting) =>
-        value.format('M') === moment(meeting.date).format(MONTH_MOMENT_FORMAT),
-    );
-
-    return data.map((meeting) => {
-      return {
-        type: meeting.importance,
-        content: `${meeting.title} (${moment(meeting.date).format('LL')})`,
-      };
-    });
+    return <DateCell value={value} meetings={meetings} onSelect={onSelect} />;
   };
 
   const monthCellRender = (value) => {
-    const listData = getMonthData(value);
-
-    return (
-      <ul className='events' style={{ height: '100%' }}>
-        {listData.map((item, index) => (
-          <li key={index}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
+    return <MonthCell value={value} meetings={meetings} />;
   };
 
   const onChange = (date) => {
@@ -124,6 +73,7 @@ const Meetings = () => {
         monthCellRender={monthCellRender}
         onChange={onChange}
       />
+
       <Modal
         centered
         visible={visible}
@@ -135,6 +85,7 @@ const Meetings = () => {
           <TabPane tab='New meeting' key='1'>
             <ModalForm onFinish={onFinish} isMainComponent={true} />
           </TabPane>
+
           <TabPane tab='Show meetings' key='2'>
             {dateContent?.map((content) => (
               <MeetingInfo content={content} user={profile} key={content.id} />

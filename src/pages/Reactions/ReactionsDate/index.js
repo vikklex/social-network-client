@@ -34,9 +34,13 @@ const ReactionsDate = ({ reactions, type, color }) => {
             scale='point'
             padding={{ left: 10, right: 10 }}
           />
+
           <YAxis />
+
           <Tooltip />
+
           <CartesianGrid strokeDasharray='3 3' />
+
           <Bar dataKey='value' fill={color} background={{ fill: '#eee' }} />
         </BarChart>
       </ResponsiveContainer>

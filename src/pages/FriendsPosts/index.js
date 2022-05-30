@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFriendsPosts } from 'redux/actions/friendPostsAction';
 
+import { getFriendsPosts } from 'redux/actions/friendsPostAction';
 import NoContent from 'components/NoContent';
 import Posts from 'pages/Profile/components/Posts';
 
@@ -12,7 +12,7 @@ const FriendsPosts = () => {
 
   const user = useSelector((state) => state.auth.profile);
 
-  const posts = useSelector((state) => state.friendPosts.friendPost);
+  const posts = useSelector((state) => state.friendsPosts.friendsPosts);
 
   useEffect(() => {
     if (user) {

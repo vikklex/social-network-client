@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Image, List, Modal } from 'antd';
+
 import Ribbon from './Ribbon';
 
 const ModalArea = ({ visibleModal, setVisibleModal, images, username }) => {

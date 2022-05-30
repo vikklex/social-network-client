@@ -14,11 +14,13 @@ import {
 } from 'antd';
 
 import { storage } from 'storage';
-import { Profile_Types, updateUser } from 'redux/actions/profileActions';
-import { getAuthUserProfile } from 'redux/actions/authActions';
-import { deleteUser } from 'redux/actions/profileActions';
+
+import { updateUser, deleteUser } from 'redux/actions/profileActions';
+import { getProfile } from 'redux/actions/authActions';
 
 import SettingCard from 'pages/Settings/SettingCard';
+
+import { password_rules, password_confirm_rules } from 'pages/Register/rules';
 
 const { TabPane } = Tabs;
 
@@ -29,12 +31,10 @@ const Settings = () => {
   const user = useSelector((state) => state.auth.profile);
 
   const onFinish = (values) => {
-    const onSuccess = (status) => {
-      if (status === Profile_Types.SUCCESS) {
-        message.success('You are successfully update your profile settings');
-        dispatch(getAuthUserProfile({ id: user.id }));
-        navigate('/');
-      }
+    const onSuccess = () => {
+      message.success('You are successfully update your profile settings');
+      dispatch(getProfile(user.id));
+      navigate('/');
     };
 
     const data = {
@@ -106,15 +106,7 @@ const Settings = () => {
             <Form.Item
               label='Password'
               name='password_hash'
-              rules={[
-                {
-                  required: true,
-                  min: 6,
-                  max: 32,
-                  whitespace: false,
-                  message: 'Please input your password!',
-                },
-              ]}
+              rules={password_rules}
             >
               <Input.Password />
             </Form.Item>
@@ -124,25 +116,7 @@ const Settings = () => {
               label='Confirm'
               dependencies={['password_hash']}
               hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: 'Please confirm your password!',
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue('password_hash') === value) {
-                      return Promise.resolve();
-                    }
-
-                    return Promise.reject(
-                      new Error(
-                        'The two passwords that you entered do not match!',
-                      ),
-                    );
-                  },
-                }),
-              ]}
+              rules={password_confirm_rules}
             >
               <Input.Password />
             </Form.Item>

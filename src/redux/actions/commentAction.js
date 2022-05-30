@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import extractError from 'utils/extractError';
-import ClientAPI from 'services/ClientAPI';
+import extractError from '../../utils/extractError';
+import ClientAPI from '../../services/ClientAPI';
 
-export const createMeeting = createAsyncThunk(
-  'meeting/createMeeting',
+export const createComment = createAsyncThunk(
+  'comment/createComment',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.createMeeting(data);
+      const res = await ClientAPI.createComment(data);
 
       return res.data;
     } catch (err) {
@@ -16,11 +16,11 @@ export const createMeeting = createAsyncThunk(
   },
 );
 
-export const getMeetings = createAsyncThunk(
-  'meeting/getMeetings',
+export const getComments = createAsyncThunk(
+  'comment/getComments',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.getMeetings(data);
+      const res = await ClientAPI.getComments(data);
 
       return res.data;
     } catch (err) {
@@ -29,11 +29,11 @@ export const getMeetings = createAsyncThunk(
   },
 );
 
-export const updateMeeting = createAsyncThunk(
-  'meeting/updateMeeting',
+export const updateComment = createAsyncThunk(
+  'comment/updateComment',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.updateMeeting(data);
+      const res = await ClientAPI.updateComment(data);
 
       return res.data;
     } catch (err) {
@@ -42,11 +42,11 @@ export const updateMeeting = createAsyncThunk(
   },
 );
 
-export const deleteMeeting = createAsyncThunk(
-  'meeting/deleteMeeting',
+export const deleteComment = createAsyncThunk(
+  'comment/deleteComment',
   async (data, { rejectWithValue }) => {
     try {
-      const res = await ClientAPI.deleteMeeting(data);
+      const res = await ClientAPI.deleteComment(data);
 
       return res.data;
     } catch (err) {

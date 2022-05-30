@@ -6,6 +6,7 @@ const ReactionsGender = ({ data, color, type }) => {
   return (
     <>
       <h4>{type}</h4>
+
       <ResponsiveContainer width='100%' height='100%'>
         <PieChart width={600} height={600}>
           <Pie
@@ -20,6 +21,7 @@ const ReactionsGender = ({ data, color, type }) => {
             fill={color}
             label
           />
+
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>

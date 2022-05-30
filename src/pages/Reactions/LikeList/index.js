@@ -27,6 +27,7 @@ const LikeList = ({ userId, likeNumber, type }) => {
         style={{ marginRight: '4%', cursor: 'pointer' }}
         onClick={() => navigate(`/user/${user.id}`)}
       />
+
       {`${user.first_name} ${user.last_name} ${type} your post ${likeNumber} count`}
     </Row>
   );

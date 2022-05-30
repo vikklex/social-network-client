@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CheckOutlined, PaperClipOutlined } from '@ant-design/icons';
-import { Upload } from 'antd';
+import { message, Upload } from 'antd';
 
-import { updateAlbum } from 'redux/actions/profileActions';
+import { getUserProfile, updateAlbum } from 'redux/actions/profileActions';
+import { getProfile } from 'redux/actions/authActions';
 
 const UploadImages = ({ id, user }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,12 @@ const UploadImages = ({ id, user }) => {
   };
 
   const handleUpload = () => {
+    const onSuccess = () => {
+      message.success('You are successfully update album');
+
+      dispatch(getUserProfile(user.id));
+      dispatch(getProfile(user.id));
+    };
     const formData = new FormData();
 
     fileList.forEach((file) => {
@@ -31,7 +38,8 @@ const UploadImages = ({ id, user }) => {
       },
     };
 
-    dispatch(updateAlbum(user, formData, config)).then(() => setFileList([]));
+    dispatch(updateAlbum({ user, formData, config })).then(onSuccess);
+    setFileList([]);
   };
 
   return (

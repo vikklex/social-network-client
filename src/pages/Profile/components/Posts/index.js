@@ -2,7 +2,8 @@ import React from 'react';
 
 import { List } from 'antd';
 
-import Post from '../Post';
+import Post from 'pages/Profile/components/Post';
+
 import './posts.scss';
 
 export default function Posts({ posts, isUserProfile }) {

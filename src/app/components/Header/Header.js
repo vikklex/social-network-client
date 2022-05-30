@@ -2,23 +2,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import jwt_decode from 'jwt-decode';
+
 import { Avatar, Col, Row, Typography } from 'antd';
 
 import { LogoutOutlined } from '@ant-design/icons';
 
-import { logout } from 'redux/actions/authActions';
-import { searchUserProfile } from 'redux/actions/profileActions';
+import { logout } from 'redux/slices/authSlice';
+
+import { searchUser } from 'redux/actions/profileActions';
+import { getProfile } from 'redux/actions/authActions';
 
 import AutoCompleteHeader from './components/AutoComplete';
-import 'app/components/Header/header.scss';
 
+import 'app/components/Header/header.scss';
 import NoAvatar from 'assets/img/noavatar.png';
 
 export default function HeaderNav() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    dispatch(getProfile(jwt_decode(token).id));
+  }, [dispatch, token]);
+
   const profile = useSelector((state) => state.auth.profile);
 
   const [search, setSearch] = useState('');
@@ -30,7 +38,7 @@ export default function HeaderNav() {
   };
 
   const onSearch = (value) => {
-    dispatch(searchUserProfile(value, profile.id));
+    dispatch(searchUser({ value: value, id: profile.id }));
     setSearch(value);
   };
 
@@ -39,15 +47,15 @@ export default function HeaderNav() {
     setSearch('');
   };
 
+  useEffect(() => {
+    if (search && token) {
+      dispatch(searchUser(search, profile.id));
+    }
+  }, [search, token, dispatch, profile]);
+
   const onLogout = () => {
     dispatch(logout());
   };
-
-  useEffect(() => {
-    if (search && token) {
-      dispatch(searchUserProfile(search, profile.id));
-    }
-  }, [search, token, dispatch, profile]);
 
   if (!profile) {
     return null;

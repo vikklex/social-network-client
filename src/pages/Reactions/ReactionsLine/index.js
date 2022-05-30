@@ -23,11 +23,13 @@ const ReactionsLine = ({ startDate, endDate, reactions }) => {
             stroke='#8884d8'
             strokeWidth={2}
           />
+
           <XAxis
             dataKey='name'
             scale='point'
             padding={{ left: 10, right: 10 }}
           />
+
           <Tooltip />
         </LineChart>
       </ResponsiveContainer>

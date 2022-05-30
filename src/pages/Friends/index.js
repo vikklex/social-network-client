@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Tabs } from 'antd';
 
-import { getAuthUserProfile } from 'redux/actions/authActions';
+import { getProfile } from 'redux/actions/authActions';
 
 import NoContent from 'components/NoContent';
 import FriendsList from 'pages/Friends/FriendsList';
@@ -18,7 +18,7 @@ const Friends = () => {
   const profile = useSelector((state) => state.auth.profile);
 
   useEffect(() => {
-    dispatch(getAuthUserProfile({ id: profile.id }));
+    dispatch(getProfile(profile.id));
   }, [
     dispatch,
     profile.followers.length,

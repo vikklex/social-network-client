@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Card, Col, Row, Switch } from 'antd';
 
 const SettingCard = ({ title, onChange, checked }) => {
