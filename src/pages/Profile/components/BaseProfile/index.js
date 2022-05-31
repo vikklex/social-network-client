@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Col, Row, Divider, Tag } from 'antd';
+import { Col, Row, Divider, Tag, Alert } from 'antd';
+
+import Marquee from 'react-fast-marquee';
 
 import jwt_decode from 'jwt-decode';
 
@@ -62,6 +64,21 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
 
   return (
     <Spinner spinning={isLoading}>
+      {user.is_blocked && !id && (
+        <Alert
+          banner
+          type='info'
+          message={
+            <Marquee pauseOnHover gradient={false}>
+              {`${user.first_name} ${user.last_name} have been blocked by an administrator for violating community
+              rights and now you cannot post until you are unblocked. You can
+              contact community administrator about unlocking. Contacts are sent
+              to your email.`}
+            </Marquee>
+          }
+        />
+      )}
+
       <Row justify='center' style={{ marginTop: '3%' }}>
         <Col span={6}>
           <Avatar id={id} user={user} />
@@ -154,7 +171,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
             </>
           )}
 
-          {!id && <NewPost />}
+          {!id && !user.is_blocked && <NewPost />}
         </Col>
       </Row>
 

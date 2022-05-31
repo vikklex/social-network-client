@@ -5,6 +5,7 @@ import {
   getAllUsers,
   searchUser,
   updateUser,
+  blockUser,
   updateAvatar,
   deleteAvatar,
   updateAlbum,
@@ -89,6 +90,21 @@ const profileSlice = createSlice({
         state.user = payload;
       })
       .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.errorCode = payload;
+      });
+
+    builder
+      .addCase(blockUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(blockUser.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isLoggedIn = true;
+        state.errorCode = null;
+        state.user = payload;
+      })
+      .addCase(blockUser.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.errorCode = payload;
       });

@@ -96,6 +96,18 @@ describe('Client API', () => {
     expect(resp).toEqual(OUTPUT_MOCK);
   });
 
+  it('Get all users', async () => {
+    const data = {
+      userId: '1',
+    };
+
+    ClientAPI.instance.get.mockResolvedValue(OUTPUT_MOCK);
+
+    const resp = await ClientAPI.getAllUsers(data);
+
+    expect(resp).toEqual(OUTPUT_MOCK);
+  });
+
   it('Get user posts', async () => {
     const data = {
       postId: '1',
@@ -150,6 +162,12 @@ describe('Client API', () => {
   it('Add friend', async () => {
     const data = {
       userId: '1',
+      profile: {
+        id: '2',
+      },
+      user: {
+        id: '3',
+      },
     };
 
     ClientAPI.instance.put.mockResolvedValue(OUTPUT_MOCK);
@@ -162,6 +180,12 @@ describe('Client API', () => {
   it('Delete friend', async () => {
     const data = {
       userId: '1',
+      profile: {
+        id: '2',
+      },
+      user: {
+        id: '3',
+      },
     };
 
     ClientAPI.instance.put.mockResolvedValue(OUTPUT_MOCK);
@@ -174,6 +198,12 @@ describe('Client API', () => {
   it('Update avatar', async () => {
     const data = {
       userId: '1',
+      profile: {
+        id: '2',
+      },
+      user: {
+        id: '3',
+      },
       config: {
         headers: {
           'content-type': 'multipart/form-data',
@@ -191,6 +221,9 @@ describe('Client API', () => {
   it('Update album', async () => {
     const data = {
       userId: '1',
+      user: {
+        id: '2',
+      },
       config: {
         headers: {
           'content-type': 'multipart/form-data',
@@ -220,6 +253,9 @@ describe('Client API', () => {
   it('Delete image', async () => {
     const data = {
       path: '/public/1653312680136-harry.jpeg',
+      profile: {
+        id: '2',
+      },
     };
 
     ClientAPI.instance.delete.mockResolvedValue(OUTPUT_MOCK);
@@ -232,6 +268,23 @@ describe('Client API', () => {
   it('Delete user', async () => {
     const data = {
       id: '1',
+    };
+
+    ClientAPI.instance.delete.mockResolvedValue(OUTPUT_MOCK);
+
+    const resp = await ClientAPI.deleteUser(data);
+
+    expect(resp).toEqual(OUTPUT_MOCK);
+  });
+
+  it('Block user', async () => {
+    const data = {
+      user: {
+        id: '1',
+      },
+      profile: {
+        id: '2',
+      },
     };
 
     ClientAPI.instance.delete.mockResolvedValue(OUTPUT_MOCK);
@@ -287,6 +340,9 @@ describe('Client API', () => {
   it('Delete post', async () => {
     const data = {
       userId: '1',
+      post: {
+        id: '2',
+      },
     };
 
     ClientAPI.instance.delete.mockResolvedValue(OUTPUT_MOCK);
@@ -402,6 +458,22 @@ describe('Client API', () => {
     ClientAPI.instance.post.mockResolvedValue(OUTPUT_MOCK);
 
     const resp = await ClientAPI.getReactionsFromDate(data);
+
+    expect(resp).toEqual(OUTPUT_MOCK);
+  });
+
+  it('Get users from register date', async () => {
+    const date = moment().toISOString();
+
+    const data = {
+      id: '1',
+      startDate: date,
+      endDate: date,
+    };
+
+    ClientAPI.instance.post.mockResolvedValue(OUTPUT_MOCK);
+
+    const resp = await ClientAPI.getUsersFromRegisterDate(data);
 
     expect(resp).toEqual(OUTPUT_MOCK);
   });

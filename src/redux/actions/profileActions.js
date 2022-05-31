@@ -64,6 +64,19 @@ export const updateUser = createAsyncThunk(
   },
 );
 
+export const blockUser = createAsyncThunk(
+  'profile/blockUser',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await ClientAPI.blockUser(data);
+
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(extractError(err));
+    }
+  },
+);
+
 export const updateAvatar = createAsyncThunk(
   'profile/updateAvatar',
   async (data, { rejectWithValue }) => {

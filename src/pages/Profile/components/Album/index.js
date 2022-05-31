@@ -8,6 +8,7 @@ const Album = ({ images }) => {
         gutter: 8,
         xs: 1,
       }}
+      style={{ maxHeight: '135px', overflow: 'hidden' }}
       itemLayout='horizontal'
       dataSource={images}
       locale={{ emptyText: () => null }}

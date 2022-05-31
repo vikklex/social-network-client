@@ -79,6 +79,12 @@ class ClientAPI {
     });
   }
 
+  blockUser(data) {
+    return this.instance.put(`v1/users/${data.user.id}/block-user`, {
+      user: data.profile,
+    });
+  }
+
   addFriend(data) {
     return this.instance.put(`v1/users/${data.profile.id}/follow`, {
       userId: data.user.id,
