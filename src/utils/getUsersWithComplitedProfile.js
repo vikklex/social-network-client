@@ -1,5 +1,6 @@
 export const getUsersWithComplitedProfile = (totalUserNumber) => {
   const userWithCompletedProfile = [];
+
   if (totalUserNumber) {
     for (const user of totalUserNumber) {
       if (
@@ -14,9 +15,11 @@ export const getUsersWithComplitedProfile = (totalUserNumber) => {
       }
     }
   }
+
   const percent = (
     (100 * userWithCompletedProfile.length) /
     totalUserNumber.length
   ).toFixed(1);
+
   return percent;
 };

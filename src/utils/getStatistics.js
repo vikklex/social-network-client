@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import getStatisticsByWeekday from './getStatisticsByWeekday';
+import getStatisticsByWeekday from 'utils/getStatisticsByWeekday';
 
 export const getStatistics = (reactions) => {
   return moment.weekdays().map((weekday, index) => {

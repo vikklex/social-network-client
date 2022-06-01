@@ -12,6 +12,7 @@ const FriendsList = ({ persons }) => {
     <List
       itemLayout='horizontal'
       dataSource={persons}
+      className='friends__list'
       locale={{ emptyText: () => null }}
       renderItem={(person) => (
         <List.Item key={person.id}>

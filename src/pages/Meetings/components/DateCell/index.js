@@ -4,7 +4,9 @@ import { Badge } from 'antd';
 import getListData from 'utils/getListData';
 
 const DateCell = ({ value, meetings, onSelect }) => {
+  
   const listData = getListData(value, meetings);
+  
   return (
     <ul
       className='events'

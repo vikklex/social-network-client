@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from 'antd';
 
-import io from 'socket.io-client';
-
 import Login from 'pages/Login';
 import Register from 'pages/Register';
 import Profile from 'pages/Profile';
@@ -23,11 +21,10 @@ import PrivateRoute from 'components/PrivateRoute';
 import { getProfile } from 'redux/actions/authActions';
 
 import jwt_decode from 'jwt-decode';
-import SocketClient from 'utils/Socket';
 
 const { Header, Sider, Content } = Layout;
 
-function App() {
+const App = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token);
@@ -40,12 +37,7 @@ function App() {
         setIsReady(true);
       };
 
-      //const socket = io();
-
-      //dispatch({ type: Types.SOCKET, payload: socket });
-
       dispatch(getProfile(jwt_decode(token).id)).then(onSuccess);
-      //return () => socket.close();
     } else {
       setIsReady(true);
     }
@@ -67,7 +59,6 @@ function App() {
             </Sider>
           )}
 
-          {/*isReady && <SocketClient />*/}
           <Content>
             <Routes>
               {isReady && (
@@ -120,6 +111,6 @@ function App() {
       </Layout>
     </Router>
   );
-}
+};
 
 export default App;

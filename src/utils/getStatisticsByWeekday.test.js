@@ -1,4 +1,4 @@
-import getStatisticsByWeekday from './getStatisticsByWeekday';
+import getStatisticsByWeekday from 'utils/getStatisticsByWeekday';
 
 describe('Statistics', () => {
   it('Get statistics by weekday', () => {

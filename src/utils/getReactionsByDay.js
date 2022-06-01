@@ -1,8 +1,7 @@
 import moment from 'moment';
 
-import { DATE_FULL_FORMAT } from './Constants';
+import { DATE_FULL_FORMAT } from 'utils/Constants';
 
-// TODO: Rename to day
 const getReactionsByDate = (date, reactions) => {
   return reactions?.filter((reaction) => {
     return (

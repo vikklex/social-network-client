@@ -13,11 +13,6 @@ import UserStatistics from './../admin/UserStatistics';
 const AdminStatistics = () => {
   const dispatch = useDispatch();
 
-  /*const [userDateRange, setUserDateRange] = useState([
-    moment().subtract(20, 'days'),
-    moment().add(1, 'day').endOf('day'),
-  ]);*/
-
   const [dateRange, setDateRange] = useState([
     moment().subtract(20, 'days'),
     moment().add(1, 'day').endOf('day'),

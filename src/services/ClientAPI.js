@@ -138,6 +138,7 @@ class ClientAPI {
     return this.instance.put(`v1/posts/${data.postId}`, {
       userId: data.userId,
       desc: data.text,
+      profile: data.profile,
     });
   }
 

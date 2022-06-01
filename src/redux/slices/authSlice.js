@@ -9,7 +9,7 @@ const authSlice = createSlice({
     isLoading: false,
     isReady: false,
     profile: null,
-    token: storage.accessToken.Get(), //delete?
+    token: storage.accessToken.Get(),
     isLoggedIn: storage.accessToken.Get() !== null,
     errorCode: null,
   },

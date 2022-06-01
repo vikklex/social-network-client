@@ -1,13 +1,13 @@
 import moment from 'moment';
 
-import { DATE_FULL_FORMAT } from './Constants';
+import { DATE_FULL_FORMAT } from 'utils/Constants';
 
-import getStatisticsByDate from './getStatisticsByDate';
+import getStatisticsByDate from 'utils/getStatisticsByDate';
 
 const LIKE_TYPE = 'like';
 
-describe('Statistics', () => {
-  it('Get statistics', () => {
+describe('Statistics by date', () => {
+  it('Get statistics by date', () => {
     const date = moment();
 
     const input = [
@@ -20,6 +20,7 @@ describe('Statistics', () => {
         updatedAt: date.toISOString(),
         userId: '1',
       },
+
       {
         createdAt: date.toISOString(),
         id: '2',

@@ -54,6 +54,7 @@ const AddFriend = ({ user }) => {
           Delete from friends
         </Button>
       )}
+
       {profile.is_admin && (
         <>
           {!user.is_blocked ? (

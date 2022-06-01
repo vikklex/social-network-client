@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import getReactionsByDate from './getReactionsByDay';
+import getReactionsByDate from 'utils/getReactionsByDay';
 
 const LIKE_TYPE = 'like';
 const DISLIKE_TYPE = 'dislike';

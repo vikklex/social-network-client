@@ -3,11 +3,10 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import { Avatar, Row, Col } from 'antd';
-
 import ClientAPI from 'services/ClientAPI';
 
-import NoAvatar from 'assets/img/noavatar.png';
+import FriendDescription from './components/FriendDescription';
+import FriendInfo from './components/FriendInfo';
 
 const FriendItem = ({ id, content }) => {
   const [isReady, setIsReady] = useState(false);
@@ -28,29 +27,8 @@ const FriendItem = ({ id, content }) => {
 
   return (
     <>
-      <Row>
-        <Col>
-          <Avatar
-            src={user.avatar || NoAvatar}
-            style={{ marginRight: '10px' }}
-          />
-        </Col>
-
-        <Col style={{ alignItems: 'center' }}>
-          <span style={{ whiteSpace: 'nowrap' }}>
-            {user.first_name} {user.last_name}
-          </span>
-        </Col>
-      </Row>
-      {!content && (
-        <Row>
-          <Col style={{ marginTop: '10px', color: '#818c99' }}>
-            <div> {user.status ?? ''}</div>
-            <div> {user.city ?? ''}</div>
-            <div> {user.relations ?? ''}</div>
-          </Col>
-        </Row>
-      )}
+      <FriendDescription user={user} />
+      {!content && <FriendInfo user={user} />}
     </>
   );
 };

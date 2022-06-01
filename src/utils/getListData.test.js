@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import getListData from './getListData';
+import getListData from 'utils/getListData';
 
 describe('Get list data', () => {
   it('Get warning meeting', () => {

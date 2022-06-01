@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import getReactionsData from './getReactionsData';
+import getReactionsData from 'utils/getReactionsData';
 
 const LIKE_TYPE = 'like';
 const DISLIKE_TYPE = 'dislike';
@@ -20,6 +20,7 @@ describe('Reactions', () => {
         gender: MALE_GENDER_TYPE,
         createdAt: date,
       },
+
       {
         userId: '2',
         type: LIKE_TYPE,
@@ -39,6 +40,7 @@ describe('Reactions', () => {
         gender: 'Male',
         createdAt: date,
       },
+
       {
         userId: '2',
         sum: 1,
@@ -84,6 +86,7 @@ describe('Reactions', () => {
         gender: 'Male',
         createdAt: date,
       },
+
       {
         userId: '2',
         sum: 1,

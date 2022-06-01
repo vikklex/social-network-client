@@ -141,7 +141,9 @@ const Post = ({ post, isUserProfile }) => {
   };
 
   const savePost = () => {
-    dispatch(updatePost({ postId: post.id, userId: user.id, text }));
+    dispatch(
+      updatePost({ postId: post.id, userId: user.id, text, profile: profile }),
+    );
     setIsEditMode(false);
   };
 
@@ -210,13 +212,13 @@ const Post = ({ post, isUserProfile }) => {
     </span>,
 
     <>
-      {!isEditMode && !id && isUserProfile && (
+      {((!id && isUserProfile && !isEditMode) || profile.is_admin) && (
         <span key='comment-basic-edit' onClick={() => setIsEditMode(true)}>
           Edit
         </span>
       )}
 
-      {!id && isUserProfile && (
+      {((!id && isUserProfile) || profile.is_admin) && (
         <span key='comment-basic-delete' onClick={handleDelete}>
           Delete
         </span>
