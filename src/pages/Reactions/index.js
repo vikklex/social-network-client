@@ -1,7 +1,9 @@
-import { Tabs } from 'antd';
 import { useSelector } from 'react-redux';
-import AdminStatistics from './components/admin';
-import GeneralReactions from './components/general';
+
+import { Tabs } from 'antd';
+
+import AdminStatistics from 'pages/Reactions/components/admin';
+import GeneralReactions from 'pages/Reactions/components/general';
 
 const { TabPane } = Tabs;
 
@@ -16,6 +18,7 @@ const Reactions = () => {
           <TabPane tab='General statistics' key='1'>
             <GeneralReactions />
           </TabPane>
+
           <TabPane tab='Pro statistics' key='2'>
             <AdminStatistics />
           </TabPane>

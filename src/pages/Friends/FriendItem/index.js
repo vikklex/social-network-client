@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 
 import ClientAPI from 'services/ClientAPI';
 
-import FriendDescription from './components/FriendDescription';
-import FriendInfo from './components/FriendInfo';
+import FriendDescription from 'pages/Friends/FriendItem/components/FriendDescription';
+import FriendInfo from 'pages/Friends/FriendItem/components/FriendInfo';
 
 const FriendItem = ({ id, content }) => {
   const [isReady, setIsReady] = useState(false);

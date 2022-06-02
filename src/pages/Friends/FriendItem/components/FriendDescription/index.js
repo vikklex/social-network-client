@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Avatar, Col, Row } from 'antd';
-
 import PropTypes from 'prop-types';
+
+import { Avatar, Col, Row } from 'antd';
 
 import NoAvatar from 'assets/img/noavatar.png';
 

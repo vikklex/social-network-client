@@ -8,7 +8,7 @@ import { UsergroupAddOutlined } from '@ant-design/icons';
 import { Card, Col, DatePicker, Divider, Row, Space, Statistic } from 'antd';
 
 import { getUsersFromRegisterDate } from 'redux/actions/profileActions';
-import UserStatistics from './../admin/UserStatistics';
+import UserStatistics from 'pages/Reactions/components/admin/UserStatistics';
 
 const AdminStatistics = () => {
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ const AdminStatistics = () => {
     <Card>
       <Row gutter={16}>
         <Divider>ADMIN STATISTICS</Divider>
+
         <Col span={16}>
           <Statistic
             title='Total number of registered users:'
@@ -51,13 +52,11 @@ const AdminStatistics = () => {
           />
         </Space>
 
-        {
-          <UserStatistics
-            startDate={dateRange[0]}
-            endDate={dateRange[1]}
-            users={usersFromRegisterDate}
-          />
-        }
+        <UserStatistics
+          startDate={dateRange[0]}
+          endDate={dateRange[1]}
+          users={usersFromRegisterDate}
+        />
       </Row>
     </Card>
   );

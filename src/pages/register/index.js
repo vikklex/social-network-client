@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 
 import Layout from 'antd/lib/layout/layout';
 import { UploadOutlined } from '@ant-design/icons';
@@ -62,6 +61,7 @@ const Register = () => {
     };
 
     dispatch(updateAvatar({ user, formData, config })).then(onSuccess);
+
     setFileList([]);
 
     return 'success';
@@ -71,7 +71,9 @@ const Register = () => {
     const onSuccess = (data) => {
       if (data.payload.token) {
         message.success('You are successfully registered');
+
         handleUpload(data.payload.user);
+
         navigate('/');
       } else {
         message.error(`Error: ${data.payload.response.data}`);
@@ -113,6 +115,7 @@ const Register = () => {
               Cement friendship and family relations with "F-network"
             </span>
           </Col>
+
           <Col span={12}>
             <Card
               hoverable

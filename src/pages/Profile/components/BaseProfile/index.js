@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Col, Row, Divider, Tag, Alert } from 'antd';
-
 import Marquee from 'react-fast-marquee';
 
 import jwt_decode from 'jwt-decode';
+
+import { Col, Row, Divider, Tag, Alert } from 'antd';
 
 import { getUserProfile } from 'redux/actions/profileActions';
 import { getPosts } from 'redux/actions/postActions';
@@ -100,6 +100,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
             <Col span={20} className='username'>
               {`${user.first_name} ${user.last_name}`}
             </Col>
+
             <Col span={2} className='status'>
               {user.is_admin ? (
                 <Tag color='blue'>admin</Tag>

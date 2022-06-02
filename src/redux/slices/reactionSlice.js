@@ -10,19 +10,11 @@ const reactionSlice = createSlice({
   name: 'reaction',
   initialState: {
     isLoading: false,
-    isReady: false,
-
     reactions: [],
     errorCode: null,
   },
 
-  reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-      state.isReady = false;
-      state.errorCode = null;
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -31,9 +23,8 @@ const reactionSlice = createSlice({
       })
       .addCase(createReaction.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-
+        console.log(payload);
         state.reactions.push({ ...payload });
       })
       .addCase(createReaction.rejected, (state, { payload }) => {
@@ -47,9 +38,7 @@ const reactionSlice = createSlice({
       })
       .addCase(getPostReactions.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-
         state.reactions.push({ ...payload });
       })
       .addCase(getPostReactions.rejected, (state, { payload }) => {
@@ -63,9 +52,7 @@ const reactionSlice = createSlice({
       })
       .addCase(getAllReactionsForUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-
         state.reactions.push({ ...payload });
       })
       .addCase(getAllReactionsForUser.rejected, (state, { payload }) => {

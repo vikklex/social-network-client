@@ -5,6 +5,7 @@ import ClientAPI from 'services/ClientAPI';
 
 export const createReaction = createAsyncThunk(
   'reaction/createReaction',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.createReaction(data);
@@ -18,6 +19,7 @@ export const createReaction = createAsyncThunk(
 
 export const getPostReactions = createAsyncThunk(
   'reaction/getPostReaction',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getAllPostReactions(data);
@@ -31,6 +33,7 @@ export const getPostReactions = createAsyncThunk(
 
 export const getAllReactionsForUser = createAsyncThunk(
   'reaction/getAllReaactionsForUser',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getAllReactionsForUser(data);
@@ -44,6 +47,7 @@ export const getAllReactionsForUser = createAsyncThunk(
 
 export const getReactionsFromDate = createAsyncThunk(
   'reaction/getReactionsFromDate',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getReactionsFromDate(data);

@@ -18,12 +18,12 @@ import 'pages/Login/login.scss';
 
 import { login } from 'redux/actions/authActions';
 
+import { email_rules, password_rules } from 'pages/Login/rules';
+
 import Center from 'components/Center';
 
 import LoginIllustration from 'assets/img/login.jpg';
 import MainLogo from 'assets/img/logo.svg';
-
-import { email_rules, password_rules } from 'pages/Login/rules';
 
 const Login = () => {
   const dispatch = useDispatch();

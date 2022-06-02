@@ -16,19 +16,11 @@ const meetingSlice = createSlice({
   name: 'meeting',
   initialState: {
     isLoading: false,
-    isReady: false,
     errorCode: null,
-
     meetings: [],
   },
 
-  reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-      state.isReady = false;
-      state.errorCode = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createMeeting.pending, (state) => {
@@ -36,7 +28,6 @@ const meetingSlice = createSlice({
       })
       .addCase(createMeeting.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.meetings.push({ ...payload });
       })
@@ -51,7 +42,6 @@ const meetingSlice = createSlice({
       })
       .addCase(getMeetings.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.meetings = payload;
       })
@@ -66,7 +56,6 @@ const meetingSlice = createSlice({
       })
       .addCase(updateMeeting.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
       })
       .addCase(updateMeeting.rejected, (state, { payload }) => {
@@ -80,7 +69,6 @@ const meetingSlice = createSlice({
       })
       .addCase(deleteMeeting.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.meetings = DeleteData(state.meetings, payload.id);
       })

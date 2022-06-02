@@ -2,7 +2,7 @@ import React from 'react';
 
 import { List } from 'antd';
 
-import CommentList from '../CommentItem';
+import CommentList from 'pages/Profile/components/Posts/components/CommentItem';
 
 const PostComments = ({ comment, onDelete }) => {
   return (

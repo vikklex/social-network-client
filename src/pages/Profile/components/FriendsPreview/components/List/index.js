@@ -3,7 +3,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { List } from 'antd';
-import FriendPreview from '../FriendPreview';
+
+import FriendPreview from 'pages/Profile/components/FriendsPreview/components/FriendPreview';
 
 const FriendsPreviewList = ({ users }) => {
   const navigate = useNavigate();

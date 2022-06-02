@@ -15,7 +15,7 @@ import {
 import { getPercentOfUserWithFriends } from 'utils/getPercentOfUserWithFriends';
 import { getUsersWithComplitedProfile } from 'utils/getUsersWithComplitedProfile';
 
-import UserStatistics from './components/UserStatistics';
+import UserStatistics from 'pages/Statistics/components/UserStatistics';
 
 const Statistics = () => {
   const dispatch = useDispatch();
@@ -65,6 +65,7 @@ const Statistics = () => {
           <Row justify='center' style={{ marginBottom: 10 }}>
             {totalUserNumber.length} users have registered in all time
           </Row>
+
           <Row justify='center'>
             <Progress
               type='circle'
@@ -78,6 +79,7 @@ const Statistics = () => {
           <Row justify='center' style={{ marginBottom: 10 }}>
             {`${usersWithFriendsPercent} percent of users have friends or followings`}
           </Row>
+
           <Row justify='center'>
             <Progress
               percent={usersWithFriendsPercent}
@@ -92,6 +94,7 @@ const Statistics = () => {
             {usersWithComplitedProfile} percent of users have a fully completed
             profile
           </Row>
+
           <Row justify='center'>
             <Progress type='circle' percent={usersWithComplitedProfile} />
           </Row>
@@ -102,6 +105,7 @@ const Statistics = () => {
         <Divider style={{ marginTop: '10%', marginBottom: '5%' }}>
           General information about user registration statistics by day
         </Divider>
+
         <Space direction='vertical' size={12}>
           <DatePicker.RangePicker
             value={dateRange}
@@ -109,13 +113,11 @@ const Statistics = () => {
           />
         </Space>
 
-        {
-          <UserStatistics
-            startDate={dateRange[0]}
-            endDate={dateRange[1]}
-            users={usersFromRegisterDate}
-          />
-        }
+        <UserStatistics
+          startDate={dateRange[0]}
+          endDate={dateRange[1]}
+          users={usersFromRegisterDate}
+        />
       </Row>
     </Card>
   );

@@ -2,8 +2,8 @@ import React from 'react';
 import { Form, Row, Col, Upload } from 'antd';
 import { PaperClipOutlined } from '@ant-design/icons';
 
-import TextAreaEditor from './components/Textarea';
-import EditorBtn from './components/Button';
+import TextAreaEditor from 'pages/Profile/components/NewPost/components/Editor/components/Textarea';
+import EditorBtn from 'pages/Profile/components/NewPost/components/Editor/components/Button';
 
 const Editor = ({ onChange, onSubmit, value, user, props, comment }) => {
   return (

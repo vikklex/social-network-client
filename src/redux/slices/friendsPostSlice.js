@@ -13,13 +13,8 @@ const friendsPostSlice = createSlice({
     friendsPosts: [],
   },
 
-  reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-      state.isReady = false;
-      state.errorCode = null;
-    },
-  },
+  reducers: {},
+
   extraReducers: (builder) => {
     builder
       .addCase(getFriendsPosts.pending, (state) => {
@@ -27,7 +22,6 @@ const friendsPostSlice = createSlice({
       })
       .addCase(getFriendsPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.friendsPosts = payload;
       })

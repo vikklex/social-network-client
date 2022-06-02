@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import extractError from '../../utils/extractError';
-import ClientAPI from '../../services/ClientAPI';
+import extractError from 'utils/extractError';
+import ClientAPI from 'services/ClientAPI';
 
 export const login = createAsyncThunk(
   'auth/login',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.login(data);
@@ -18,6 +19,7 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
   'auth/register',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.register(data);
@@ -31,6 +33,7 @@ export const register = createAsyncThunk(
 
 export const getProfile = createAsyncThunk(
   'auth/getProfile',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getUser(data);

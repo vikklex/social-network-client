@@ -1,7 +1,8 @@
 import React from 'react';
-import { Col, Row } from 'antd';
 
 import PropTypes from 'prop-types';
+
+import { Col, Row } from 'antd';
 
 const FriendInfo = ({ user }) => {
   if (!user) {

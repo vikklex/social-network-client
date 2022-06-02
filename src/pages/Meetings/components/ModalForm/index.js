@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { Button, Form, Input, Select, TimePicker } from 'antd';
 
 import {
@@ -6,11 +8,9 @@ import {
   description_rules,
   choice_rules,
 } from 'pages/Meetings/rules';
-
-import { useSelector } from 'react-redux';
+import FriendItem from 'pages/Friends/FriendItem';
 
 import { TIME_FORMAT } from 'utils/Constants';
-import FriendItem from '../../../Friends/FriendItem';
 
 const { Option } = Select;
 

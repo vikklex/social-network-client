@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import jwt_decode from 'jwt-decode';
+
 import { Layout } from 'antd';
 
 import Login from 'pages/Login';
@@ -16,11 +19,10 @@ import Statistics from 'pages/Statistics';
 
 import HeaderNav from 'app/components/Header/Header';
 import { FullMenu } from 'app/components/Menu/FullMenu';
+
 import PrivateRoute from 'components/PrivateRoute';
 
 import { getProfile } from 'redux/actions/authActions';
-
-import jwt_decode from 'jwt-decode';
 
 const { Header, Sider, Content } = Layout;
 

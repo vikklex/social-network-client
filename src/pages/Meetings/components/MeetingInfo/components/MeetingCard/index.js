@@ -2,12 +2,12 @@ import React from 'react';
 
 import moment from 'moment';
 
-import { TIME_PM_FORMAT } from 'utils/Constants';
-import { DATE_MOMENT_FORMAT } from 'utils/Constants';
 import { Avatar, List } from 'antd';
 
+import { TIME_PM_FORMAT } from 'utils/Constants';
+import { DATE_MOMENT_FORMAT } from 'utils/Constants';
+
 const MeetingCard = ({ content }) => {
-  
   return (
     <div className='meeting__info'>
       <p>

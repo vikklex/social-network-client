@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { Comment, Avatar } from 'antd';
 
 import {
@@ -8,7 +9,7 @@ import {
   updatePostImage,
 } from 'redux/actions/postActions';
 
-import Editor from './components/Editor';
+import Editor from 'pages/Profile/components/NewPost/components/Editor';
 
 import NoAvatar from 'assets/img/noavatar.png';
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { updateUser } from 'redux/actions/profileActions';
 
-import StatusInput from './components/StatusInput';
+import StatusInput from 'pages/Profile/components/Status//components/StatusInput';
 
 const Status = ({ id, user, statusText, setStatusText }) => {
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const Status = ({ id, user, statusText, setStatusText }) => {
           {user.status}
         </span>
       )}
+
       {!id && (
         <StatusInput
           user={user}

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { storage } from '../storage';
+import { storage } from 'storage';
 
 class ClientAPI {
   constructor() {
@@ -7,6 +7,7 @@ class ClientAPI {
       baseURL: process.env.REACT_APP_BASE_URL,
       responseType: 'json',
     });
+
     this.instance.interceptors.request.use((config) => {
       config.headers.Authorization = storage.accessToken.Get();
 

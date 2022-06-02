@@ -39,6 +39,7 @@ const Friends = () => {
           <TabPane tab='Friends' key='1'>
             <FriendsList persons={profile.followings} />
           </TabPane>
+
           <TabPane tab='Followers' key='2'>
             <FriendsList persons={profile.followers} />
           </TabPane>

@@ -1,5 +1,5 @@
-import { Image, List } from 'antd';
 import React from 'react';
+import { Image, List } from 'antd';
 
 const Album = ({ images }) => {
   return (

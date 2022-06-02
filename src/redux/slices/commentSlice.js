@@ -18,17 +18,11 @@ const commentSlice = createSlice({
   initialState: {
     isLoading: false,
     isReady: false,
-    comment: [],
     errorCode: null,
+    comment: [],
   },
 
-  reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-      state.isReady = false;
-      state.errorCode = null;
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -37,9 +31,7 @@ const commentSlice = createSlice({
       })
       .addCase(createComment.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-
         state.comment.push(payload);
       })
       .addCase(createComment.rejected, (state, { payload }) => {
@@ -53,7 +45,7 @@ const commentSlice = createSlice({
       })
       .addCase(getComments.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
+
         state.errorCode = null;
 
         state.comment = payload;
@@ -69,7 +61,6 @@ const commentSlice = createSlice({
       })
       .addCase(updateComment.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
       })
       .addCase(updateComment.rejected, (state, { payload }) => {
@@ -83,7 +74,6 @@ const commentSlice = createSlice({
       })
       .addCase(deleteComment.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
 
         state.comment = [{ ...payload }];

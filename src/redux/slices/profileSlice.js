@@ -20,17 +20,14 @@ const profileSlice = createSlice({
   name: 'profile',
   initialState: {
     isLoading: false,
-    isReady: false,
     errorCode: null,
     user: null,
     searchUsers: [],
-    posts: [],
   },
 
   reducers: {
     reset: (state) => {
       state.isLoading = false;
-      state.isReady = false;
       state.errorCode = null;
     },
   },
@@ -41,7 +38,6 @@ const profileSlice = createSlice({
       })
       .addCase(getUserProfile.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -54,9 +50,8 @@ const profileSlice = createSlice({
       .addCase(getAllUsers.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllUsers.fulfilled, (state, { payload }) => {
+      .addCase(getAllUsers.fulfilled, (state) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
       })
       .addCase(getAllUsers.rejected, (state, { payload }) => {
@@ -70,7 +65,6 @@ const profileSlice = createSlice({
       })
       .addCase(searchUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.searchUsers = payload;
       })
@@ -85,7 +79,6 @@ const profileSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -100,7 +93,6 @@ const profileSlice = createSlice({
       })
       .addCase(blockUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -115,7 +107,6 @@ const profileSlice = createSlice({
       })
       .addCase(updateAvatar.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -130,7 +121,6 @@ const profileSlice = createSlice({
       })
       .addCase(deleteAvatar.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -145,7 +135,6 @@ const profileSlice = createSlice({
       })
       .addCase(updateAlbum.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -160,7 +149,6 @@ const profileSlice = createSlice({
       })
       .addCase(deleteImageFromAlbum.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -175,7 +163,6 @@ const profileSlice = createSlice({
       })
       .addCase(addFriend.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -190,7 +177,6 @@ const profileSlice = createSlice({
       })
       .addCase(deleteFriend.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })
@@ -203,11 +189,9 @@ const profileSlice = createSlice({
       .addCase(getUsersFromRegisterDate.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getUsersFromRegisterDate.fulfilled, (state, { payload }) => {
+      .addCase(getUsersFromRegisterDate.fulfilled, (state) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-        //state.user = payload;
       })
       .addCase(getUsersFromRegisterDate.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -220,7 +204,6 @@ const profileSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
         state.user = payload;
       })

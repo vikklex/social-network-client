@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Row } from 'antd';
 
-import FriendsPreviewList from './components/List';
+import FriendsPreviewList from 'pages/Profile/components/FriendsPreview/components/List';
 
 const FriendsPreview = ({ id, style }) => {
   const profile = useSelector((state) => state.auth.profile);

@@ -15,18 +15,12 @@ const authSlice = createSlice({
   },
 
   reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-      state.isReady = false;
-      state.errorCode = null;
-    },
     logout: (state) => {
       state.isLoading = false;
       state.isReady = false;
       state.isLoggedIn = false;
       state.profile = null;
       state.errorCode = null;
-
       storage.accessToken.Remove();
       window.location.href = '/login';
     },
@@ -41,6 +35,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoggedIn = true;
         state.errorCode = null;
+
         state.token = payload.token;
         storage.accessToken.Set(payload.token);
       })
@@ -57,6 +52,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.errorCode = null;
         state.token = payload.token;
+        state.isLoggedIn = true;
         storage.accessToken.Set(payload.token);
       })
       .addCase(register.rejected, (state, { payload }) => {

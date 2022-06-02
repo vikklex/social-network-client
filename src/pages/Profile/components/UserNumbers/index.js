@@ -1,11 +1,10 @@
 import React from 'react';
-import { Fragment } from 'react';
 
 import { Col } from 'antd';
 
 const UserNumbers = ({ user, posts }) => {
   return (
-    <Fragment>
+    <>
       <Col span={6}>
         <div className='personal__numbers_number'>
           {user.followings?.length ? user.followings.length : 0}
@@ -28,7 +27,7 @@ const UserNumbers = ({ user, posts }) => {
         <div className='personal__numbers_number'>{posts?.length}</div>
         <div className='personal__numbers_posts'>Posts</div>
       </Col>
-    </Fragment>
+    </>
   );
 };
 

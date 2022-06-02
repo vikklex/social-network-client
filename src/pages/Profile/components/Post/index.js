@@ -3,13 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Avatar, Comment, Image, List, Input, Tooltip, Card } from 'antd';
-
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
 
 import { updatePost, deletePost, getPosts } from 'redux/actions/postActions';
-
 import { getPostReactions, createReaction } from 'redux/actions/reactionAction';
 
 import {

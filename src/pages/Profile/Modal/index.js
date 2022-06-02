@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { Image, List, Modal } from 'antd';
 
-import Ribbon from './Ribbon';
+import Ribbon from 'pages/Profile/Modal/Ribbon';
 
 const ModalArea = ({ visibleModal, setVisibleModal, images, username }) => {
   const { id } = useParams();

@@ -1,13 +1,13 @@
 import { Input } from 'antd';
 import React from 'react';
 
-function StatusInput({
+const StatusInput = ({
   user,
   onPressEnter,
   statusText,
   setStatusText,
   inputDisplay,
-}) {
+}) => {
   return (
     <>
       <Input
@@ -20,6 +20,6 @@ function StatusInput({
       />
     </>
   );
-}
+};
 
 export default StatusInput;

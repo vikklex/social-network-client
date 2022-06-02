@@ -5,6 +5,7 @@ import ClientAPI from 'services/ClientAPI';
 
 export const createPost = createAsyncThunk(
   'post/createPost',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.createPost(data);
@@ -18,6 +19,7 @@ export const createPost = createAsyncThunk(
 
 export const getPosts = createAsyncThunk(
   'post/getPosts',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getUserPosts(data);
@@ -31,6 +33,7 @@ export const getPosts = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
   'post/updatePost',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.updatePost(data);
@@ -44,6 +47,7 @@ export const updatePost = createAsyncThunk(
 
 export const updatePostImage = createAsyncThunk(
   'post/updatePostImage',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.updatePostImage(data);
@@ -57,6 +61,7 @@ export const updatePostImage = createAsyncThunk(
 
 export const deletePost = createAsyncThunk(
   'post/deletePost',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.deletePost(data);

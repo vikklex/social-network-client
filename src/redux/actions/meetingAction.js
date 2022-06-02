@@ -5,6 +5,7 @@ import ClientAPI from 'services/ClientAPI';
 
 export const createMeeting = createAsyncThunk(
   'meeting/createMeeting',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.createMeeting(data);
@@ -18,6 +19,7 @@ export const createMeeting = createAsyncThunk(
 
 export const getMeetings = createAsyncThunk(
   'meeting/getMeetings',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getMeetings(data);
@@ -31,6 +33,7 @@ export const getMeetings = createAsyncThunk(
 
 export const updateMeeting = createAsyncThunk(
   'meeting/updateMeeting',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.updateMeeting(data);
@@ -44,6 +47,7 @@ export const updateMeeting = createAsyncThunk(
 
 export const deleteMeeting = createAsyncThunk(
   'meeting/deleteMeeting',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.deleteMeeting(data);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Button, message } from 'antd';
 
 import {
@@ -7,6 +8,8 @@ import {
   deleteFriend,
   blockUser,
 } from 'redux/actions/profileActions';
+
+import { getProfile } from 'redux/actions/authActions';
 
 const AddFriend = ({ user }) => {
   const dispatch = useDispatch();
@@ -24,13 +27,17 @@ const AddFriend = ({ user }) => {
   }, [profile.followings, user.id]);
 
   const handleAddFriend = () => {
-    setFriend(true);
-    dispatch(addFriend({ profile, user }));
+    //setFriend(true);
+    dispatch(addFriend({ profile, user })).then(() =>
+      dispatch(getProfile(profile.id)),
+    );
   };
 
   const handleDeleteFriend = () => {
-    setFriend(false);
-    dispatch(deleteFriend({ profile, user }));
+    //setFriend(false);
+    dispatch(deleteFriend({ profile, user })).then(() =>
+      dispatch(getProfile(profile.id)),
+    );
   };
 
   const handleBlockUser = () => {

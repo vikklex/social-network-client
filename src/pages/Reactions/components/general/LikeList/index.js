@@ -20,6 +20,7 @@ const LikeList = ({ userId, likeNumber, type }) => {
   if (!user) {
     return null;
   }
+
   return (
     <Row style={{ display: 'flex', marginBottom: '2%' }}>
       <Avatar

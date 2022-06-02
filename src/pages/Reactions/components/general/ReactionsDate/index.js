@@ -10,12 +10,14 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+
 import { getStatistics } from 'utils/getStatistics';
 
 const ReactionsDate = ({ reactions, type, color }) => {
   return (
     <Row style={{ width: '45%', marginTop: '5%' }}>
       <h4 style={{ marginBottom: '10%' }}>{type}</h4>
+
       <ResponsiveContainer width='100%' height='100%'>
         <BarChart
           width={700}

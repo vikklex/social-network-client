@@ -1,6 +1,7 @@
-import { Menu } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { Menu } from 'antd';
 
 const MenuItem = ({ link, icon, text }) => {
   return (

@@ -14,6 +14,7 @@ const filterData = (data, id) => {
 
 export const getUserProfile = createAsyncThunk(
   'profile/getUser',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getUser(data);
@@ -27,6 +28,7 @@ export const getUserProfile = createAsyncThunk(
 
 export const getAllUsers = createAsyncThunk(
   'profile/getAllUsers',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getAllUsers(data);
@@ -53,6 +55,7 @@ export const searchUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'profile/updateUser',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.updateUser(data);
@@ -79,6 +82,7 @@ export const blockUser = createAsyncThunk(
 
 export const updateAvatar = createAsyncThunk(
   'profile/updateAvatar',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.updateAvatar(data);
@@ -92,6 +96,7 @@ export const updateAvatar = createAsyncThunk(
 
 export const deleteAvatar = createAsyncThunk(
   'profile/deleteAvatar',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.deleteAvatar(data);
@@ -105,6 +110,7 @@ export const deleteAvatar = createAsyncThunk(
 
 export const updateAlbum = createAsyncThunk(
   'profile/updateAlbum',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.updateAlbum(data);
@@ -118,6 +124,7 @@ export const updateAlbum = createAsyncThunk(
 
 export const deleteImageFromAlbum = createAsyncThunk(
   'profile/deleteImageFromAlbum',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.deleteImageFromAlbum(data);
@@ -131,6 +138,7 @@ export const deleteImageFromAlbum = createAsyncThunk(
 
 export const addFriend = createAsyncThunk(
   'profile/addFriend',
+
   async (data, { rejectWithValue }) => {
     try {
       const newUser = {
@@ -148,6 +156,7 @@ export const addFriend = createAsyncThunk(
 
 export const deleteFriend = createAsyncThunk(
   'profile/delete',
+
   async (data, { rejectWithValue }) => {
     try {
       const newUser = {
@@ -166,6 +175,7 @@ export const deleteFriend = createAsyncThunk(
 
 export const getUsersFromRegisterDate = createAsyncThunk(
   'profile/getUsersFromDate',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.getUsersFromRegisterDate(data);
@@ -179,6 +189,7 @@ export const getUsersFromRegisterDate = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   'profile/deleteUser',
+
   async (data, { rejectWithValue }) => {
     try {
       const res = await ClientAPI.deleteUser(data);

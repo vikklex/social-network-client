@@ -17,18 +17,11 @@ const postSlice = createSlice({
   name: 'post',
   initialState: {
     isLoading: false,
-    isReady: false,
-    post: [],
     errorCode: null,
+    post: [],
   },
 
-  reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-      state.isReady = false;
-      state.errorCode = null;
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -37,9 +30,7 @@ const postSlice = createSlice({
       })
       .addCase(createPost.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-
         state.post.push({ ...payload });
       })
       .addCase(createPost.rejected, (state, { payload }) => {
@@ -53,9 +44,7 @@ const postSlice = createSlice({
       })
       .addCase(getPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-
         state.post = payload;
       })
       .addCase(getPosts.rejected, (state, { payload }) => {
@@ -69,7 +58,6 @@ const postSlice = createSlice({
       })
       .addCase(updatePost.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
       })
       .addCase(updatePost.rejected, (state, { payload }) => {
@@ -83,9 +71,7 @@ const postSlice = createSlice({
       })
       .addCase(deletePost.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
-
         state.post = [{ ...payload }];
       })
       .addCase(deletePost.rejected, (state, { payload }) => {
@@ -97,9 +83,8 @@ const postSlice = createSlice({
       .addCase(updatePostImage.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updatePostImage.fulfilled, (state, { payload }) => {
+      .addCase(updatePostImage.fulfilled, (state) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
         state.errorCode = null;
       })
       .addCase(updatePostImage.rejected, (state, { payload }) => {
@@ -108,7 +93,5 @@ const postSlice = createSlice({
       });
   },
 });
-
-export const { reset } = postSlice.actions;
 
 export default postSlice.reducer;

@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import moment from 'moment';
+
 import { Avatar, Comment, Tooltip } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
-import moment from 'moment';
-
 import { updateComment } from 'redux/actions/commentAction';
-
 import { createReaction, getPostReactions } from 'redux/actions/reactionAction';
 
 import { DATE_FORMAT } from 'utils/Constants';
