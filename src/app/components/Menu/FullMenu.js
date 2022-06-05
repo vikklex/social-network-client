@@ -11,6 +11,7 @@ import {
   SettingOutlined,
   CalendarFilled,
   StockOutlined,
+  MessageOutlined,
 } from '@ant-design/icons';
 
 import 'app/components/Menu/menu.scss';
@@ -31,6 +32,8 @@ export const FullMenu = () => {
         icon={<UsergroupAddOutlined />}
         text='My friends'
       />
+
+      <MenuItem link='/messenger' icon={<MessageOutlined />} text='Messages' />
 
       <MenuItem
         link='/posts'

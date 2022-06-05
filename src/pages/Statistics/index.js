@@ -58,7 +58,7 @@ const Statistics = () => {
       <Divider>ADMIN STATISTICS</Divider>
 
       <Divider style={{ marginTop: '10%', marginBottom: '5%' }}>
-        General information about registrated users:
+        General information about registered users:
       </Divider>
       <Row>
         <Col span={8}>

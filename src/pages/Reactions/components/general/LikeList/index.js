@@ -5,11 +5,14 @@ import { Avatar, Row } from 'antd';
 
 import ClientAPI from 'services/ClientAPI';
 
+import { TIME, TIMES } from 'utils/Constants';
 import NoAvatar from 'assets/img/noavatar.png';
 
 const LikeList = ({ userId, likeNumber, type }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+
+  const times = likeNumber === 1 ? TIME : TIMES;
 
   useEffect(() => {
     ClientAPI.getUser(userId).then((resp) => {
@@ -29,7 +32,7 @@ const LikeList = ({ userId, likeNumber, type }) => {
         onClick={() => navigate(`/user/${user.id}`)}
       />
 
-      {`${user.first_name} ${user.last_name} ${type} your post ${likeNumber} count`}
+      {`${user.first_name} ${user.last_name} ${type}d your post ${likeNumber} ${times}`}
     </Row>
   );
 };

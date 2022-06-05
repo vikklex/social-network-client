@@ -9,7 +9,7 @@ const EditButton = ({ id }) => {
   };
 
   if (!id) {
-    return <EditBtn handleClick={handleClick} />;
+    return <EditBtn handleClick={handleClick} data-test='edit-btn' />;
   }
 };
 

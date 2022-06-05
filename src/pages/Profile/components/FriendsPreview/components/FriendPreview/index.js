@@ -7,7 +7,7 @@ import ClientAPI from 'services/ClientAPI';
 
 import NoAvatar from 'assets/img/noavatar.png';
 
-const FriendPreview = ({ id }) => {
+const FriendPreview = ({ id, content }) => {
   const [isReady, setIsReady] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -31,9 +31,11 @@ const FriendPreview = ({ id }) => {
       </Col>
 
       <Col>
-        <span style={{ whiteSpace: 'nowrap' }}>
-          {user.first_name} {user.last_name}
-        </span>
+        {!content && (
+          <span style={{ whiteSpace: 'nowrap' }}>
+            {user.first_name} {user.last_name}
+          </span>
+        )}
       </Col>
     </Row>
   );

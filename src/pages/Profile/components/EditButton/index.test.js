@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom';
 
-import { render, screen } from '@testing-library/react';
-import { configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 
 import Adapter from 'enzyme-adapter-react-16';
 
-import EditButton from './index';
+import EditBtn from './index';
 
 configure({ adapter: new Adapter() });
 
@@ -27,14 +26,14 @@ jest.mock('react-router-dom', () => ({
   navigation: jest.fn((options, callback) => callback('Edit', 1)),
 }));
 
-describe('Edit button', () => {
-  it('Edit button', () => {
-    render(
-      <EditButton>
-        <h1>Edit profile</h1>
-      </EditButton>,
+describe('Click edit btn', () => {
+  it('Click edit btn', () => {
+    const mockCallBack = jest.fn();
+
+    const wrapper = shallow(
+      <EditBtn onClick={mockCallBack}>Edit profile</EditBtn>,
     );
 
-    expect(screen.getByText('Edit profile')).toBeInTheDocument();
+    expect(wrapper).toHaveLength(1);
   });
 });

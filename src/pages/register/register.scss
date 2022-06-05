@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
 
 .ant-card-cover img {
-  border-radius: 2px 2px 0 0;
-  height: 25vh;
+  border-radius: 30px !important;
+  height: 30vh;
   object-fit: cover;
 }
 
@@ -14,6 +14,10 @@
 
 .register__layout {
   background-color: rgb(112, 144, 241) !important;
+}
+
+.register__card {
+  border-radius: 30px !important;
 }
 
 @media screen and (max-width: 1350px) {

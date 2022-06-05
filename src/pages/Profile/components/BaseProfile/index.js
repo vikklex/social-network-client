@@ -22,6 +22,7 @@ import Status from 'pages/Profile/components/Status';
 import UserInfo from 'pages/Profile/components/UserInfo';
 import UserNumbers from 'pages/Profile/components/UserNumbers';
 import FriendsPreview from 'pages/Profile/components/FriendsPreview';
+import SendMessage from 'pages/Profile/components/SendMessage';
 
 import 'pages/Profile/profile.scss';
 
@@ -83,7 +84,9 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
         <Col span={6}>
           <Avatar id={id} user={user} />
           <UserButton id={id} user={user} />
-          {(user.friends_visibility || !id) && (
+          {id && <SendMessage />}
+
+          {(user.friends_visibility || !id || profile.is_admin) && (
             <FriendsPreview
               id={id}
               style={{
@@ -129,7 +132,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
             <UserNumbers user={user} posts={posts} />
           </Row>
 
-          {(user.album_visibility || !id) && (
+          {(user.album_visibility || !id || profile.is_admin) && (
             <>
               <Row justify='space-between' style={{ marginBottom: 30 }}>
                 {user.album.length !== 0 && (
@@ -176,7 +179,7 @@ const BaseProfile = ({ id, UserButton, UploadImages }) => {
         </Col>
       </Row>
 
-      {(user.posts_visibility || !id) && (
+      {(user.posts_visibility || !id || profile.is_admin) && (
         <Row style={{ backgroundColor: 'white' }}>
           <Col span={24}>
             <Feed />

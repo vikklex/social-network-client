@@ -7,6 +7,8 @@ import friendsPosts from 'redux/slices/friendsPostSlice';
 import comment from 'redux/slices/commentSlice';
 import reaction from 'redux/slices/reactionSlice';
 import meeting from 'redux/slices/meetingSlice';
+import conversation from 'redux/slices/conversationSlice';
+import message from 'redux/slices/messageSlice';
 
 export default combineReducers({
   auth,
@@ -16,4 +18,6 @@ export default combineReducers({
   comment,
   reaction,
   meeting,
+  conversation,
+  message,
 });

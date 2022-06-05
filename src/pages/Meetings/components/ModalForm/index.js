@@ -25,6 +25,7 @@ function ModalForm({ onFinish, initialValue, isMainComponent }) {
       labelCol={{
         span: 7,
       }}
+      data-test='modal'
     >
       <Form.Item label='Title' name='title' rules={title_rules}>
         <Input />

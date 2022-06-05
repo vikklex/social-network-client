@@ -24,7 +24,6 @@ const reactionSlice = createSlice({
       .addCase(createReaction.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.errorCode = null;
-        console.log(payload);
         state.reactions.push({ ...payload });
       })
       .addCase(createReaction.rejected, (state, { payload }) => {

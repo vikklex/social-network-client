@@ -6,8 +6,14 @@ import { List } from 'antd';
 
 import FriendPreview from 'pages/Profile/components/FriendsPreview/components/FriendPreview';
 
-const FriendsPreviewList = ({ users }) => {
+const FriendsPreviewList = ({ users, messenger }) => {
   const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    if (!messenger) {
+      navigate(`/user/${id}`);
+    }
+  };
 
   return (
     <List
@@ -17,7 +23,7 @@ const FriendsPreviewList = ({ users }) => {
       renderItem={(id) => (
         <List.Item
           key={id}
-          onClick={() => navigate(`/user/${id}`)}
+          onClick={() => handleClick(id)}
           style={{ cursor: 'pointer' }}
         >
           <FriendPreview id={id} />

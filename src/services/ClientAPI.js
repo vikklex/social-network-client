@@ -248,6 +248,22 @@ class ClientAPI {
   deleteMeeting(data) {
     return this.instance.delete(`v1/meetings/${data.id}`);
   }
+  //
+
+  createUserConversation(data) {
+    return this.instance.post(`v1/conversation/`, data);
+  }
+  getUserConversations(id) {
+    return this.instance.get(`v1/conversation/${id}`);
+  }
+
+  getUserMessages(id) {
+    return this.instance.get(`v1/messages/${id}`);
+  }
+
+  createMessage(data) {
+    return this.instance.post(`v1/messages/`, data);
+  }
 }
 
 export default new ClientAPI();

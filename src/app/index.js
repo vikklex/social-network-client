@@ -12,6 +12,7 @@ import Profile from 'pages/Profile';
 import EditProfile from 'pages/EditProfile';
 import FriendsPosts from 'pages/FriendsPosts';
 import Friends from 'pages/Friends';
+import Messenger from 'pages/Messenger';
 import Meetings from 'pages/Meetings';
 import Settings from 'pages/Settings';
 import Reactions from 'pages/Reactions';
@@ -84,6 +85,10 @@ const App = () => {
 
                   <Route exact path='/friends' element={<PrivateRoute />}>
                     <Route exact path='/friends' element={<Friends />} />
+                  </Route>
+
+                  <Route exact path='/messenger' element={<PrivateRoute />}>
+                    <Route exact path='/messenger' element={<Messenger />} />
                   </Route>
 
                   <Route exact path='/reactions' element={<PrivateRoute />}>
