@@ -22,6 +22,7 @@ const AutoCompleteHeader = ({
       onChange={onChange}
       onSelect={onSelect}
       style={style}
+      data-test='autocomplete'
     >
       {searchUsers &&
         searchUsers.map((user) => (

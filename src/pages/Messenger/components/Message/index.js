@@ -8,7 +8,11 @@ import FriendPreview from 'pages/Profile/components/FriendsPreview/components/Fr
 
 const Message = ({ own, message }) => {
   return (
-    <Row className={own ? 'left' : ''} style={{ marginTop: 10 }}>
+    <Row
+      className={own ? 'left' : ''}
+      style={{ marginTop: 10 }}
+      data-test='message'
+    >
       <Col span={2}>
         <FriendPreview id={message.sender} content='message' />
       </Col>
