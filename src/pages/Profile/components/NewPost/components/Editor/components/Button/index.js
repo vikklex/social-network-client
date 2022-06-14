@@ -5,6 +5,7 @@ const EditorBtn = ({ onSubmit, comment }) => {
   return (
     <Button
       htmlType='submit'
+      aria-label='share_button'
       onClick={onSubmit}
       type='primary'
       style={

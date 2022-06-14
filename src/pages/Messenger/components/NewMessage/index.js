@@ -13,6 +13,7 @@ const NewMessage = ({ avatar, onChange, messageText }) => {
         content={
           <TextArea
             style={{ borderRadius: 20 }}
+            data-testid={'message_textarea'}
             placeholder='Write something'
             onChange={onChange}
             value={messageText}

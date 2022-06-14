@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, List } from 'antd';
 
+
 const Album = ({ images }) => {
   return (
     <List
@@ -16,6 +17,7 @@ const Album = ({ images }) => {
         <List.Item key={image}>
           <Image
             src={image}
+            data-testid={image}
             height={120}
             style={{ borderRadius: 10, objectFit: 'cover' }}
           />

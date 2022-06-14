@@ -6,18 +6,17 @@ import { useDispatch } from 'react-redux';
 
 import { io } from 'socket.io-client';
 
-import { Avatar, Button, Card, Col, Comment, Row, Typography } from 'antd';
-import TextArea from 'antd/lib/input/TextArea';
+import { Button, Card, Col, Row, Typography } from 'antd';
 
 import { getUserConversations } from 'redux/actions/conversationActions';
 import { createMessage, getUserMessages } from 'redux/actions/messageAction';
 
 import Conversation from 'pages/Messenger/components/Conversation';
+import NewMessage from 'pages/Messenger/components/NewMessage';
 import Message from 'pages/Messenger/components/Message';
 
 import NoContent from 'components/NoContent';
 
-import NoAvatar from 'assets/img/noavatar.png';
 import Friend from 'assets/img/messages.jpeg';
 
 import 'pages/Messenger/messenger.scss';
@@ -166,18 +165,10 @@ const Messenger = () => {
                 }}
               >
                 <Col span={16}>
-                  <Comment
-                    avatar={
-                      <Avatar src={profile.avatar || NoAvatar} alt='Avatar' />
-                    }
-                    content={
-                      <TextArea
-                        style={{ borderRadius: 20 }}
-                        placeholder='Write something'
-                        onChange={onChange}
-                        value={messageText}
-                      />
-                    }
+                  <NewMessage
+                    avatar={profile.avatar}
+                    onChange={onChange}
+                    messageText={messageText}
                   />
                 </Col>
                 <Col span={8}>

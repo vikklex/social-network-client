@@ -19,6 +19,7 @@ const FriendsList = ({ persons }) => {
           <Card
             bordered={false}
             size='small'
+            data-testid={'click_friend'}
             onClick={() => navigate(`/user/${person}`)}
             style={{ cursor: 'pointer', width: '100%' }}
           >

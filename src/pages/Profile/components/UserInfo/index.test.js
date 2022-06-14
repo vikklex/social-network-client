@@ -7,6 +7,13 @@ import UserInfo from './index';
 
 configure({ adapter: new Adapter() });
 
+const mockedUsedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
 const props = {
   user: {
     id: '1',
@@ -24,13 +31,6 @@ window.matchMedia =
       removeListener: function () {},
     };
   };
-
-const mockedUsedNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockedUsedNavigate,
-}));
 
 describe('User info', () => {
   it('User info', () => {

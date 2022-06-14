@@ -10,9 +10,11 @@ export const Feed = () => {
 
   return (
     <div className='feed'>
-      <div className='feed__wrapper'>
-        <Posts posts={posts} isUserProfile={true} />
-      </div>
+      {posts.length > 0 && (
+        <div data-testid='feed_wrapper' className='feed__wrapper'>
+          <Posts posts={posts} isUserProfile={true} />
+        </div>
+      )}
     </div>
   );
 };

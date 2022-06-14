@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom';
-
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -20,16 +18,6 @@ const wrapper = shallow(
     messageText={props.messageText}
   />,
 );
-
-window.matchMedia =
-  window.matchMedia ||
-  function () {
-    return {
-      matches: false,
-      addListener: function () {},
-      removeListener: function () {},
-    };
-  };
 
 describe('New message render', () => {
   it('New message render', () => {

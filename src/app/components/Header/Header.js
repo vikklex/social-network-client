@@ -18,9 +18,10 @@ import AutoCompleteHeader from './components/AutoComplete';
 import 'app/components/Header/header.scss';
 import NoAvatar from 'assets/img/noavatar.png';
 
-export default function HeaderNav() {
+const HeaderNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -98,9 +99,15 @@ export default function HeaderNav() {
         </Col>
 
         <Col span={1}>
-          <LogoutOutlined className='right_icon_antd' onClick={onLogout} />
+          <LogoutOutlined
+            className='right_icon_antd'
+            onClick={onLogout}
+            data-testid='logout_button'
+          />
         </Col>
       </Row>
     </div>
   );
-}
+};
+
+export default HeaderNav;

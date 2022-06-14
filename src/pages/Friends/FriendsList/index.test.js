@@ -1,11 +1,15 @@
-import '@testing-library/jest-dom';
-
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import FriendsList from './index';
 
 configure({ adapter: new Adapter() });
+
+const mockedUsedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  useNavigate: () => mockedUsedNavigate(),
+}));
 
 const props = {
   persons: [
@@ -16,23 +20,6 @@ const props = {
   ],
 };
 const wrapper = shallow(<FriendsList persons={props.persons} />);
-
-window.matchMedia =
-  window.matchMedia ||
-  function () {
-    return {
-      matches: false,
-      addListener: function () {},
-      removeListener: function () {},
-    };
-  };
-
-const mockedUsedNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockedUsedNavigate,
-}));
 
 describe('Friend list render', () => {
   it('Friend List', () => {

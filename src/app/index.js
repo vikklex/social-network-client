@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import jwt_decode from 'jwt-decode';
@@ -40,83 +40,83 @@ const App = () => {
         setIsReady(true);
       };
 
-      dispatch(getProfile(jwt_decode(token).id)).then(onSuccess);
+      const profile = jwt_decode(token);
+
+      dispatch(getProfile(profile.id)).then(onSuccess);
     } else {
       setIsReady(true);
     }
   }, [dispatch, token]);
 
   return (
-    <Router>
-      <Layout className='layout'>
+    <Layout className='layout'>
+      {token && (
+        <Header>
+          <HeaderNav />
+        </Header>
+      )}
+
+      <Layout>
         {token && (
-          <Header>
-            <HeaderNav />
-          </Header>
+          <Sider>
+            <FullMenu />
+          </Sider>
         )}
 
-        <Layout>
-          {token && (
-            <Sider>
-              <FullMenu />
-            </Sider>
-          )}
+        <Content>
+          <Routes>
+            {isReady && (
+              <>
+                <Route
+                  path='/'
+                  element={token ? <Profile /> : <Login />}
+                ></Route>
 
-          <Content>
-            <Routes>
-              {isReady && (
-                <>
-                  <Route
-                    path='/'
-                    element={token ? <Profile /> : <Login />}
-                  ></Route>
+                <Route exact path='/login' element={<Login />} />
 
-                  <Route exact path='/login' element={<Login />} />
+                <Route exact path='/register' element={<Register />} />
 
-                  <Route exact path='/register' element={<Register />} />
+                <Route exact path='/user/:id' element={<PrivateRoute />}>
+                  <Route exact path='/user/:id' element={<Profile />} />
+                </Route>
 
-                  <Route exact path='/user/:id' element={<PrivateRoute />}>
-                    <Route exact path='/user/:id' element={<Profile />} />
-                  </Route>
+                <Route exact path='/posts' element={<PrivateRoute />}>
+                  <Route exact path='/posts' element={<FriendsPosts />} />
+                </Route>
 
-                  <Route exact path='/posts' element={<PrivateRoute />}>
-                    <Route exact path='/posts' element={<FriendsPosts />} />
-                  </Route>
+                <Route exact path='/friends' element={<PrivateRoute />}>
+                  <Route exact path='/friends' element={<Friends />} />
+                </Route>
 
-                  <Route exact path='/friends' element={<PrivateRoute />}>
-                    <Route exact path='/friends' element={<Friends />} />
-                  </Route>
+                <Route exact path='/messenger' element={<PrivateRoute />}>
+                  <Route exact path='/messenger' element={<Messenger />} />
+                </Route>
 
-                  <Route exact path='/messenger' element={<PrivateRoute />}>
-                    <Route exact path='/messenger' element={<Messenger />} />
-                  </Route>
+                <Route exact path='/reactions' element={<PrivateRoute />}>
+                  <Route exact path='/reactions' element={<Reactions />} />
+                </Route>
 
-                  <Route exact path='/reactions' element={<PrivateRoute />}>
-                    <Route exact path='/reactions' element={<Reactions />} />
-                  </Route>
+                <Route exact path='/statistics' element={<PrivateRoute />}>
+                  <Route exact path='/statistics' element={<Statistics />} />
+                </Route>
 
-                  <Route exact path='/statistics' element={<PrivateRoute />}>
-                    <Route exact path='/statistics' element={<Statistics />} />
-                  </Route>
+                <Route exact path='/edit' element={<PrivateRoute />}>
+                  <Route exact path='/edit' element={<EditProfile />} />
+                </Route>
 
-                  <Route exact path='/edit' element={<PrivateRoute />}>
-                    <Route exact path='/edit' element={<EditProfile />} />
-                  </Route>
+                <Route exact path='/meetings' element={<PrivateRoute />}>
+                  <Route exact path='/meetings' element={<Meetings />} />
+                </Route>
 
-                  <Route exact path='/meetings' element={<PrivateRoute />}>
-                    <Route exact path='/meetings' element={<Meetings />} />
-                  </Route>
-
-                  <Route exact path='/settings' element={<PrivateRoute />}>
-                    <Route exact path='/settings' element={<Settings />} />
-                  </Route>
-                </>
-              )}
-            </Routes>
-          </Content>
-        </Layout>
+                <Route exact path='/settings' element={<PrivateRoute />}>
+                  <Route exact path='/settings' element={<Settings />} />
+                </Route>
+              </>
+            )}
+          </Routes>
+        </Content>
       </Layout>
-    </Router>
+    </Layout>
   );
 };
 

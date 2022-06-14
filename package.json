@@ -15,7 +15,6 @@
     "antd-img-crop": "^4.2.1",
     "antd-password-input-strength": "^2.0.1",
     "axios": "^0.26.1",
-    "axios-mock-adapter": "^1.21.1",
     "chart.js": "^3.7.1",
     "cheerio": "^1.0.0-rc.3",
     "fetch-mock": "^9.11.0",
@@ -35,6 +34,7 @@
     "recharts": "^2.1.9",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
+    "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1",
     "sass": "^1.52.1",
@@ -45,8 +45,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "coverage": "jest --coverage",
+    "test": "react-scripts test",
+    "coverage": "react-scripts test --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -68,18 +68,7 @@
     ]
   },
   "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "moduleNameMapper": {
-      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
-    },
-    "testEnvironment": "jsdom",
-    "collectCoverage": false,
-    "collectCoverageFrom": [
-      "./src/**"
-    ],
+    "resetMocks": false,
     "coverageThreshold": {
       "global": {
         "lines": 80
@@ -89,6 +78,7 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.18.0",
     "@jedmao/redux-mock-store": "^3.0.5",
+    "axios-mock-adapter": "^1.21.1",
     "check-prop-types": "^1.1.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-preact-pure": "^4.0.1",
@@ -97,6 +87,8 @@
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "jest-jasmine2": "^28.1.0",
-    "moxios": "^0.4.0"
+    "moxios": "^0.4.0",
+    "njwt": "^1.2.0",
+    "secure-random": "^1.1.2"
   }
 }

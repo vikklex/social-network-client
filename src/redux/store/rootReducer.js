@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import auth from 'redux/slices/authSlice';
+import auth, { logout } from 'redux/slices/authSlice';
 import profile from 'redux/slices/profileSlice';
 import post from 'redux/slices/postSlice';
 import friendsPosts from 'redux/slices/friendsPostSlice';
@@ -10,7 +10,7 @@ import meeting from 'redux/slices/meetingSlice';
 import conversation from 'redux/slices/conversationSlice';
 import message from 'redux/slices/messageSlice';
 
-export default combineReducers({
+const appReducer = combineReducers({
   auth,
   profile,
   post,
@@ -21,3 +21,12 @@ export default combineReducers({
   conversation,
   message,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === logout.type) {
+    return appReducer(undefined, action);
+  }
+  return appReducer(state, action);
+};
+
+export default rootReducer;
